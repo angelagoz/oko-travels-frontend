@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Productos - LUCHRIS TRAVELS</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://upload-widget.cloudinary.com/latest/index.js"></script>
     <style>
         body {
             margin: 0;
@@ -439,11 +440,12 @@
 
                 <div class="form-group">
                     <label>Foto Principal</label>
-                    <div class="file-upload">
-                        <input type="file" id="foto-principal" accept="image/*">
-                        <label class="file-upload-label" for="foto-principal">
-                            📸 Haz clic o arrastra una imagen
-                        </label>
+                    <button type="button" id="upload-button" class="btn" style="width: 100%; margin-bottom: 10px;">
+                        📸 Subir Foto desde Cloudinary
+                    </button>
+                    <input type="hidden" id="foto-url">
+                    <div id="foto-preview" style="margin-top: 10px; text-align: center;">
+                        <p style="color: #999; font-size: 0.9rem;">No hay foto seleccionada</p>
                     </div>
                 </div>
 
@@ -454,6 +456,31 @@
 
     <script src="config.js"></script>
     <script>
+        // ========================================
+        // CONFIGURACIÓN CLOUDINARY
+        // ========================================
+        // IMPORTANTE: Reemplaza estos valores con los tuyos de Cloudinary
+        const CLOUDINARY_CONFIG = {
+            cloudName: "YOUR_CLOUD_NAME", // Reemplaza con tu Cloud Name
+            uploadPreset: "YOUR_UPLOAD_PRESET" // Reemplaza con tu Upload Preset
+        };
+
+        // Validar configuración
+        function validarCloudinary() {
+            if (CLOUDINARY_CONFIG.cloudName === "YOUR_CLOUD_NAME" ||
+                CLOUDINARY_CONFIG.uploadPreset === "YOUR_UPLOAD_PRESET") {
+                alert('⚠️ IMPORTANTE: Debes configurar Cloudinary\n\n' +
+                    '1. Ve a https://cloudinary.com y crea una cuenta (gratis)\n' +
+                    '2. Obtén tu Cloud Name\n' +
+                    '3. Crea un Upload Preset\n' +
+                    '4. Abre admin-productos.html en tu editor\n' +
+                    '5. Busca CLOUDINARY_CONFIG y reemplaza los valores\n\n' +
+                    'Guía completa en: FOTOS_CLOUDINARY.md');
+                return false;
+            }
+            return true;
+        }
+
         let productoActual = null;
         let tipoFiltro = 'todos';
 
@@ -466,8 +493,46 @@
                 window.location.href = 'admin-login.html';
                 return;
             }
+
+            // Validar Cloudinary y configurar upload button
+            if (validarCloudinary()) {
+                setupCloudinaryUpload();
+            }
+
             cargarProductos();
         });
+
+        // ========================================
+        // CONFIGURAR CLOUDINARY UPLOAD
+        // ========================================
+        function setupCloudinaryUpload() {
+            document.getElementById('upload-button').addEventListener('click', (e) => {
+                e.preventDefault();
+
+                cloudinary.openUploadWidget({
+                    cloudName: CLOUDINARY_CONFIG.cloudName,
+                    uploadPreset: CLOUDINARY_CONFIG.uploadPreset,
+                    sources: ['local', 'url', 'camera'],
+                    multiple: false,
+                    resourceType: 'image',
+                    clientAllowedFormats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+                    maxFileSize: 5242880, // 5 MB
+                    maxImageWidth: 2000,
+                    maxImageHeight: 2000
+                }, (error, result) => {
+                    if (!error && result && result.event === 'success') {
+                        const imageUrl = result.info.secure_url;
+                        document.getElementById('foto-url').value = imageUrl;
+
+                        // Mostrar preview
+                        document.getElementById('foto-preview').innerHTML =
+                            `<img src="${imageUrl}" style="max-width: 250px; max-height: 200px; border-radius: 4px; object-fit: cover;">`;
+
+                        console.log('✅ Foto subida:', imageUrl);
+                    }
+                });
+            });
+        }
 
         // ========================================
         // CARGAR PRODUCTOS
@@ -564,6 +629,12 @@
         async function guardarProducto(event) {
             event.preventDefault();
 
+            const fotoUrl = document.getElementById('foto-url').value;
+            if (!fotoUrl) {
+                mostrarAlerta('❌ Debes subir una foto', 'error');
+                return;
+            }
+
             const producto = {
                 nombre: document.getElementById('nombre').value,
                 tipo: document.getElementById('tipo').value,
@@ -572,7 +643,9 @@
                 destino: document.getElementById('destino').value,
                 precio_base: parseFloat(document.getElementById('precio_base').value),
                 duracion_dias: parseInt(document.getElementById('duracion_dias').value) || 0,
-                capacidad: parseInt(document.getElementById('capacidad').value) || 0
+                capacidad: parseInt(document.getElementById('capacidad').value) || 0,
+                foto_principal: fotoUrl,
+                fotos: [{ url: fotoUrl, titulo: document.getElementById('nombre').value, orden: 0 }]
             };
 
             try {

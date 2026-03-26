@@ -57,6 +57,9 @@ app.use('/api/pagos', require('./routes/pagos'));
 // Rutas de cotizaciones
 app.use('/api/cotizaciones', require('./routes/cotizaciones'));
 
+// Rutas de productos (cruceros, tours, disney)
+app.use('/api/productos', require('./routes/productos'));
+
 // ========================================
 // MANEJO DE ERRORES
 // ========================================

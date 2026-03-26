@@ -244,7 +244,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const btnAgregar = document.createElement('button');
             btnAgregar.className = 'btn-secondary agregar-carrito';
             btnAgregar.setAttribute('data-id', card.getAttribute('data-id') || Math.random());
-            btnAgregar.setAttribute('data-nombre', card.querySelector('h4').textContent);
+
+            // Obtener nombre con validación
+            const h4Element = card.querySelector('h4');
+            const nombre = h4Element ? h4Element.textContent : 'Producto';
+            btnAgregar.setAttribute('data-nombre', nombre);
+
             btnAgregar.setAttribute('data-precio', card.getAttribute('data-precio') || '0');
             btnAgregar.setAttribute('data-tipo', 'crucero');
             btnAgregar.textContent = '🛒 Agregar al Carrito';

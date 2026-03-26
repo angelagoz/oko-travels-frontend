@@ -233,14 +233,35 @@
 
 ---
 
+**Sistema de Exportación de Reportes en PDF (PASO 3.4):**
+- ✅ server/services/pdfService.js con 2 funciones principales:
+  - generarReporteCotizacion(): PDF individual con datos del cliente, detalles, precios
+  - generarReporteEstadisticas(): PDF de resumen con métricas globales
+- ✅ Actualizado server/routes/cotizaciones.js:
+  - Importado pdfService
+  - Agregados 2 nuevos endpoints:
+    - GET /api/cotizaciones/:id/pdf → Descarga PDF individual
+    - GET /api/cotizaciones/reporte/estadisticas → Descarga reporte PDF
+- ✅ Actualizado admin-cotizaciones.html:
+  - Agregado botón "📥" en acciones de cada cotización
+  - CSS styling para btn-pdf (naranja #FFA500)
+  - Función descargarPDF(id) que abre la URL en nueva pestaña
+- ✅ Actualizado admin-estadisticas.html:
+  - Reemplazado alert de placeholder con función real
+  - exportarPDF() ahora descarga el reporte completo
+- ✅ package.json con "pdfkit": "^0.13.0"
+- ✅ Cambios confirmados y listos para deploy
+
+---
+
 ## 🎯 PRÓXIMOS PASOS OPCIONALES
 
 Opciones para continuar:
 1. ✅ Sistema de email automático (COMPLETADO)
-2. Integración WhatsApp Business API
-3. Dashboard de estadísticas avanzadas
+2. ✅ Reportes y exportación de datos PDF (COMPLETADO)
+3. Integración WhatsApp Business API
 4. CRM integrado con historial de clientes
 5. Autenticación JWT mejorada en backend
 6. Pagos online completos con Stripe
 7. Sistema de reservas completo
-8. Reportes y exportación de datos (PDF/Excel)
+8. Analytics avanzados con Machine Learning

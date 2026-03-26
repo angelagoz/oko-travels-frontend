@@ -262,6 +262,15 @@
             background-color: #d62828;
         }
 
+        .btn-pdf {
+            background-color: #FFA500;
+            color: white;
+        }
+
+        .btn-pdf:hover {
+            background-color: #ff8c00;
+        }
+
         /* MODAL */
         .modal {
             display: none;
@@ -690,6 +699,7 @@
                             <div class="acciones">
                                 <button class="btn-action btn-ver" onclick="verDetalle('${cotizacion._id}')">Ver</button>
                                 <button class="btn-action btn-responder" onclick="abrirResponder('${cotizacion._id}')">✉️</button>
+                                <button class="btn-action btn-pdf" onclick="descargarPDF('${cotizacion._id}')">📥</button>
                                 <button class="btn-action btn-eliminar" onclick="eliminarCotizacion('${cotizacion._id}')">🗑️</button>
                             </div>
                         </td>
@@ -871,6 +881,14 @@
                 console.error('Error:', error);
                 alert('❌ Error al eliminar');
             }
+        }
+
+        // ========================================
+        // DESCARGAR PDF
+        // ========================================
+        function descargarPDF(id) {
+            const url = CONFIG.obtenerURL(`/cotizaciones/${id}/pdf`);
+            window.open(url, '_blank');
         }
 
         // ========================================

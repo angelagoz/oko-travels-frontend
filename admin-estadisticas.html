@@ -698,7 +698,8 @@
 
         // EXPORTAR PDF
         function exportarPDF() {
-            alert('📥 Función de exportación PDF en desarrollo.\n\nPronto podrás descargar reportes en PDF con todos los gráficos y datos.');
+            const url = CONFIG.obtenerURL('/cotizaciones/reporte/estadisticas');
+            window.open(url, '_blank');
         }
     </script>
 </body>

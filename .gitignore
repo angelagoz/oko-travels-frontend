@@ -28,6 +28,3 @@ build/
 # Misc
 .cache/
 temp/
-
-# Backend (separate repository)
-server/

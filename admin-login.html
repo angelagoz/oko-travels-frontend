@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - LUCHRIS TRAVELS</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #003366 0%, #004d80 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: #003366;
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #003366;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #003366;
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: #E63946;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: #d62828;
+            transform: translateY(-2px);
+        }
+
+        .btn-login:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .login-footer a {
+            color: #003366;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .info-box {
+            background-color: #e7f3ff;
+            border-left: 4px solid #003366;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #003366;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>LUCHRIS TRAVELS</h1>
+                <p>Panel Administrativo</p>
+            </div>
+
+            <div class="info-box">
+                <strong>Credenciales de Prueba:</strong>
+                Usuario: admin@luchris.com<br>
+                Contraseña: admin123
+            </div>
+
+            <div id="alert" class="alert"></div>
+
+            <form id="form-login" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="admin@luchris.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-login" id="btn-login">🔓 Iniciar Sesión</button>
+            </form>
+
+            <div class="login-footer">
+                <a href="index.html">← Volver a sitio principal</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btnLogin = document.getElementById('btn-login');
+            const alertDiv = document.getElementById('alert');
+
+            // Validación simple (en producción, usar backend)
+            if (email === 'admin@luchris.com' && password === 'admin123') {
+                // Guardar en localStorage
+                localStorage.setItem('admin_token', 'token_' + Date.now());
+                localStorage.setItem('admin_email', email);
+
+                alertDiv.className = 'alert success';
+                alertDiv.textContent = '✅ ¡Bienvenido! Redirigiendo...';
+
+                setTimeout(() => {
+                    window.location.href = 'admin-cotizaciones.html';
+                }, 1500);
+            } else {
+                alertDiv.className = 'alert error';
+                alertDiv.textContent = '❌ Email o contraseña incorrectos';
+            }
+        }
+
+        // Verificar si ya está logueado
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('admin_token');
+            if (token) {
+                window.location.href = 'admin-cotizaciones.html';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -122,12 +122,27 @@
 **Ubicación**: Calle Primera #11, Residencial Peravia, Baní, República Dominicana
 **Experiencia**: 8 años
 
+**Sistema de Cotizaciones (PASO 2.8+ Continuación):**
+- ✅ Reemplazado sistema de carrito con formulario de cotización
+- ✅ Creado modelo Cotizacion en backend (MongoDB)
+- ✅ Implementados endpoints REST para cotizaciones:
+  - POST /api/cotizaciones - Crear nueva solicitud
+  - GET /api/cotizaciones - Listar todas (admin)
+  - GET /api/cotizaciones/:id - Obtener detalle
+  - PUT /api/cotizaciones/:id - Actualizar estado y respuesta
+  - DELETE /api/cotizaciones/:id - Eliminar
+- ✅ Creada función solicitarCotizacion() en script.js
+- ✅ Integración con CONFIG.js para llamadas API
+- ✅ Validación de formulario en frontend y backend
+- ✅ Persistencia en localStorage (histórico local)
+- ✅ Cambios pusheados a GitHub (Vercel y Render auto-desplegando)
+
 ---
 
 ## 🎯 PRÓXIMOS PASOS
 
 Opciones:
-1. JavaScript interactivo (galerías, carrito)
-2. Página institucional (About)
-3. Backend - Rutas de API
-4. Panel CMS Visual
+1. Panel CMS para administrar cotizaciones
+2. Sistema de email para notificaciones
+3. Dashboard de estadísticas
+4. Integración de WhatsApp Business API

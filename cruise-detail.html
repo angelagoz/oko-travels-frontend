@@ -314,49 +314,66 @@
         </div>
     </section>
 
-    <!-- CARRITO FLOTANTE -->
+    <!-- SOLICITAR COTIZACIÓN -->
     <section class="carrito-reserva">
         <div class="container">
             <div class="reserva-box">
-                <h3>Reserva Tu Crucero</h3>
+                <h3>📋 Solicitar Cotización</h3>
+                <p style="color: #666; margin-bottom: 20px;">Completa el formulario y nos contactaremos con tu cotización personalizada</p>
 
-                <div class="form-reserva">
+                <form class="form-reserva" onsubmit="solicitarCotizacion(event)">
                     <div class="form-group">
-                        <label>Selecciona Fecha de Salida</label>
-                        <select required>
+                        <label>Tu Nombre</label>
+                        <input type="text" name="nombre" required placeholder="Ej: Angela Gómez">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required placeholder="tu@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" name="telefono" required placeholder="829-550-2847">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fecha Deseada</label>
+                        <select name="fecha" required>
                             <option value="">-- Selecciona una fecha --</option>
-                            <option value="2026-04-15">15 de Abril 2026</option>
-                            <option value="2026-04-22">22 de Abril 2026</option>
-                            <option value="2026-04-29">29 de Abril 2026</option>
-                            <option value="2026-05-06">6 de Mayo 2026</option>
-                            <option value="2026-05-13">13 de Mayo 2026</option>
+                            <option value="15 de Abril 2026">15 de Abril 2026</option>
+                            <option value="22 de Abril 2026">22 de Abril 2026</option>
+                            <option value="29 de Abril 2026">29 de Abril 2026</option>
+                            <option value="6 de Mayo 2026">6 de Mayo 2026</option>
+                            <option value="13 de Mayo 2026">13 de Mayo 2026</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>Tipo de Camarote</label>
-                        <select required>
+                        <select name="camarote" required>
                             <option value="">-- Selecciona camarote --</option>
-                            <option value="interior">Interior - Desde $899</option>
-                            <option value="balcon">Balcón - Desde $1,299</option>
-                            <option value="suite">Suite - Desde $2,499</option>
+                            <option value="Interior">Interior - Desde $899</option>
+                            <option value="Balcón">Balcón - Desde $1,299</option>
+                            <option value="Suite">Suite - Desde $2,499</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>Cantidad de Pasajeros</label>
-                        <input type="number" min="1" max="6" value="1" required>
+                        <input type="number" name="pasajeros" min="1" max="6" value="1" required>
                     </div>
 
-                    <div class="precio-total">
-                        <p><strong>Precio Total:</strong> <span id="precio-total">$899</span></p>
+                    <div class="form-group">
+                        <label>Comentarios Adicionales</label>
+                        <textarea name="comentarios" rows="3" placeholder="Cuéntanos tus preferencias..."></textarea>
                     </div>
 
-                    <button class="btn-primary btn-full" onclick="agregarAlCarrito()">Agregar al Carrito</button>
-                </div>
+                    <button type="submit" class="btn-primary btn-full">✉️ Solicitar Cotización</button>
+                </form>
 
                 <div class="info-adicional">
-                    <p><strong>💡 Tip:</strong> Los precios pueden variar según la disponibilidad y la fecha. Se incluyen impuestos y tasas portuarias.</p>
+                    <p><strong>📞 O llámanos directamente:</strong> +1 (829) 550-2847</p>
                 </div>
             </div>
         </div>
@@ -435,59 +452,8 @@
         </div>
     </footer>
 
-    <script src="carrito-app.js"></script>
+    <script src="config.js"></script>
     <script src="auth.js"></script>
     <script src="script.js"></script>
-
-    <script>
-        // FUNCIÓN GLOBAL PARA AGREGAR AL CARRITO
-        function agregarAlCarrito() {
-            console.log('🔘 Botón clickeado');
-
-            // Buscar los selects por su posición
-            const selects = document.querySelectorAll('.form-reserva select');
-            const selectCamarote = selects[1] || null; // El segundo select (camarote)
-            const inputPasajeros = document.querySelector('.form-reserva input[type="number"]');
-
-            console.log('Camarote select:', selectCamarote);
-            console.log('Pasajeros input:', inputPasajeros);
-
-            if (!selectCamarote || !inputPasajeros) {
-                alert('❌ Error: No se encontraron los campos del formulario');
-                return;
-            }
-
-            const camarote = selectCamarote.value;
-            const pasajeros = parseInt(inputPasajeros.value) || 1;
-
-            if (!camarote) {
-                alert('⚠️ Por favor selecciona un tipo de camarote');
-                return;
-            }
-
-            const precios = { interior: 899, balcon: 1299, suite: 2499 };
-            const precioBase = precios[camarote] || 899;
-            const total = precioBase * pasajeros;
-
-            // Crear objeto de producto
-            const producto = {
-                id: 'crucero_' + Date.now(),
-                nombre: 'Crucero Oasis of the Seas - ' + camarote,
-                precio: precioBase,
-                tipo: 'crucero',
-                cantidad: pasajeros
-            };
-
-            // Guardar en carrito (localStorage)
-            let carrito_local = JSON.parse(localStorage.getItem('carrito_luchris')) || [];
-            carrito_local.push(producto);
-            localStorage.setItem('carrito_luchris', JSON.stringify(carrito_local));
-
-            // Notificación
-            alert('✅ ¡Agregado al carrito!\n\n' + pasajeros + ' pasajero(s)\n' + camarote + '\n$' + total.toLocaleString());
-
-            console.log('✅ Producto agregado:', producto);
-        }
-    </script>
 </body>
 </html>

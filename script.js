@@ -343,4 +343,78 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// ========================================
+// SOLICITAR COTIZACIÓN
+// ========================================
+
+async function solicitarCotizacion(event) {
+    event.preventDefault();
+
+    // Obtener datos del formulario
+    const form = event.target;
+    const formData = new FormData(form);
+
+    const cotizacion = {
+        nombre: formData.get('nombre'),
+        email: formData.get('email'),
+        telefono: formData.get('telefono'),
+        fecha: formData.get('fecha'),
+        camarote: formData.get('camarote'),
+        pasajeros: parseInt(formData.get('pasajeros')),
+        comentarios: formData.get('comentarios') || ''
+    };
+
+    // Validar datos
+    if (!cotizacion.nombre || !cotizacion.email || !cotizacion.telefono || !cotizacion.fecha || !cotizacion.camarote) {
+        alert('❌ Por favor completa todos los campos requeridos');
+        return;
+    }
+
+    // Mostrar estado de envío
+    const btnSubmit = form.querySelector('button[type="submit"]');
+    const textoOriginal = btnSubmit.textContent;
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = '⏳ Enviando...';
+
+    try {
+        // Enviar al backend
+        const response = await fetch(CONFIG.obtenerURL('/cotizaciones'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cotizacion)
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            // Éxito
+            alert('✅ ¡Cotización recibida!\n\nNos contactaremos con los detalles en breve.\n\nGracias por confiar en LUCHRIS TRAVELS');
+            form.reset();
+            btnSubmit.textContent = textoOriginal;
+            btnSubmit.disabled = false;
+
+            // Opcional: Guardar en localStorage
+            const cotizaciones = JSON.parse(localStorage.getItem('cotizaciones') || '[]');
+            cotizaciones.push({
+                ...cotizacion,
+                fechaEnvio: new Date().toISOString()
+            });
+            localStorage.setItem('cotizaciones', JSON.stringify(cotizaciones));
+        } else {
+            // Error del servidor
+            alert('⚠️ Error: ' + (data.error || 'No se pudo procesar la cotización'));
+            btnSubmit.textContent = textoOriginal;
+            btnSubmit.disabled = false;
+        }
+    } catch (error) {
+        // Error de conexión
+        console.error('Error enviando cotización:', error);
+        alert('❌ Error al enviar la cotización. Por favor intenta de nuevo o llama al +1 (829) 550-2847');
+        btnSubmit.textContent = textoOriginal;
+        btnSubmit.disabled = false;
+    }
+}
+
 console.log('✅ LUCHRIS TRAVELS - JavaScript cargado exitosamente');

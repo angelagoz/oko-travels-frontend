@@ -352,7 +352,7 @@
                         <p><strong>Precio Total:</strong> <span id="precio-total">$899</span></p>
                     </div>
 
-                    <button class="btn-primary btn-full">Agregar al Carrito</button>
+                    <button class="btn-primary btn-full" onclick="agregarAlCarrito()">Agregar al Carrito</button>
                 </div>
 
                 <div class="info-adicional">
@@ -440,58 +440,48 @@
     <script src="script.js"></script>
 
     <script>
-        // VINCULAR BOTÓN "AGREGAR AL CARRITO" - CON REINTENTOS
-        function vincularBoton() {
-            const btnAgregar = document.querySelector('.form-reserva .btn-primary');
+        // FUNCIÓN GLOBAL PARA AGREGAR AL CARRITO
+        function agregarAlCarrito() {
+            console.log('🔘 Botón clickeado');
+
             const selectCamarote = document.querySelector('.form-reserva select:nth-of-type(2)');
             const inputPasajeros = document.querySelector('.form-reserva input[type="number"]');
 
-            if (!btnAgregar || !selectCamarote || !inputPasajeros) {
-                console.log('⏳ Esperando elementos del formulario...');
-                setTimeout(vincularBoton, 500);
+            if (!selectCamarote || !inputPasajeros) {
+                alert('❌ Error: No se encontraron los campos del formulario');
                 return;
             }
 
-            if (typeof carrito === 'undefined') {
-                console.log('⏳ Esperando carrito global...');
-                setTimeout(vincularBoton, 500);
+            const camarote = selectCamarote.value;
+            const pasajeros = parseInt(inputPasajeros.value) || 1;
+
+            if (!camarote) {
+                alert('⚠️ Por favor selecciona un tipo de camarote');
                 return;
             }
 
-            console.log('✅ Vinculando botón "Agregar al Carrito"');
+            const precios = { interior: 899, balcon: 1299, suite: 2499 };
+            const precioBase = precios[camarote] || 899;
+            const total = precioBase * pasajeros;
 
-            btnAgregar.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
+            // Crear objeto de producto
+            const producto = {
+                id: 'crucero_' + Date.now(),
+                nombre: 'Crucero Oasis of the Seas - ' + camarote,
+                precio: precioBase,
+                tipo: 'crucero',
+                cantidad: pasajeros
+            };
 
-                const camarote = selectCamarote.value;
-                const pasajeros = parseInt(inputPasajeros.value) || 1;
+            // Guardar en carrito (localStorage)
+            let carrito_local = JSON.parse(localStorage.getItem('carrito_luchris')) || [];
+            carrito_local.push(producto);
+            localStorage.setItem('carrito_luchris', JSON.stringify(carrito_local));
 
-                if (!camarote) {
-                    alert('Por favor selecciona un tipo de camarote');
-                    return;
-                }
+            // Notificación
+            alert('✅ ¡Agregado al carrito!\n\n' + pasajeros + ' pasajero(s)\n' + camarote + '\n$' + total.toLocaleString());
 
-                const precios = { interior: 899, balcon: 1299, suite: 2499 };
-                const precioBase = precios[camarote] || 899;
-
-                carrito.agregar({
-                    id: 'crucero_' + Date.now(),
-                    nombre: 'Crucero Oasis of the Seas - ' + camarote,
-                    precio: precioBase,
-                    tipo: 'crucero',
-                    cantidad: pasajeros
-                });
-
-                console.log('✅ Agregado al carrito');
-            });
-        }
-
-        // Ejecutar cuando el DOM esté listo
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', vincularBoton);
-        } else {
-            vincularBoton();
+            console.log('✅ Producto agregado:', producto);
         }
     </script>
 </body>

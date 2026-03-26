@@ -102,6 +102,16 @@
 - ✅ Todos los endpoints apuntan a: `https://luchris-travels-backend.onrender.com/api`
 - ✅ Cambios subidos a GitHub y redesplegados en Vercel automáticamente
 
+**Opción de Compra Dual (PASO 2.8 Continuación):**
+- ✅ Agregados botones "Login" y "Registrarse" a navbar de index.html
+- ✅ Actualizado checkout.html con selector de compra:
+  - Opción 1: "Comprar como Invitado" (sin registro)
+  - Opción 2: "Tengo Cuenta" (usuario registrado)
+- ✅ Actualizado modelo Reserva: campo `usuario` opcional + nuevo campo `datosInvitado`
+- ✅ Actualizado ruta POST /api/reservas para aceptar invitados (nombre, email, teléfono)
+- ✅ Validaciones en backend para asegurar datos completos
+- ✅ Navbar dinámico que muestra usuario si está logueado, sino muestra botones Login/Registrarse
+
 ---
 
 ## 📊 INFORMACIÓN DEL PROYECTO

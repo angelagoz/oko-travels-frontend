@@ -444,8 +444,13 @@
         function agregarAlCarrito() {
             console.log('🔘 Botón clickeado');
 
-            const selectCamarote = document.querySelector('.form-reserva select:nth-of-type(2)');
+            // Buscar los selects por su posición
+            const selects = document.querySelectorAll('.form-reserva select');
+            const selectCamarote = selects[1] || null; // El segundo select (camarote)
             const inputPasajeros = document.querySelector('.form-reserva input[type="number"]');
+
+            console.log('Camarote select:', selectCamarote);
+            console.log('Pasajeros input:', inputPasajeros);
 
             if (!selectCamarote || !inputPasajeros) {
                 alert('❌ Error: No se encontraron los campos del formulario');

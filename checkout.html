@@ -20,7 +20,8 @@
             <ul class="nav-menu">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="about.html">Sobre Nosotros</a></li>
-                <li><a href="#" class="carrito-btn">🛒 Carrito</a></li>
+                <li><a href="carrito.html" class="carrito-btn">🛒 Carrito</a></li>
+                <li id="nav-auth"></li>
             </ul>
         </div>
     </nav>
@@ -29,6 +30,27 @@
     <section class="checkout-section">
         <div class="container">
             <h2>Finalizar Compra</h2>
+
+            <!-- OPCION DE COMPRA -->
+            <div class="checkout-opcion" id="opcion-compra">
+                <h3>¿Cómo deseas continuar?</h3>
+                <div class="opciones-compra">
+                    <button class="opcion-btn activa" data-opcion="invitado">
+                        <span class="opcion-icon">👤</span>
+                        <span class="opcion-texto">
+                            <strong>Comprar como Invitado</strong>
+                            <p>Rápido y seguro, sin necesidad de crear cuenta</p>
+                        </span>
+                    </button>
+                    <button class="opcion-btn" data-opcion="usuario">
+                        <span class="opcion-icon">🔓</span>
+                        <span class="opcion-texto">
+                            <strong>Tengo Cuenta</strong>
+                            <p>Inicia sesión para acceder a tus reservas</p>
+                        </span>
+                    </button>
+                </div>
+            </div>
 
             <div class="checkout-grid">
                 <!-- RESUMEN DE PEDIDO -->
@@ -118,6 +140,67 @@
         .checkout-section {
             padding: 40px 0;
             background-color: #f8f9fa;
+        }
+
+        .checkout-opcion {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout-opcion h3 {
+            color: #003366;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+        }
+
+        .opciones-compra {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .opcion-btn {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .opcion-btn:hover {
+            border-color: #003366;
+            background-color: #f0f5ff;
+        }
+
+        .opcion-btn.activa {
+            border-color: #E63946;
+            background-color: #fff5f5;
+        }
+
+        .opcion-icon {
+            font-size: 2.5rem;
+            min-width: 60px;
+        }
+
+        .opcion-texto strong {
+            color: #003366;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .opcion-texto p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin: 0;
         }
 
         .checkout-grid {
@@ -299,7 +382,26 @@
     </style>
 
     <script src="config.js"></script>
+    <script src="auth.js"></script>
     <script>
+        // Manejar opciones de compra
+        document.querySelectorAll('.opcion-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const opcion = e.currentTarget.dataset.opcion;
+
+                document.querySelectorAll('.opcion-btn').forEach(b => b.classList.remove('activa'));
+                e.currentTarget.classList.add('activa');
+
+                if (opcion === 'usuario') {
+                    // Verificar si está autenticado
+                    if (!auth.estaAutenticado()) {
+                        alert('Por favor inicia sesión primero');
+                        window.location.href = 'login.html?redirect=checkout.html';
+                    }
+                }
+            });
+        });
+
         // Inicializar Stripe
         const stripe = Stripe('PUBLICABLE_KEY_AQUI'); // Reemplazar con tu clave
         const elements = stripe.elements();
@@ -374,8 +476,18 @@
             }
         }
 
-        // Cargar resumen (ejemplo)
+        // Actualizar navbar con estado de autenticación
         document.addEventListener('DOMContentLoaded', () => {
+            const auth = new SistemaAutenticacion();
+            const navAuth = document.getElementById('nav-auth');
+
+            if (auth.estaAutenticado()) {
+                const usuario = JSON.parse(localStorage.getItem('usuario'));
+                navAuth.innerHTML = `<a href="perfil.html" class="btn-perfil">👤 ${usuario.nombre}</a> | <a href="#" class="btn-logout" onclick="auth.logout(); return false;">Salir</a>`;
+            } else {
+                navAuth.innerHTML = `<a href="login.html" class="btn-login">🔓 Login</a> | <a href="registro.html" class="btn-registro">📝 Registrarse</a>`;
+            }
+
             // Aquí se cargarían los items del carrito
             document.getElementById('total-precio').textContent = '$1,200.00';
         });

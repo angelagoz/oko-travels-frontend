@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Pago Exitoso! - LUCHRIS TRAVELS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAVEGACION -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <h1>LUCHRIS TRAVELS</h1>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="about.html">Sobre Nosotros</a></li>
+                <li><a href="carrito.html">🛒 Carrito</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MENSAJE DE EXITO -->
+    <section class="exito-section">
+        <div class="container">
+            <div class="exito-card">
+                <div class="exito-icon">✅</div>
+                <h2>¡Pago Realizado Exitosamente!</h2>
+                <p class="exito-mensaje">Tu reserva ha sido confirmada y procesada.</p>
+
+                <div class="exito-detalles">
+                    <div class="detalle-item">
+                        <h4>Número de Transacción</h4>
+                        <p id="numero-transaccion" class="codigo">Generando...</p>
+                    </div>
+                    <div class="detalle-item">
+                        <h4>Estado</h4>
+                        <p><span class="badge-success">✅ Confirmado</span></p>
+                    </div>
+                    <div class="detalle-item">
+                        <h4>Email de Confirmación</h4>
+                        <p>Se ha enviado un email con todos los detalles de tu viaje.</p>
+                    </div>
+                </div>
+
+                <div class="proximos-pasos">
+                    <h3>Próximos Pasos</h3>
+                    <ol>
+                        <li>Revisa tu email (incluyendo spam) para el comprobante</li>
+                        <li>Descarga tu e-ticket y documentos de viaje</li>
+                        <li>Asegúrate de tener documentos de identidad válidos</li>
+                        <li>Llega con tiempo suficiente al punto de embarque</li>
+                        <li>¡Disfruta tu aventura de viaje!</li>
+                    </ol>
+                </div>
+
+                <div class="acciones">
+                    <a href="index.html" class="btn-primary">← Volver al Inicio</a>
+                    <a href="carrito.html" class="btn-secondary">🛒 Ver Carrito</a>
+                </div>
+
+                <div class="contacto-info">
+                    <h4>¿Necesitas Ayuda?</h4>
+                    <p>Si tienes alguna pregunta sobre tu reserva, contacta con nosotros:</p>
+                    <p>📞 (829) 550-2847 | 📧 luchristravels@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>LUCHRIS TRAVELS</h4>
+                    <p>Tu compañero de confianza en aventuras de viaje.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p>📞 (829) 550-2847</p>
+                    <p>📧 luchristravels@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 LUCHRIS TRAVELS. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .exito-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+        }
+
+        .exito-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .exito-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .exito-card h2 {
+            color: #003366;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .exito-mensaje {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+        }
+
+        .exito-detalles {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: grid;
+            gap: 20px;
+        }
+
+        .detalle-item h4 {
+            color: #003366;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detalle-item p {
+            color: #6c757d;
+            margin: 0;
+        }
+
+        .codigo {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #E63946;
+            font-weight: 700;
+        }
+
+        .badge-success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .proximos-pasos {
+            text-align: left;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .proximos-pasos h3 {
+            color: #003366;
+            margin-bottom: 15px;
+        }
+
+        .proximos-pasos ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .proximos-pasos li {
+            color: #6c757d;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .acciones a {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: #003366;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #001f42;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #003366;
+            border: 2px solid #003366;
+        }
+
+        .btn-secondary:hover {
+            background-color: #003366;
+            color: white;
+        }
+
+        .contacto-info {
+            padding-top: 25px;
+            border-top: 2px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .contacto-info h4 {
+            color: #003366;
+            margin-bottom: 10px;
+        }
+
+        .contacto-info p {
+            color: #6c757d;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .exito-card {
+                padding: 30px;
+            }
+
+            .exito-icon {
+                font-size: 3rem;
+            }
+
+            .exito-card h2 {
+                font-size: 1.5rem;
+            }
+
+            .acciones {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script>
+        // Obtener número de transacción de URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const transaccion = urlParams.get('transaccion') || 'TXN-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        document.getElementById('numero-transaccion').textContent = transaccion;
+
+        // Limpiar carrito
+        localStorage.removeItem('carrito_luchris');
+        sessionStorage.removeItem('carrito_checkout');
+    </script>
+</body>
+</html>

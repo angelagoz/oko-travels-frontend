@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - LUCHRIS TRAVELS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAVEGACION -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <h1>LUCHRIS TRAVELS</h1>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="about.html">Sobre Nosotros</a></li>
+                <li><a href="carrito.html">🛒 Carrito</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- LOGIN -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2>Iniciar Sesión</h2>
+                <p class="auth-subtitle">Accede a tu cuenta LUCHRIS TRAVELS</p>
+
+                <form id="form-login" class="auth-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" required>
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="recordar" name="recordar">
+                        <label for="recordar">Recuérdame</label>
+                    </div>
+
+                    <button type="submit" class="btn-auth">🔓 Iniciar Sesión</button>
+
+                    <div id="mensaje-error" class="error-message" style="display: none;"></div>
+                </form>
+
+                <div class="auth-footer">
+                    <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
+                    <p><a href="#" class="link-secondary">¿Olvidaste tu contraseña?</a></p>
+                </div>
+            </div>
+
+            <!-- BENEFICIOS -->
+            <div class="beneficios-login">
+                <h3>Beneficios de Registrarse</h3>
+                <ul>
+                    <li>✅ Acceso a ofertas exclusivas</li>
+                    <li>✅ Historial de reservas</li>
+                    <li>✅ Puntos de recompensa</li>
+                    <li>✅ Soporte prioritario</li>
+                    <li>✅ Descuentos especiales</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>LUCHRIS TRAVELS</h4>
+                    <p>Tu compañero de confianza en aventuras de viaje.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p>📞 (829) 550-2847</p>
+                    <p>📧 luchristravels@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 LUCHRIS TRAVELS. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .auth-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #003366 0%, #2E8B9E 100%);
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .auth-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-card h2 {
+            color: #003366;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .auth-subtitle {
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #003366;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #003366;
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+        }
+
+        .form-group.checkbox {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .form-group.checkbox input {
+            width: auto;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .form-group.checkbox label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .btn-auth {
+            padding: 14px;
+            background-color: #E63946;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-auth:hover {
+            background-color: #d62828;
+            transform: translateY(-2px);
+        }
+
+        .btn-auth:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #f5c6cb;
+            margin-top: 15px;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .auth-footer p {
+            color: #6c757d;
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .auth-footer a {
+            color: #E63946;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .link-secondary {
+            color: #003366 !important;
+        }
+
+        .beneficios-login {
+            color: white;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .beneficios-login h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .beneficios-login ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .beneficios-login li {
+            padding: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .beneficios-login {
+                display: none;
+            }
+
+            .auth-card {
+                padding: 25px;
+            }
+
+            .auth-card h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+
+    <script src="auth.js"></script>
+    <script>
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const contrasena = document.getElementById('contrasena').value;
+            const recordar = document.getElementById('recordar').checked;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/usuarios/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        contrasena
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Guardar token
+                    localStorage.setItem('token_luchris', data.token);
+                    localStorage.setItem('usuario_luchris', JSON.stringify(data.usuario));
+
+                    if (recordar) {
+                        localStorage.setItem('recordar_usuario', email);
+                    }
+
+                    // Redirigir a perfil
+                    window.location.href = 'perfil.html';
+                } else {
+                    mostrarError(data.error || 'Email o contraseña incorrectos');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarError('Error de conexión. Intenta de nuevo.');
+            }
+        });
+
+        function mostrarError(mensaje) {
+            const errorDiv = document.getElementById('mensaje-error');
+            errorDiv.textContent = mensaje;
+            errorDiv.style.display = 'block';
+        }
+
+        // Cargar email si estaba guardado
+        window.addEventListener('load', () => {
+            const emailGuardado = localStorage.getItem('recordar_usuario');
+            if (emailGuardado) {
+                document.getElementById('email').value = emailGuardado;
+                document.getElementById('recordar').checked = true;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - LUCHRIS TRAVELS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAVEGACION -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <h1>LUCHRIS TRAVELS</h1>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="about.html">Sobre Nosotros</a></li>
+                <li><a href="carrito.html">🛒 Carrito</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- PERFIL -->
+    <section class="perfil-section">
+        <div class="container">
+            <h2>Mi Perfil</h2>
+
+            <div class="perfil-grid">
+                <!-- INFORMACION DEL USUARIO -->
+                <div class="perfil-card">
+                    <h3>📋 Información Personal</h3>
+                    <div class="perfil-info">
+                        <div class="info-item">
+                            <label>Nombre Completo</label>
+                            <p id="perfil-nombre">-</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Email</label>
+                            <p id="perfil-email">-</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Teléfono</label>
+                            <p id="perfil-telefono">-</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Cédula</label>
+                            <p id="perfil-cedula">-</p>
+                        </div>
+                    </div>
+                    <button class="btn-editar" onclick="abrirEdicion()">✏️ Editar Información</button>
+                </div>
+
+                <!-- HISTORIAL DE RESERVAS -->
+                <div class="perfil-card">
+                    <h3>🎫 Mis Reservas</h3>
+                    <div id="reservas-contenedor">
+                        <p class="loading">Cargando reservas...</p>
+                    </div>
+                </div>
+
+                <!-- ACCIONES -->
+                <div class="perfil-card perfil-actions">
+                    <h3>⚙️ Acciones</h3>
+                    <button class="btn-action" onclick="cambiarContrasena()">🔐 Cambiar Contraseña</button>
+                    <button class="btn-action" onclick="descargarFacturas()">📥 Descargar Facturas</button>
+                    <button class="btn-action btn-danger" onclick="eliminarCuenta()">🗑️ Eliminar Cuenta</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>LUCHRIS TRAVELS</h4>
+                    <p>Tu compañero de confianza en aventuras de viaje.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p>📞 (829) 550-2847</p>
+                    <p>📧 luchristravels@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 LUCHRIS TRAVELS. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .perfil-section {
+            padding: 40px 0;
+            background-color: #f8f9fa;
+            min-height: calc(100vh - 200px);
+        }
+
+        .perfil-section h2 {
+            color: #003366;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .perfil-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .perfil-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .perfil-card h3 {
+            color: #003366;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .perfil-info {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #E63946;
+        }
+
+        .info-item label {
+            color: #003366;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-item p {
+            color: #6c757d;
+            margin: 0;
+        }
+
+        .btn-editar {
+            width: 100%;
+            padding: 12px;
+            background-color: #2E8B9E;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-editar:hover {
+            background-color: #1f6d7f;
+        }
+
+        .perfil-actions {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            align-content: start;
+        }
+
+        .perfil-actions h3 {
+            grid-column: 1 / -1;
+        }
+
+        .btn-action {
+            padding: 12px;
+            background-color: #f0f0f0;
+            color: #003366;
+            border: 2px solid #003366;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background-color: #003366;
+            color: white;
+        }
+
+        .btn-action.btn-danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .btn-action.btn-danger:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            color: #6c757d;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .perfil-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .perfil-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .perfil-actions h3 {
+                grid-column: 1;
+            }
+        }
+    </style>
+
+    <script src="auth.js"></script>
+    <script>
+        // Verificar autenticación
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!autenticacion.estaAutenticado()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Cargar información del usuario
+            const usuario = autenticacion.obtenerUsuario();
+            document.getElementById('perfil-nombre').textContent = `${usuario.nombre} ${usuario.apellido}`;
+            document.getElementById('perfil-email').textContent = usuario.email;
+            document.getElementById('perfil-telefono').textContent = usuario.telefono || '-';
+            document.getElementById('perfil-cedula').textContent = usuario.cedula || '-';
+
+            // Cargar reservas (ejemplo)
+            cargarReservas();
+        });
+
+        async function cargarReservas() {
+            const container = document.getElementById('reservas-contenedor');
+
+            try {
+                const usuario = autenticacion.obtenerUsuario();
+                const response = await fetch(`http://localhost:5000/api/reservas/usuario/${usuario.id}`, {
+                    headers: autenticacion.obtenerHeaders()
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.datos.length > 0) {
+                    container.innerHTML = data.datos.map(reserva => `
+                        <div class="reserva-item">
+                            <h4>${reserva.crucero?.nombre || 'Reserva'}</h4>
+                            <p>Estado: <span class="badge">${reserva.estado}</span></p>
+                            <p>Total: $${reserva.precioTotal}</p>
+                            <p>Fecha: ${new Date(reserva.fechaSalida).toLocaleDateString()}</p>
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = '<p class="loading">No tienes reservas aún</p>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                container.innerHTML = '<p class="loading">Error al cargar reservas</p>';
+            }
+        }
+
+        function abrirEdicion() {
+            alert('Funcionalidad de edición próximamente');
+        }
+
+        function cambiarContrasena() {
+            alert('Funcionalidad de cambio de contraseña próximamente');
+        }
+
+        function descargarFacturas() {
+            alert('Funcionalidad de descargar facturas próximamente');
+        }
+
+        function eliminarCuenta() {
+            if (confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')) {
+                alert('Funcionalidad de eliminar cuenta próximamente');
+            }
+        }
+    </script>
+</body>
+</html>

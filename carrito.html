@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito - LUCHRIS TRAVELS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAVEGACION -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <h1>LUCHRIS TRAVELS</h1>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="about.html">Sobre Nosotros</a></li>
+                <li><a href="carrito.html" class="active">🛒 Carrito</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CARRITO -->
+    <section class="carrito-section">
+        <div class="container">
+            <h2>Mi Carrito de Compras</h2>
+
+            <div class="carrito-grid">
+                <!-- ITEMS DEL CARRITO -->
+                <div class="carrito-items">
+                    <div id="items-container">
+                        <p class="carrito-vacio">Tu carrito está vacío</p>
+                    </div>
+                </div>
+
+                <!-- RESUMEN Y CHECKOUT -->
+                <div class="carrito-resumen">
+                    <div class="resumen-box">
+                        <h3>Resumen</h3>
+
+                        <div class="resumen-detalle">
+                            <div class="resumen-fila">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="resumen-fila">
+                                <span>Impuestos (10%):</span>
+                                <span id="impuestos">$0.00</span>
+                            </div>
+                            <div class="resumen-fila">
+                                <span>Envío:</span>
+                                <span id="envio">Gratis</span>
+                            </div>
+                        </div>
+
+                        <div class="resumen-total">
+                            <span>Total:</span>
+                            <span id="total">$0.00</span>
+                        </div>
+
+                        <button id="btn-checkout" class="btn-checkout" disabled>
+                            💳 Ir a Pagar
+                        </button>
+                        <a href="index.html" class="btn-continuar-comprando">
+                            ← Continuar Comprando
+                        </a>
+                    </div>
+
+                    <!-- INFO DE ENVIO -->
+                    <div class="info-box">
+                        <h4>📍 Información de Envío</h4>
+                        <p>Los viajes se procesan automáticamente después del pago.</p>
+                        <p>Recibirás un email de confirmación con todos los detalles.</p>
+                    </div>
+
+                    <!-- SEGURIDAD -->
+                    <div class="seguridad-box">
+                        <h4>🔒 Seguridad</h4>
+                        <p>Tus datos están protegidos con encriptación SSL.</p>
+                        <p>Los pagos se procesan con Stripe, el líder en seguridad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>LUCHRIS TRAVELS</h4>
+                    <p>Tu compañero de confianza en aventuras de viaje.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p>📞 (829) 550-2847</p>
+                    <p>📧 luchristravels@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 LUCHRIS TRAVELS. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .carrito-section {
+            padding: 40px 0;
+            background-color: #f8f9fa;
+            min-height: calc(100vh - 200px);
+        }
+
+        .carrito-section h2 {
+            color: #003366;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .carrito-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .carrito-items {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .carrito-vacio {
+            text-align: center;
+            color: #6c757d;
+            padding: 40px;
+            font-size: 1.1rem;
+        }
+
+        .item-carrito {
+            display: grid;
+            grid-template-columns: 120px 1fr 100px 80px;
+            gap: 20px;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .item-carrito:last-child {
+            border-bottom: none;
+        }
+
+        .item-imagen {
+            width: 120px;
+            height: 120px;
+            background-color: #f0f0f0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .item-info h4 {
+            color: #003366;
+            margin-bottom: 8px;
+        }
+
+        .item-info p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .item-precio {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #E63946;
+        }
+
+        .item-cantidad {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .item-cantidad button {
+            background-color: #f0f0f0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .item-cantidad button:hover {
+            background-color: #003366;
+            color: white;
+        }
+
+        .item-cantidad input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        .btn-eliminar-item {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-eliminar-item:hover {
+            background-color: #c82333;
+        }
+
+        .carrito-resumen {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .resumen-box, .info-box, .seguridad-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .resumen-box h3 {
+            color: #003366;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .info-box h4, .seguridad-box h4 {
+            color: #003366;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .info-box p, .seguridad-box p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .resumen-detalle {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .resumen-fila {
+            display: flex;
+            justify-content: space-between;
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+
+        .resumen-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .resumen-total span:last-child {
+            color: #E63946;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 15px;
+            background-color: #E63946;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .btn-checkout:hover:not(:disabled) {
+            background-color: #d62828;
+            transform: translateY(-2px);
+        }
+
+        .btn-checkout:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-continuar-comprando {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            background-color: #f0f0f0;
+            color: #003366;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continuar-comprando:hover {
+            background-color: #003366;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .carrito-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .item-carrito {
+                grid-template-columns: 80px 1fr;
+                gap: 15px;
+            }
+
+            .item-cantidad, .btn-eliminar-item {
+                grid-column: 2;
+                justify-self: start;
+            }
+        }
+    </style>
+
+    <script src="carrito-app.js"></script>
+</body>
+</html>

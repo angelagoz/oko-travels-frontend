@@ -1,0 +1,1395 @@
+/* ========================================
+   LUCHRIS TRAVELS - ESTILOS GLOBALES
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #003366;        /* Azul Marino */
+    --color-secondary: #E63946;      /* Rojo */
+    --color-accent-blue: #2E8B9E;    /* Azul Celeste */
+    --color-accent-green: #2D6A4F;   /* Verde */
+    --color-accent-gold: #F5A623;    /* Dorado */
+    --color-light: #F8F9FA;
+    --color-white: #FFFFFF;
+    --color-dark: #1A1A1A;
+    --color-gray: #6C757D;
+    --color-border: #E0E0E0;
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --transition: 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    color: var(--color-dark);
+    background-color: var(--color-white);
+}
+
+/* ========================================
+   TIPOGRAFIA
+   ======================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-primary);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; margin-bottom: 1rem; }
+h3 { font-size: 1.75rem; margin-bottom: 1rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.1rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: var(--color-dark);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--color-secondary);
+}
+
+/* ========================================
+   CONTENEDOR
+   ======================================== */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ========================================
+   NAVBAR / NAVEGACION
+   ======================================== */
+
+.navbar {
+    background-color: var(--color-white);
+    box-shadow: 0 2px 10px rgba(0, 51, 102, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-menu a {
+    font-weight: 500;
+    color: var(--color-dark);
+    transition: color var(--transition);
+    position: relative;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-secondary);
+    transition: width var(--transition);
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+.carrito-btn {
+    background-color: var(--color-accent-blue);
+    color: var(--color-white);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.carrito-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+
+.hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-blue) 100%);
+    color: var(--color-white);
+    padding: 120px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    color: var(--color-white);
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+}
+
+.hero-about {
+    padding: 80px 20px;
+}
+
+.hero-about h2 {
+    font-size: 2.5rem;
+}
+
+/* ========================================
+   BOTONES
+   ======================================== */
+
+.btn-primary, .btn-secondary, .btn-camarote, .btn-contacto {
+    display: inline-block;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    font-size: 1rem;
+}
+
+.btn-primary:hover {
+    background-color: #d62828;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--color-accent-blue);
+    color: var(--color-white);
+    font-size: 0.95rem;
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.btn-full {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+}
+
+.btn-camarote {
+    width: 100%;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 10px;
+    margin-top: 1rem;
+}
+
+.btn-camarote:hover {
+    background-color: var(--color-secondary);
+}
+
+.btn-contacto {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 15px 25px;
+    margin: 0 10px;
+    font-size: 1rem;
+}
+
+.btn-contacto:hover {
+    background-color: var(--color-secondary);
+}
+
+/* ========================================
+   SECCION PRODUCTOS/GRID
+   ======================================== */
+
+.productos {
+    padding: 80px 20px;
+    background-color: var(--color-white);
+}
+
+.productos-alt {
+    background-color: var(--color-light);
+}
+
+.productos h3 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+}
+
+.seccion-desc {
+    text-align: center;
+    color: var(--color-gray);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.producto-card {
+    background: var(--color-white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all var(--transition);
+    position: relative;
+}
+
+.producto-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 51, 102, 0.2);
+}
+
+.producto-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.producto-card h4, .producto-card h5 {
+    color: var(--color-primary);
+    margin: 1rem;
+}
+
+.producto-card p {
+    margin: 0.5rem 1rem;
+    color: var(--color-dark);
+}
+
+.naviera, .destino, .puesto, .caracteristicas {
+    color: var(--color-accent-blue);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.precio, .precio-camarote {
+    color: var(--color-secondary);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 1rem;
+}
+
+.producto-card button {
+    width: calc(100% - 2rem);
+    margin: 0 1rem 1rem 1rem;
+}
+
+/* ========================================
+   BADGES
+   ======================================== */
+
+.badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.badge-rd {
+    background-color: var(--color-accent-green);
+    color: var(--color-white);
+}
+
+.badge-miami {
+    background-color: var(--color-accent-gold);
+    color: var(--color-dark);
+}
+
+.badge-popular {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+}
+
+/* ========================================
+   SECCION QUIENES SOMOS
+   ======================================== */
+
+.quienes-somos {
+    padding: 80px 20px;
+    background-color: var(--color-white);
+}
+
+.seccion-contenido {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.seccion-texto h3 {
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+}
+
+.seccion-texto p {
+    color: var(--color-dark);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.seccion-imagen img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   NUMEROS DESTACADOS
+   ======================================== */
+
+.numeros-destacados {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-blue) 100%);
+    color: var(--color-white);
+    padding: 60px 20px;
+}
+
+.numeros-destacados h3 {
+    text-align: center;
+    color: var(--color-white);
+    margin-bottom: 3rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-card h4 {
+    font-size: 2.5rem;
+    color: var(--color-accent-gold);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+/* ========================================
+   EQUIPO
+   ======================================== */
+
+.nuestro-equipo {
+    padding: 80px 20px;
+    background-color: var(--color-light);
+}
+
+.nuestro-equipo h3 {
+    text-align: center;
+    color: var(--color-primary);
+}
+
+.equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.miembro-card {
+    background: var(--color-white);
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all var(--transition);
+}
+
+.miembro-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 51, 102, 0.2);
+}
+
+.miembro-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.miembro-card h4 {
+    margin-top: 1rem;
+    color: var(--color-primary);
+}
+
+.miembro-card .puesto {
+    color: var(--color-secondary);
+    font-weight: 600;
+}
+
+.miembro-card p {
+    margin: 0.5rem 1rem;
+    font-size: 0.95rem;
+}
+
+/* ========================================
+   BENEFICIOS
+   ======================================== */
+
+.por-que-elegirnos {
+    padding: 80px 20px;
+    background-color: var(--color-white);
+}
+
+.por-que-elegirnos h3 {
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 3rem;
+}
+
+.beneficios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.beneficio-card {
+    background: linear-gradient(135deg, rgba(46, 139, 158, 0.1) 0%, rgba(245, 166, 35, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-secondary);
+}
+
+.beneficio-card h4 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.beneficio-card p {
+    color: var(--color-dark);
+    margin: 0;
+}
+
+/* ========================================
+   TESTIMONIOS
+   ======================================== */
+
+.testimonios {
+    padding: 80px 20px;
+    background-color: var(--color-light);
+}
+
+.testimonios h3 {
+    text-align: center;
+    color: var(--color-primary);
+}
+
+.testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.testimonio-card {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--color-secondary);
+}
+
+.stars {
+    color: var(--color-accent-gold);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.testimonio-card .texto {
+    font-style: italic;
+    color: var(--color-dark);
+    margin-bottom: 1rem;
+}
+
+.testimonio-card .autor {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+/* ========================================
+   DETALLE DE CRUCERO
+   ======================================== */
+
+.breadcrumb {
+    background-color: var(--color-light);
+    padding: 1rem 20px;
+    font-size: 0.95rem;
+    color: var(--color-gray);
+}
+
+.cruise-detail {
+    padding: 60px 20px;
+}
+
+.cruise-detail .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.cruise-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.main-image img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnail-images {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--transition);
+}
+
+.thumbnail:hover {
+    opacity: 1;
+}
+
+.cruise-info h2 {
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.cruise-info .naviera {
+    color: var(--color-secondary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.rating {
+    margin-bottom: 2rem;
+}
+
+.rating .stars {
+    color: var(--color-accent-gold);
+    font-size: 1.3rem;
+}
+
+.quick-info {
+    background-color: var(--color-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    margin-bottom: 0.8rem;
+    color: var(--color-dark);
+}
+
+/* ========================================
+   ITINERARIO
+   ======================================== */
+
+.itinerario {
+    padding: 60px 20px;
+    background-color: var(--color-light);
+}
+
+.itinerario h3 {
+    color: var(--color-primary);
+    margin-bottom: 2rem;
+}
+
+.itinerario-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.itinerario-item {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+    background-color: var(--color-white);
+    border-radius: 8px;
+    border-left: 4px solid var(--color-secondary);
+}
+
+.dia-numero {
+    font-weight: 700;
+    color: var(--color-secondary);
+    font-size: 1.2rem;
+}
+
+.puerto-info strong {
+    color: var(--color-primary);
+}
+
+/* ========================================
+   SERVICIOS A BORDO
+   ======================================== */
+
+.servicios-bordo {
+    padding: 60px 20px;
+    background-color: var(--color-white);
+}
+
+.servicios-bordo h3 {
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 3rem;
+}
+
+.servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.servicio-item {
+    background: linear-gradient(135deg, rgba(46, 139, 158, 0.08) 0%, rgba(245, 166, 35, 0.08) 100%);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.servicio-item h4 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+/* ========================================
+   CAMAROTES
+   ======================================== */
+
+.camarotes {
+    padding: 60px 20px;
+    background-color: var(--color-light);
+}
+
+.camarotes h3 {
+    color: var(--color-primary);
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.camarotes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.camarote-card {
+    background: var(--color-white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all var(--transition);
+    position: relative;
+}
+
+.camarote-card.destacado {
+    border: 3px solid var(--color-secondary);
+    transform: scale(1.05);
+}
+
+.camarote-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 51, 102, 0.2);
+}
+
+.camarote-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.camarote-card h4 {
+    margin: 1rem;
+    color: var(--color-primary);
+}
+
+.camarote-card .descripcion {
+    margin: 0.5rem 1rem;
+    color: var(--color-gray);
+    font-size: 0.95rem;
+}
+
+.camarote-card .caracteristicas {
+    margin: 1rem;
+    list-style: none;
+    color: var(--color-dark);
+}
+
+.camarote-card .caracteristicas li {
+    margin: 0.5rem 0;
+    color: var(--color-accent-green);
+    font-weight: 500;
+}
+
+.precio-camarote {
+    display: block;
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--color-secondary);
+    margin: 1rem;
+}
+
+/* ========================================
+   FECHAS Y TABLA
+   ======================================== */
+
+.fechas-salida {
+    padding: 60px 20px;
+    background-color: var(--color-white);
+}
+
+.fechas-salida h3 {
+    color: var(--color-primary);
+    margin-bottom: 2rem;
+}
+
+.fechas-table {
+    overflow-x: auto;
+}
+
+.fechas-table table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.fechas-table th {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.fechas-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.fechas-table tr:hover {
+    background-color: var(--color-light);
+}
+
+.disponible {
+    background-color: #28a745;
+    color: var(--color-white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.casi-lleno {
+    background-color: #ffc107;
+    color: var(--color-dark);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* ========================================
+   CARRITO RESERVA
+   ======================================== */
+
+.carrito-reserva {
+    padding: 60px 20px;
+    background-color: var(--color-light);
+}
+
+.reserva-box {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--color-secondary);
+}
+
+.reserva-box h3 {
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: var(--font-primary);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.precio-total {
+    background-color: var(--color-light);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--color-secondary);
+}
+
+.info-adicional {
+    background: linear-gradient(135deg, rgba(46, 139, 158, 0.1) 0%, rgba(245, 166, 35, 0.1) 100%);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+}
+
+/* ========================================
+   POLITICAS
+   ======================================== */
+
+.politicas {
+    padding: 60px 20px;
+    background-color: var(--color-white);
+}
+
+.politicas h3 {
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 3rem;
+}
+
+.politicas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.politica-item {
+    padding: 1.5rem;
+    background-color: var(--color-light);
+    border-radius: 8px;
+    border-left: 4px solid var(--color-secondary);
+}
+
+.politica-item h4 {
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+/* ========================================
+   ASESORAMIENTO
+   ======================================== */
+
+.asesoramiento {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-blue) 100%);
+    color: var(--color-white);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.asesoramiento h3 {
+    color: var(--color-white);
+    margin-bottom: 1rem;
+}
+
+.asesoramiento p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+}
+
+.contacto-rapido {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ========================================
+   CONTACTO
+   ======================================== */
+
+.contacto {
+    padding: 60px 20px;
+    background-color: var(--color-light);
+}
+
+.contacto h3 {
+    color: var(--color-primary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.contacto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.contacto-info h4 {
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+}
+
+.contacto-info p {
+    margin-bottom: 0.8rem;
+    color: var(--color-dark);
+}
+
+.contacto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contacto-form input,
+.contacto-form textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+}
+
+.contacto-form input:focus,
+.contacto-form textarea:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.footer {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 60px 20px 0;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    color: var(--color-accent-gold);
+    margin-bottom: 1rem;
+}
+
+.footer-section p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color var(--transition);
+}
+
+.footer-section a:hover {
+    color: var(--color-accent-gold);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .seccion-contenido,
+    .cruise-detail .container,
+    .contacto-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .productos-grid,
+    .equipo-grid,
+    .beneficios-grid,
+    .testimonios-grid,
+    .camarotes-grid,
+    .servicios-grid,
+    .politicas-grid,
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .camarote-card.destacado {
+        transform: scale(1);
+    }
+
+    .itinerario-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .contacto-rapido {
+        flex-direction: column;
+    }
+
+    .btn-contacto {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.3rem; }
+
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .hero {
+        padding: 60px 20px;
+    }
+
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+    }
+
+    .contacto-grid,
+    .cruise-detail .container {
+        gap: 1.5rem;
+    }
+
+    .thumbnail-images {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; }
+    h3 { font-size: 1rem; }
+}
+
+/* ========================================
+   BARRA DE BUSQUEDA Y FILTROS
+   ======================================== */
+
+.search-section {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-blue) 100%);
+    padding: 40px 0;
+    margin-top: -30px;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.search-box {
+    background: var(--color-white);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* TABS DE PRODUCTOS */
+.search-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.search-tab {
+    background: none;
+    border: none;
+    padding: 15px 25px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-gray);
+    border-bottom: 3px solid transparent;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-tab:hover {
+    color: var(--color-primary);
+    background-color: var(--color-light);
+}
+
+.search-tab.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-secondary);
+}
+
+.tab-icon {
+    font-size: 1.2rem;
+}
+
+/* FORMULARIO DE BUSQUEDA */
+.search-form-container {
+    display: none;
+}
+
+.search-form-container.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.search-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-input {
+    padding: 12px;
+    border: 2px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: var(--font-primary);
+    transition: all var(--transition);
+    background-color: var(--color-white);
+    color: var(--color-dark);
+}
+
+.filter-input:hover {
+    border-color: var(--color-accent-blue);
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+}
+
+.btn-buscar {
+    padding: 12px 30px;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.btn-buscar:hover {
+    background-color: #d62828;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);
+}
+
+.btn-buscar:active {
+    transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .search-tabs {
+        gap: 5px;
+    }
+
+    .search-tab {
+        padding: 12px 15px;
+        font-size: 0.85rem;
+    }
+
+    .tab-icon {
+        font-size: 1rem;
+    }
+
+    .search-box {
+        padding: 20px;
+    }
+
+    .search-filters {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .btn-buscar {
+        width: 100%;
+    }
+}

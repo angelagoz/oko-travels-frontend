@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - LUCHRIS TRAVELS</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+    <!-- NAVEGACION -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <h1>LUCHRIS TRAVELS</h1>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="about.html">Sobre Nosotros</a></li>
+                <li><a href="#" class="carrito-btn">🛒 Carrito</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CHECKOUT -->
+    <section class="checkout-section">
+        <div class="container">
+            <h2>Finalizar Compra</h2>
+
+            <div class="checkout-grid">
+                <!-- RESUMEN DE PEDIDO -->
+                <div class="checkout-resumen">
+                    <h3>Resumen de tu Pedido</h3>
+                    <div id="resumen-items"></div>
+                    <div class="resumen-total">
+                        <h4>Total: <span id="total-precio">$0.00</span></h4>
+                    </div>
+                </div>
+
+                <!-- FORMULARIO DE PAGO -->
+                <div class="checkout-form">
+                    <h3>Detalles de Pago</h3>
+
+                    <form id="form-pago">
+                        <!-- DATOS PERSONALES -->
+                        <div class="form-section">
+                            <h4>Datos Personales</h4>
+                            <div class="form-group">
+                                <label for="nombre">Nombre Completo</label>
+                                <input type="text" id="nombre" name="nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefono">Teléfono</label>
+                                <input type="tel" id="telefono" name="telefono" required>
+                            </div>
+                        </div>
+
+                        <!-- DATOS DE PAGO -->
+                        <div class="form-section">
+                            <h4>Información de Pago</h4>
+                            <div class="form-group">
+                                <label for="card-element">Tarjeta de Crédito/Débito</label>
+                                <div id="card-element" class="stripe-element"></div>
+                                <div id="card-errors" role="alert"></div>
+                            </div>
+                        </div>
+
+                        <!-- TERMINOS -->
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="terminos" name="terminos" required>
+                            <label for="terminos">Acepto los términos y condiciones de LUCHRIS TRAVELS</label>
+                        </div>
+
+                        <!-- BOTONES -->
+                        <div class="checkout-acciones">
+                            <button type="submit" class="btn-pagar">💳 Pagar Ahora</button>
+                            <a href="index.html" class="btn-cancelar">Cancelar</a>
+                        </div>
+                    </form>
+
+                    <p class="seguridad-info">
+                        🔒 Tus datos de pago están protegidos por Stripe.
+                        LUCHRIS TRAVELS nunca verá tu información de tarjeta.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>LUCHRIS TRAVELS</h4>
+                    <p>Tu compañero de confianza en aventuras de viaje.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p>📞 (829) 550-2847</p>
+                    <p>📧 luchristravels@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 LUCHRIS TRAVELS. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .checkout-section {
+            padding: 40px 0;
+            background-color: #f8f9fa;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .checkout-resumen, .checkout-form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout-resumen h3, .checkout-form h3 {
+            color: #003366;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .form-section h4 {
+            color: #003366;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #003366;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #003366;
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+        }
+
+        .form-group.checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .form-group.checkbox input {
+            width: auto;
+            margin: 0;
+        }
+
+        .form-group.checkbox label {
+            margin: 0;
+        }
+
+        .stripe-element {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            background-color: white;
+        }
+
+        #card-errors {
+            color: #dc3545;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .resumen-total {
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            margin-top: 20px;
+        }
+
+        .resumen-total h4 {
+            color: #003366;
+            font-size: 1.3rem;
+            text-align: right;
+        }
+
+        #total-precio {
+            color: #E63946;
+            font-weight: 700;
+        }
+
+        .checkout-acciones {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-pagar, .btn-cancelar {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-pagar {
+            background-color: #E63946;
+            color: white;
+        }
+
+        .btn-pagar:hover {
+            background-color: #d62828;
+            transform: translateY(-2px);
+        }
+
+        .btn-pagar:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-cancelar {
+            background-color: #f0f0f0;
+            color: #003366;
+            border: 2px solid #003366;
+        }
+
+        .btn-cancelar:hover {
+            background-color: #003366;
+            color: white;
+        }
+
+        .seguridad-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-acciones {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script>
+        // Inicializar Stripe
+        const stripe = Stripe('PUBLICABLE_KEY_AQUI'); // Reemplazar con tu clave
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        // Manejo de errores de tarjeta
+        cardElement.on('change', (event) => {
+            const displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Manejar envío del formulario
+        document.getElementById('form-pago').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+            const telefono = document.getElementById('telefono').value;
+
+            // Crear token de pago
+            const { token, error } = await stripe.createToken(cardElement, {
+                name: nombre,
+                address_zip: document.getElementById('codigo-postal')?.value || ''
+            });
+
+            if (error) {
+                document.getElementById('card-errors').textContent = error.message;
+            } else {
+                // Enviar token al servidor
+                procesarPago(token, email);
+            }
+        });
+
+        async function procesarPago(token, email) {
+            const btnPagar = document.querySelector('.btn-pagar');
+            btnPagar.disabled = true;
+            btnPagar.textContent = 'Procesando...';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/pagos/pago-directo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        reservaId: 'RESERVA_ID_AQUI',
+                        token: token.id,
+                        monto: parseFloat(document.getElementById('total-precio').textContent.replace('$', ''))
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('¡Pago realizado exitosamente!');
+                    window.location.href = 'exito.html?transaccion=' + data.transaccionId;
+                } else {
+                    alert('Error: ' + data.error);
+                    btnPagar.disabled = false;
+                    btnPagar.textContent = '💳 Pagar Ahora';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al procesar el pago');
+                btnPagar.disabled = false;
+                btnPagar.textContent = '💳 Pagar Ahora';
+            }
+        }
+
+        // Cargar resumen (ejemplo)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Aquí se cargarían los items del carrito
+            document.getElementById('total-precio').textContent = '$1,200.00';
+        });
+    </script>
+</body>
+</html>

@@ -440,52 +440,59 @@
     <script src="script.js"></script>
 
     <script>
-        // VINCULAR BOTÓN "AGREGAR AL CARRITO" DIRECTAMENTE
-        document.addEventListener('DOMContentLoaded', function() {
+        // VINCULAR BOTÓN "AGREGAR AL CARRITO" - CON REINTENTOS
+        function vincularBoton() {
             const btnAgregar = document.querySelector('.form-reserva .btn-primary');
-            const selectFecha = document.querySelector('.form-reserva select:nth-of-type(1)');
             const selectCamarote = document.querySelector('.form-reserva select:nth-of-type(2)');
             const inputPasajeros = document.querySelector('.form-reserva input[type="number"]');
 
-            if (btnAgregar && selectCamarote && inputPasajeros) {
-                btnAgregar.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    const fecha = selectFecha ? selectFecha.value : '2026-04-15';
-                    const camarote = selectCamarote.value;
-                    const pasajeros = parseInt(inputPasajeros.value) || 1;
-
-                    if (!camarote) {
-                        alert('Por favor selecciona un tipo de camarote');
-                        return;
-                    }
-
-                    // Precios
-                    const preciosCamarote = {
-                        interior: 899,
-                        balcon: 1299,
-                        suite: 2499
-                    };
-
-                    const precioBase = preciosCamarote[camarote];
-                    const precioTotal = precioBase * pasajeros;
-
-                    // Agregar al carrito
-                    if (carrito) {
-                        carrito.agregar({
-                            id: 'crucero_' + Date.now(),
-                            nombre: 'Crucero Oasis of the Seas - ' + camarote,
-                            precio: precioBase,
-                            tipo: 'crucero',
-                            cantidad: pasajeros,
-                            descripcion: 'Crucero por el Caribe - ' + fecha
-                        });
-
-                        alert('✅ Añadido al carrito!\n\n' + pasajeros + ' pasajero(s)\n' + camarote + '\n$' + precioTotal.toLocaleString());
-                    }
-                });
+            if (!btnAgregar || !selectCamarote || !inputPasajeros) {
+                console.log('⏳ Esperando elementos del formulario...');
+                setTimeout(vincularBoton, 500);
+                return;
             }
-        });
+
+            if (typeof carrito === 'undefined') {
+                console.log('⏳ Esperando carrito global...');
+                setTimeout(vincularBoton, 500);
+                return;
+            }
+
+            console.log('✅ Vinculando botón "Agregar al Carrito"');
+
+            btnAgregar.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const camarote = selectCamarote.value;
+                const pasajeros = parseInt(inputPasajeros.value) || 1;
+
+                if (!camarote) {
+                    alert('Por favor selecciona un tipo de camarote');
+                    return;
+                }
+
+                const precios = { interior: 899, balcon: 1299, suite: 2499 };
+                const precioBase = precios[camarote] || 899;
+
+                carrito.agregar({
+                    id: 'crucero_' + Date.now(),
+                    nombre: 'Crucero Oasis of the Seas - ' + camarote,
+                    precio: precioBase,
+                    tipo: 'crucero',
+                    cantidad: pasajeros
+                });
+
+                console.log('✅ Agregado al carrito');
+            });
+        }
+
+        // Ejecutar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', vincularBoton);
+        } else {
+            vincularBoton();
+        }
     </script>
 </body>
 </html>

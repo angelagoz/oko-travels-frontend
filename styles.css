@@ -145,6 +145,32 @@ a:hover {
     color: var(--color-white);
 }
 
+.btn-login {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.btn-login:hover {
+    background-color: #c5092b;
+    color: var(--color-white);
+}
+
+.btn-registro {
+    background-color: var(--color-accent-blue);
+    color: var(--color-white);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.btn-registro:hover {
+    background-color: #1f6b7d;
+    color: var(--color-white);
+}
+
 /* ========================================
    HERO SECTION
    ======================================== */

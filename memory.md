@@ -254,14 +254,118 @@
 
 ---
 
+---
+
+## 🚀 SESIÓN 26/03/2026 - SISTEMA DE PRODUCTOS DINÁMICOS
+
+**Objetivo**: Implementar gestión dinámica de productos (Cruceros, Tours, Disney) con cargas desde API.
+
+### ✅ Completado Hoy:
+
+**1. Creación de Sistema de Productos (PASO 3.5):**
+- ✅ server/models/Producto.js - Mongoose schema polymórfico
+  - Soporta: crucero, tour, disney, boleto, seguro
+  - Campos: nombre, tipo, descripción, precio_base, fotos (array), videos, características, calificación, estado
+- ✅ server/routes/productos.js - 6 endpoints REST
+  - GET /productos (listar activos)
+  - GET /productos/tipo/:tipo (filtrar por tipo)
+  - GET /productos/:id (obtener individual)
+  - POST /productos (crear - admin)
+  - PUT /productos/:id (actualizar)
+  - DELETE /productos/:id (eliminar)
+
+**2. Admin Panel de Productos (PASO 3.6):**
+- ✅ admin-productos.html - Interfaz CRUD completa
+  - Grid de productos con hover effects
+  - Filtros por tipo (Todos, Cruceros, Tours, Disney)
+  - Modal para crear/editar productos
+  - Integración con Cloudinary upload widget
+  - Vista previa de imágenes
+  - Botones de acciones (editar, eliminar)
+
+**3. Integración Cloudinary (PASO 3.7):**
+- ✅ cloudinary-config.js - Configuración centralizada
+- ✅ FOTOS_CLOUDINARY.md - Guía completa (225 líneas)
+  - Instrucciones de registro
+  - Obtención de Cloud Name y Upload Preset
+  - Configuración del widget unsigned upload
+  - Seguridad (no compartir API Secret)
+
+**4. Actualización del Modelo de Producto:**
+- ✅ render.yaml creado (especifica rootDir: server)
+- ✅ .gitignore corregido (removido line "server/")
+- ✅ Git cleanup: `git rm --cached server` para eliminar submodule tracking
+
+**5. Página Dinámica (PASO 3.8):**
+- ✅ index-dynamic.html creado
+  - Cargas productos desde /api/productos/tipo/crucero, /tour, /disney
+  - Diseño responsivo
+  - Sliders dinámicos
+  - Integración con cotizaciones
+- ✅ Desplegado en GitHub Pages
+  - URL: https://angelagoz.github.io/luchris-travels-frontend/
+  - ✅ FUNCIONANDO EN VIVO
+
+**6. Fixes de Configuración:**
+- ✅ Vercel backend issue identificado: deploy fallido
+- ✅ Render configuración: problema con render.yaml
+- ✅ UptimeRobot configurado para mantener backend activo
+
+### ⏳ EN PROGRESO (Para Mañana):
+
+**Problema Identificado:**
+- ❌ Render apunta a repositorio `luchris-travels-backend` (incorrecto)
+- ❌ Debería apuntar a `luchris-travels-frontend` donde está TODO el código
+- ❌ Endpoints /api/productos retornan 404 porque Render no encuentra los archivos
+
+**SOLUCIÓN PARA MAÑANA:**
+1. Entrar a Render Dashboard
+2. Ir a Settings del servicio `luchris-travels-backend`
+3. Click "Edit" en Repository
+4. Cambiar URL a: `https://github.com/angelagoz/luchris-travels-frontend`
+5. Guardar y triggerear "Deploy latest commit"
+6. Esperar 2-3 minutos
+7. Verificar endpoint: https://luchris-travels-backend.onrender.com/api/productos/tipo/crucero
+8. Crear 2-3 productos de prueba en admin-productos.html
+9. Verificar que carguen dinámicamente en la página
+
+### 📊 Estado Actual:
+
+| Componente | Status | URL |
+|-----------|--------|-----|
+| Frontend | ✅ VIVO | https://angelagoz.github.io/luchris-travels-frontend/ |
+| Backend | ⚠️ Config incorrecta | https://luchris-travels-backend.onrender.com/api/health |
+| API Productos | ❌ 404 | /api/productos/tipo/crucero |
+| Admin Panel | ✅ Listo | /admin-productos.html |
+| Cloudinary | ⏳ Necesita config | Ver FOTOS_CLOUDINARY.md |
+
+### 📝 Archivos Creados/Modificados:
+
+**Nuevos:**
+- server/models/Producto.js
+- server/routes/productos.js
+- admin-productos.html (645 líneas)
+- cloudinary-config.js
+- index-dynamic.html
+- render.yaml
+- FOTOS_CLOUDINARY.md
+
+**Modificados:**
+- .gitignore (removido server/)
+- server/index.js (agregada ruta /api/productos)
+- script.js (agregada función cargarProductosDinamicos)
+- index.html → index-old.html (respaldo)
+
+---
+
 ## 🎯 PRÓXIMOS PASOS OPCIONALES
 
-Opciones para continuar:
+Opciones para continuar después de mañana:
 1. ✅ Sistema de email automático (COMPLETADO)
 2. ✅ Reportes y exportación de datos PDF (COMPLETADO)
-3. Integración WhatsApp Business API
-4. CRM integrado con historial de clientes
-5. Autenticación JWT mejorada en backend
+3. ✅ Sistema de productos dinámicos (EN PROGRESO - mañana)
+4. Integración WhatsApp Business API
+5. CRM integrado con historial de clientes
 6. Pagos online completos con Stripe
 7. Sistema de reservas completo
 8. Analytics avanzados con Machine Learning

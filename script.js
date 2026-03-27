@@ -423,10 +423,11 @@ async function solicitarCotizacion(event) {
 
 async function cargarProductosDinamicos() {
     try {
+        const baseURL = 'https://luchris-travels-backend.onrender.com/api';
         const [cruceros, tours, disney] = await Promise.all([
-            fetch(CONFIG.obtenerURL('/productos/tipo/crucero')).then(r => r.json()),
-            fetch(CONFIG.obtenerURL('/productos/tipo/tour')).then(r => r.json()),
-            fetch(CONFIG.obtenerURL('/productos/tipo/disney')).then(r => r.json())
+            fetch(baseURL + '/productos/tipo/crucero').then(r => r.json()),
+            fetch(baseURL + '/productos/tipo/tour').then(r => r.json()),
+            fetch(baseURL + '/productos/tipo/disney').then(r => r.json())
         ]);
 
         // Insertar Cruceros

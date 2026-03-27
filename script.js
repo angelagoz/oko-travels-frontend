@@ -429,14 +429,82 @@ async function cargarProductosDinamicos() {
             fetch(CONFIG.obtenerURL('/productos/tipo/disney')).then(r => r.json())
         ]);
 
+        // Insertar Cruceros
         if (cruceros.success && cruceros.datos.length > 0) {
-            console.log('✅ Cruceros cargados:', cruceros.datos.length);
+            const cruceroGrid = document.getElementById('cruceros-grid');
+            if (cruceroGrid) {
+                cruceroGrid.innerHTML = '';
+                cruceros.datos.forEach(crucero => {
+                    const html = `
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="${crucero.fotos[0] || 'https://via.placeholder.com/500x300'}" alt="${crucero.nombre}">
+                            </div>
+                            <div class="card-body">
+                                <h3>${crucero.nombre}</h3>
+                                <p class="f-desc">${crucero.descripcion}</p>
+                                <div class="card-footer">
+                                    <span class="precio">$${crucero.precio_base}</span>
+                                    <button class="btn-secondary" onclick="ir('cruceros')">Ver Detalles</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    cruceroGrid.innerHTML += html;
+                });
+                console.log('✅ Cruceros insertados:', cruceros.datos.length);
+            }
         }
+
+        // Insertar Tours
         if (tours.success && tours.datos.length > 0) {
-            console.log('✅ Tours cargados:', tours.datos.length);
+            const toursGrid = document.getElementById('tours-grid');
+            if (toursGrid) {
+                toursGrid.innerHTML = '';
+                tours.datos.forEach(tour => {
+                    const html = `
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="${tour.fotos[0] || 'https://via.placeholder.com/500x300'}" alt="${tour.nombre}">
+                            </div>
+                            <div class="card-body">
+                                <h3>${tour.nombre}</h3>
+                                <p class="f-desc">${tour.descripcion}</p>
+                                <div class="card-footer">
+                                    <span class="precio">$${tour.precio_base}</span>
+                                    <button class="btn-secondary" onclick="ir('tours')">Ver Detalles</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    toursGrid.innerHTML += html;
+                });
+                console.log('✅ Tours insertados:', tours.datos.length);
+            }
         }
+
+        // Insertar Disney
         if (disney.success && disney.datos.length > 0) {
-            console.log('✅ Disney cargados:', disney.datos.length);
+            const disneyGrid = document.getElementById('disney-grid');
+            if (disneyGrid) {
+                disneyGrid.innerHTML = '';
+                disney.datos.forEach(d => {
+                    const html = `
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="${d.fotos[0] || 'https://via.placeholder.com/500x300'}" alt="${d.nombre}">
+                            </div>
+                            <div class="card-body">
+                                <h3>${d.nombre}</h3>
+                                <p class="f-desc">${d.descripcion}</p>
+                                <div class="card-footer">
+                                    <span class="precio">$${d.precio_base}</span>
+                                    <button class="btn-secondary" onclick="ir('parques')">Ver Detalles</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    disneyGrid.innerHTML += html;
+                });
+                console.log('✅ Disney insertados:', disney.datos.length);
+            }
         }
     } catch (error) {
         console.warn('⚠️ No se pudieron cargar productos dinámicos:', error.message);

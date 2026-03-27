@@ -40,7 +40,7 @@ const CONFIG = {
     },
 
     // Clave pública de Stripe
-    STRIPE_PUBLISHABLE_KEY: 'pk_test_51TFcKeAbjIysxkieV0OQLVBgjMzUadc6uSMbMYNkTKOcK1dvx8dGfDNvjfmHdtRoqkj1Y45VRRFgG61menGKuUbSS00eKRPrdc1',
+    STRIPE_PUBLISHABLE_KEY: 'pk_test_51TFcKeAbjIyskxieV0OQLVBgjMzUadc6uSMbMYNkTKOcK1dvx8dGfDNyjfmHdtRoqkjlY45VRRFG6lmenGKuUbSS00eKRPrdc1',
 
     // Métodos auxiliares
     obtenerURL: function(endpoint) {

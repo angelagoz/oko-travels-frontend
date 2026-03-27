@@ -385,112 +385,236 @@
     <script src="carrito-app.js"></script>
     <script src="auth.js"></script>
     <script>
-        // Manejar opciones de compra
-        document.querySelectorAll('.opcion-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const opcion = e.currentTarget.dataset.opcion;
+        let stripe = null;
+        let elements = null;
+        let cardElement = null;
 
-                document.querySelectorAll('.opcion-btn').forEach(b => b.classList.remove('activa'));
-                e.currentTarget.classList.add('activa');
+        // VARIABLES GLOBALES
+        let carritoCheckout = null;
+        let reservaId = null;
 
-                if (opcion === 'usuario') {
-                    // Verificar si está autenticado
-                    if (!auth.estaAutenticado()) {
-                        alert('Por favor inicia sesión primero');
-                        window.location.href = 'login.html?redirect=checkout.html';
-                    }
-                }
-            });
-        });
-
-        // Inicializar Stripe
-        const stripe = Stripe('PUBLICABLE_KEY_AQUI'); // Reemplazar con tu clave
-        const elements = stripe.elements();
-        const cardElement = elements.create('card');
-        cardElement.mount('#card-element');
-
-        // Manejo de errores de tarjeta
-        cardElement.on('change', (event) => {
-            const displayError = document.getElementById('card-errors');
-            if (event.error) {
-                displayError.textContent = event.error.message;
+        // ========================================
+        // CARGAR CARRITO DESDE SESSIONSTORAGE
+        // ========================================
+        function cargarCarrito() {
+            const data = sessionStorage.getItem('carrito_checkout');
+            if (data) {
+                carritoCheckout = JSON.parse(data);
             } else {
-                displayError.textContent = '';
+                // Si no hay carrito en sessionStorage, redirigir al carrito
+                alert('Tu carrito está vacío. Regresando...');
+                window.location.href = 'carrito.html';
+                return false;
             }
-        });
+            return true;
+        }
 
-        // Manejar envío del formulario
-        document.getElementById('form-pago').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // ========================================
+        // MOSTRAR ITEMS DEL CARRITO
+        // ========================================
+        function mostrarResumen() {
+            if (!carritoCheckout || !carritoCheckout.items) return;
 
+            const resumenContainer = document.getElementById('resumen-items');
+            const totalPrecioElement = document.getElementById('total-precio');
+
+            // Generar HTML de items
+            const itemsHTML = carritoCheckout.items.map(item => `
+                <div style="padding: 10px 0; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between;">
+                    <div>
+                        <p style="margin: 0; font-weight: 600;">${item.nombre}</p>
+                        <p style="margin: 5px 0 0 0; color: #6c757d; font-size: 0.9rem;">
+                            ${item.tipo.toUpperCase()} × ${item.cantidad}
+                        </p>
+                    </div>
+                    <p style="margin: 0; font-weight: 600;">$${(item.precio * item.cantidad).toFixed(2)}</p>
+                </div>
+            `).join('');
+
+            resumenContainer.innerHTML = itemsHTML;
+            totalPrecioElement.textContent = `$${carritoCheckout.total.toFixed(2)}`;
+        }
+
+        // ========================================
+        // INICIALIZAR STRIPE
+        // ========================================
+        function inicializarStripe() {
+            // Obtener clave publicable del backend
+            fetch(CONFIG.obtenerURL('/pagos/config'))
+                .then(r => r.json())
+                .then(data => {
+                    if (data.publishableKey) {
+                        stripe = Stripe(data.publishableKey);
+                        elements = stripe.elements();
+                        cardElement = elements.create('card');
+                        cardElement.mount('#card-element');
+
+                        // Manejo de errores
+                        cardElement.on('change', (event) => {
+                            const displayError = document.getElementById('card-errors');
+                            if (event.error) {
+                                displayError.textContent = event.error.message;
+                            } else {
+                                displayError.textContent = '';
+                            }
+                        });
+                    } else {
+                        console.error('No se pudo obtener la clave de Stripe');
+                        document.getElementById('card-errors').textContent =
+                            'Error de configuración. Por favor intenta más tarde.';
+                    }
+                })
+                .catch(err => {
+                    console.error('Error al obtener clave Stripe:', err);
+                    // Fallback a clave test si es necesario
+                    stripe = Stripe('pk_test_51234567890');
+                    elements = stripe.elements();
+                    cardElement = elements.create('card');
+                    cardElement.mount('#card-element');
+                });
+        }
+
+        // ========================================
+        // GENERAR ID DE TRANSACCION
+        // ========================================
+        function generarIdTransaccion() {
+            return 'TXN_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // ========================================
+        // PROCESAR PAGO
+        // ========================================
+        async function procesarPago(token) {
+            const btnPagar = document.querySelector('.btn-pagar');
             const nombre = document.getElementById('nombre').value;
             const email = document.getElementById('email').value;
             const telefono = document.getElementById('telefono').value;
 
-            // Crear token de pago
-            const { token, error } = await stripe.createToken(cardElement, {
-                name: nombre,
-                address_zip: document.getElementById('codigo-postal')?.value || ''
-            });
-
-            if (error) {
-                document.getElementById('card-errors').textContent = error.message;
-            } else {
-                // Enviar token al servidor
-                procesarPago(token, email);
-            }
-        });
-
-        async function procesarPago(token, email) {
-            const btnPagar = document.querySelector('.btn-pagar');
             btnPagar.disabled = true;
-            btnPagar.textContent = 'Procesando...';
+            btnPagar.textContent = '⏳ Procesando pago...';
+
+            // Generar ID de transacción temporal
+            const transactionId = generarIdTransaccion();
 
             try {
+                // Enviar pago a Stripe a través del backend
                 const response = await fetch(CONFIG.obtenerURL(CONFIG.PAGOS.DIRECTO), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        reservaId: 'RESERVA_ID_AQUI',
+                        reservaId: transactionId,
                         token: token.id,
-                        monto: parseFloat(document.getElementById('total-precio').textContent.replace('$', ''))
+                        email: email,
+                        monto: carritoCheckout.total,
+                        cliente: {
+                            nombre,
+                            email,
+                            telefono
+                        },
+                        items: carritoCheckout.items
                     })
                 });
 
                 const data = await response.json();
 
                 if (data.success) {
-                    alert('¡Pago realizado exitosamente!');
-                    window.location.href = 'exito.html?transaccion=' + data.transaccionId;
+                    // Limpiar carrito
+                    localStorage.removeItem('carrito_luchris');
+                    sessionStorage.removeItem('carrito_checkout');
+
+                    // Redirigir a página de éxito
+                    const finalTransactionId = data.transaccionId || transactionId;
+                    window.location.href = 'exito.html?transaccion=' + finalTransactionId;
                 } else {
-                    alert('Error: ' + data.error);
+                    alert('❌ Error: ' + (data.error || 'No se pudo procesar el pago'));
                     btnPagar.disabled = false;
                     btnPagar.textContent = '💳 Pagar Ahora';
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('Error al procesar el pago');
+                console.error('Error al procesar pago:', error);
+                alert('❌ Error de conexión: ' + error.message);
                 btnPagar.disabled = false;
                 btnPagar.textContent = '💳 Pagar Ahora';
             }
         }
 
-        // Actualizar navbar con estado de autenticación
-        document.addEventListener('DOMContentLoaded', () => {
-            const auth = new SistemaAutenticacion();
-            const navAuth = document.getElementById('nav-auth');
+        // ========================================
+        // EVENT LISTENERS
+        // ========================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Cargar carrito
+            if (!cargarCarrito()) return;
 
-            if (auth.estaAutenticado()) {
-                const usuario = JSON.parse(localStorage.getItem('usuario'));
-                navAuth.innerHTML = `<a href="perfil.html" class="btn-perfil">👤 ${usuario.nombre}</a> | <a href="#" class="btn-logout" onclick="auth.logout(); return false;">Salir</a>`;
-            } else {
-                navAuth.innerHTML = `<a href="login.html" class="btn-login">🔓 Login</a> | <a href="registro.html" class="btn-registro">📝 Registrarse</a>`;
-            }
+            // Mostrar resumen
+            mostrarResumen();
 
-            // Aquí se cargarían los items del carrito
-            document.getElementById('total-precio').textContent = '$1,200.00';
+            // Inicializar Stripe
+            inicializarStripe();
+
+            // Opciones de compra
+            document.querySelectorAll('.opcion-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const opcion = e.currentTarget.dataset.opcion;
+                    document.querySelectorAll('.opcion-btn').forEach(b => b.classList.remove('activa'));
+                    e.currentTarget.classList.add('activa');
+
+                    if (opcion === 'usuario') {
+                        const auth = new SistemaAutenticacion();
+                        if (!auth.estaAutenticado()) {
+                            alert('Por favor inicia sesión primero');
+                            window.location.href = 'login.html?redirect=checkout.html';
+                        }
+                    }
+                });
+            });
+
+            // Manejar envío del formulario
+            document.getElementById('form-pago').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const nombre = document.getElementById('nombre').value;
+                const email = document.getElementById('email').value;
+                const telefono = document.getElementById('telefono').value;
+                const terminos = document.getElementById('terminos').checked;
+
+                // Validaciones
+                if (!nombre || !email || !telefono) {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
+
+                if (!terminos) {
+                    alert('Debes aceptar los términos y condiciones');
+                    return;
+                }
+
+                if (!stripe || !cardElement) {
+                    alert('Stripe no está inicializado. Intenta nuevamente.');
+                    return;
+                }
+
+                const btnPagar = document.querySelector('.btn-pagar');
+                btnPagar.disabled = true;
+                btnPagar.textContent = '⏳ Creando token...';
+
+                // Crear token de Stripe
+                const { token, error } = await stripe.createToken(cardElement, {
+                    name: nombre
+                });
+
+                if (error) {
+                    document.getElementById('card-errors').textContent = error.message;
+                    btnPagar.disabled = false;
+                    btnPagar.textContent = '💳 Pagar Ahora';
+                } else {
+                    // Procesar pago
+                    await procesarPago(token);
+                }
+            });
+
+            // Navbar limpio - sin elementos dinámicos de auth por ahora
         });
     </script>
 </body>

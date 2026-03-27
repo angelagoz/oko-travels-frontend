@@ -512,7 +512,7 @@ async function cargarProductosDinamicos() {
     }
 }
 
-// Ejecutar al cargar la página
-window.addEventListener('load', cargarProductosDinamicos);
+// Ejecutar al cargar la página (deshabilitado - productos hardcodeados)
+// window.addEventListener('load', cargarProductosDinamicos);
 
 console.log('✅ LUCHRIS TRAVELS - JavaScript cargado exitosamente');

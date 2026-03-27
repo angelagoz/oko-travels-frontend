@@ -44,19 +44,31 @@ ul{list-style:none;}
   color:#1565c0;letter-spacing:-.02em;
 }
 .brand span{color:#c8102e;}
-.nav-menu{display:flex;align-items:center;gap:4px;margin-left:auto;}
+.nav-menu{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.nav-menu li{display:flex;align-items:center;}
 .nav-menu a{
-  font-size:.82rem;font-weight:700;
-  color:#333;padding:8px 14px;
+  font-size:.8rem;font-weight:700;
+  color:#333;padding:10px 16px;
   border-radius:6px;transition:.2s;
   white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+  position:relative;
 }
 .nav-menu a:hover{background:#e8f0fe;color:#1565c0;}
+.nav-carrito a{padding:10px 12px;}
+.carrito-badge{
+  position:absolute;top:-6px;right:0;
+  background:#c8102e;color:#fff;
+  width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;font-weight:bold;
+}
 .nav-cta{
   background:#c8102e;color:#fff;
-  padding:10px 22px;border-radius:8px;
-  font-weight:800;font-size:.82rem;
+  padding:10px 20px;border-radius:6px;
+  font-weight:800;font-size:.8rem;
   transition:.2s;
+  display:flex;align-items:center;gap:6px;
 }
 .nav-cta:hover{background:#a50e25;color:#fff;}
 
@@ -633,9 +645,8 @@ footer{
       <li><a href="#destinos">Destinos</a></li>
       <li><a href="#cruceros">Cruceros</a></li>
       <li><a href="#parques">Parques</a></li>
-      <li><a href="#tours">Tours</a></li>
       <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="carrito.html" style="position:relative;"><span style="position:absolute;top:-8px;right:-10px;background:#c8102e;color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:bold;" id="carrito-count">0</span>🛒 Carrito</a></li>
+      <li class="nav-carrito"><a href="carrito.html"><span class="carrito-badge" id="carrito-count">0</span>🛒 Carrito</a></li>
       <li><a href="#cotizar" class="nav-cta">✈️ Cotizar</a></li>
     </ul>
     <button class="hbg" id="hbg" onclick="openMob()">
@@ -649,7 +660,6 @@ footer{
   <a href="#destinos" onclick="closeMob()">Destinos</a>
   <a href="#cruceros" onclick="closeMob()">Cruceros</a>
   <a href="#parques" onclick="closeMob()">Parques Temáticos</a>
-  <a href="#tours" onclick="closeMob()">Tours</a>
   <a href="#nosotros" onclick="closeMob()">Nosotros</a>
   <a href="carrito.html" onclick="closeMob()">🛒 Ver Carrito</a>
   <a href="#cotizar" onclick="closeMob()" class="nav-cta">✈️ Cotizar Ahora</a>

@@ -466,8 +466,8 @@
                 })
                 .catch(err => {
                     console.error('Error al obtener clave Stripe:', err);
-                    // Fallback a clave test si es necesario
-                    stripe = Stripe('pk_test_51234567890');
+                    // Usar clave pública real de Stripe
+                    stripe = Stripe('pk_test_51TFcKeAbjIysxkieV0OQLVBgjMzUadc6uSMbMYNkTKOcK1dvx8dGfDNvjfmHdtRoqkj1Y45VRRFgG61menGKuUbSS00eKRPrdc1');
                     elements = stripe.elements();
                     cardElement = elements.create('card');
                     cardElement.mount('#card-element');

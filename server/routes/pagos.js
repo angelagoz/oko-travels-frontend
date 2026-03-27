@@ -8,6 +8,16 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Reserva = require('../models/Reserva');
 
 // ========================================
+// GET - OBTENER CONFIGURACION STRIPE
+// ========================================
+
+router.get('/config', (req, res) => {
+    res.json({
+        publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || ''
+    });
+});
+
+// ========================================
 // POST - CREAR INTENTO DE PAGO
 // ========================================
 

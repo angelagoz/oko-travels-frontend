@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CMS LUCHRIS TRAVELS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, Arial; background: #f0f2f5; }
+
+        .container { display: flex; min-height: 100vh; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #1565c0;
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 12px 20px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #4fc3f7;
+            color: white;
+        }
+        .sidebar a.active {
+            background: rgba(255,255,255,0.2);
+            border-left-color: #4fc3f7;
+            color: white;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 { color: #333; font-size: 28px; }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: #1565c0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover { background: #d32f2f; }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #1565c0;
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1565c0;
+        }
+
+        .stat-card.blue { border-left-color: #1565c0; }
+        .stat-card.green { border-left-color: #4caf50; }
+        .stat-card.orange { border-left-color: #ff9800; }
+        .stat-card.red { border-left-color: #f44336; }
+
+        /* Sections */
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1565c0;
+        }
+
+        .products-by-type {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .type-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .type-box h4 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .type-count {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1565c0;
+        }
+
+        .type-box:hover {
+            border-color: #1565c0;
+            background: #f0f7ff;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .action-btn {
+            background: #1565c0;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .action-btn:hover {
+            background: #0d47a1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .action-btn.secondary {
+            background: #f44336;
+        }
+
+        .action-btn.secondary:hover {
+            background: #d32f2f;
+        }
+
+        .loading {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 0; transform: translateX(-100%); }
+            .main { margin-left: 0; }
+            .header { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>🛒 LUCHRIS CMS</h2>
+            <a href="dashboard.html" class="active">📊 Dashboard</a>
+            <a href="index.html#crucero">⛴️ Cruceros</a>
+            <a href="index.html#boleto">✈️ Boletos</a>
+            <a href="index.html#disney">🏰 Disney</a>
+            <a href="index.html#tour">🗺️ Tours</a>
+            <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
+            <a href="cotizaciones.html">📋 Cotizaciones</a>
+            <a href="../index.html">👁️ Ver Sitio</a>
+            <a href="#" onclick="logout()">🚪 Salir</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            <!-- Header -->
+            <div class="header">
+                <h1>📊 Dashboard</h1>
+                <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <div>
+                        <p style="color: #333; margin: 0;">Admin</p>
+                        <p style="color: #999; font-size: 12px; margin: 0;">LUCHRIS TRAVELS</p>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">Salir</button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <h3>Total Productos</h3>
+                    <div class="stat-number" id="total-productos">0</div>
+                </div>
+                <div class="stat-card green">
+                    <h3>Cruceros</h3>
+                    <div class="stat-number" id="count-crucero">0</div>
+                </div>
+                <div class="stat-card orange">
+                    <h3>Boletos</h3>
+                    <div class="stat-number" id="count-boleto">0</div>
+                </div>
+                <div class="stat-card red">
+                    <h3>Disney</h3>
+                    <div class="stat-number" id="count-disney">0</div>
+                </div>
+            </div>
+
+            <!-- Products by Type -->
+            <div class="section">
+                <h2>📦 Productos por Categoría</h2>
+                <div class="products-by-type" id="products-by-type"></div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section">
+                <h2>⚡ Acciones Rápidas</h2>
+                <div class="quick-actions">
+                    <a href="index.html#crucero" class="action-btn">➕ Agregar Crucero</a>
+                    <a href="index.html#boleto" class="action-btn">➕ Agregar Boleto</a>
+                    <a href="index.html#disney" class="action-btn">➕ Agregar Disney</a>
+                    <a href="index.html#tour" class="action-btn">➕ Agregar Tour</a>
+                    <a href="cotizaciones.html" class="action-btn secondary">📋 Ver Cotizaciones</a>
+                    <a href="../index.html" class="action-btn secondary">👁️ Ver Sitio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://luchris-travels-backend.onrender.com/api';
+
+        async function cargarEstadisticas() {
+            try {
+                // Cargar cruceros
+                const cruceros = await fetch(`${API_BASE}/cruceros`).then(r => r.json());
+                const boletos = await fetch(`${API_BASE}/productos/tipo/boleto`).then(r => r.json());
+                const disney = await fetch(`${API_BASE}/productos/tipo/disney`).then(r => r.json());
+                const tours = await fetch(`${API_BASE}/productos/tipo/tour`).then(r => r.json());
+
+                const totalProductos = (cruceros.datos?.length || 0) + (boletos.datos?.length || 0) + (disney.datos?.length || 0) + (tours.datos?.length || 0);
+
+                document.getElementById('total-productos').textContent = totalProductos;
+                document.getElementById('count-crucero').textContent = cruceros.datos?.length || 0;
+                document.getElementById('count-boleto').textContent = boletos.datos?.length || 0;
+                document.getElementById('count-disney').textContent = disney.datos?.length || 0;
+
+                // Productos por tipo
+                const html = `
+                    <div class="type-box">
+                        <h4>⛴️ Cruceros</h4>
+                        <div class="type-count">${cruceros.datos?.length || 0}</div>
+                    </div>
+                    <div class="type-box">
+                        <h4>✈️ Boletos</h4>
+                        <div class="type-count">${boletos.datos?.length || 0}</div>
+                    </div>
+                    <div class="type-box">
+                        <h4>🏰 Disney</h4>
+                        <div class="type-count">${disney.datos?.length || 0}</div>
+                    </div>
+                    <div class="type-box">
+                        <h4>🗺️ Tours</h4>
+                        <div class="type-count">${tours.datos?.length || 0}</div>
+                    </div>
+                `;
+                document.getElementById('products-by-type').innerHTML = html;
+            } catch (error) {
+                console.error('Error cargando estadísticas:', error);
+                document.getElementById('products-by-type').innerHTML = '<p style="color: #f44336;">Error al cargar datos</p>';
+            }
+        }
+
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas salir?')) {
+                location.href = '../index.html';
+            }
+        }
+
+        cargarEstadisticas();
+    </script>
+</body>
+</html>

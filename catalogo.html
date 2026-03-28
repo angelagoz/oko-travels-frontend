@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Productos | LUCHRIS TRAVELS & TOURS</title>
+  <link rel="stylesheet" href="estilos.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <style>
+    .catalogo-header {
+      background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+      color: white;
+      padding: 60px 24px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .catalogo-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 900;
+    }
+
+    .catalogo-header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .volver-btn {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+      border: 2px solid white;
+    }
+
+    .volver-btn:hover {
+      background: white;
+      color: #1565c0;
+    }
+
+    .catalogo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .catalogo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .catalogo-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+
+    .catalogo-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(21, 101, 192, 0.2);
+    }
+
+    .catalogo-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .catalogo-card-body {
+      padding: 20px;
+    }
+
+    .catalogo-card h3 {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .catalogo-card p {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .catalogo-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .precio {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #1565c0;
+    }
+
+    .btn-detalles {
+      background: #1565c0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: 0.3s;
+    }
+
+    .btn-detalles:hover {
+      background: #0d47a1;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 24px;
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    .error-message {
+      background: #ffebee;
+      color: #c62828;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 768px) {
+      .catalogo-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .catalogo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="nav">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-blue">LUCHRIS</span>
+        <span class="logo-red">TRAVELS & TOURS</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">← Volver al inicio</a>
+      </div>
+      <div class="nav-lang">
+        <select id="idioma-select" onchange="cambiarIdioma(this.value)">
+          <option value="es">Es Español</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="fr">🇫🇷 Français</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ENCABEZADO CATÁLOGO -->
+  <div class="catalogo-header">
+    <a href="index.html" class="volver-btn">← Volver</a>
+    <h1 id="catalogo-titulo">Catálogo de Productos</h1>
+    <p id="catalogo-desc">Explora nuestros mejores viajes</p>
+  </div>
+
+  <!-- CONTENEDOR CATÁLOGO -->
+  <div class="catalogo-container">
+    <div id="catalogo-grid" class="catalogo-grid">
+      <div class="loading">Cargando productos...</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 LUCHRIS TRAVELS & TOURS. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="translations.js"></script>
+  <script>
+    // Obtener el tipo de producto de la URL
+    const params = new URLSearchParams(window.location.search);
+    const tipo = params.get('tipo') || 'cruceros';
+
+    // Mapeo de tipos a traducciones
+    const tiposMap = {
+      'cruceros': { es: 'Cruceros', en: 'Cruises', fr: 'Croisières' },
+      'tours': { es: 'Tours Internacionales', en: 'International Tours', fr: 'Tours Internationaux' },
+      'disney': { es: 'Paquetes Disney & Universal', en: 'Disney & Universal Packages', fr: 'Forfaits Disney & Universal' },
+      'parques': { es: 'Parques Temáticos', en: 'Theme Parks', fr: 'Parcs à Thème' },
+      'boleto': { es: 'Boletos Aéreos', en: 'Air Tickets', fr: 'Billets Aériens' },
+      'destinos': { es: 'Destinos', en: 'Destinations', fr: 'Destinations' }
+    };
+
+    // Actualizar títulos
+    function actualizarTitulos() {
+      const idioma = localStorage.getItem('idioma') || 'es';
+      const nombre = tiposMap[tipo]?.[idioma] || tipo;
+      document.getElementById('catalogo-titulo').textContent = nombre;
+
+      const desc = {
+        es: 'Explora nuestros mejores viajes',
+        en: 'Explore our best trips',
+        fr: 'Explorez nos meilleurs voyages'
+      };
+      document.getElementById('catalogo-desc').textContent = desc[idioma];
+    }
+
+    // Cargar productos
+    async function cargarProductos() {
+      try {
+        const url = CONFIG.obtenerURL(`/productos/tipo/${tipo}`);
+        console.log('📍 Cargando desde:', url);
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const grid = document.getElementById('catalogo-grid');
+
+        if (data.success && data.datos && data.datos.length > 0) {
+          grid.innerHTML = data.datos.map(p => `
+            <div class="catalogo-card">
+              <img src="${p.fotos && p.fotos.length > 0 ? p.fotos[0].url : 'https://via.placeholder.com/300x200?text=Producto'}" alt="${p.nombre}">
+              <div class="catalogo-card-body">
+                <h3>${p.nombre}</h3>
+                <p>${p.descripcion || 'Vive una experiencia inolvidable'}</p>
+                <div class="catalogo-card-footer">
+                  <span class="precio">$${p.precio_base?.toLocaleString() || 'Consultar'}</span>
+                  <button class="btn-detalles" onclick="ir('cotizar')">Ver más</button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          grid.innerHTML = '<div class="error-message">No hay productos disponibles en este momento.</div>';
+        }
+      } catch (error) {
+        console.error('❌ Error:', error);
+        document.getElementById('catalogo-grid').innerHTML = '<div class="error-message">Error al cargar productos. Intenta más tarde.</div>';
+      }
+    }
+
+    // Función ir (redirigir)
+    function ir(seccion) {
+      if (seccion === 'cotizar') {
+        window.location.href = 'index.html#buscador';
+      } else {
+        window.location.href = `index.html#${seccion}`;
+      }
+    }
+
+    // Cambiar idioma
+    function cambiarIdioma(idioma) {
+      localStorage.setItem('idioma', idioma);
+      actualizarTitulos();
+      // Recargar página para aplicar idioma a todo
+      location.reload();
+    }
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      actualizarTitulos();
+      cargarProductos();
+    });
+  </script>
+</body>
+</html>

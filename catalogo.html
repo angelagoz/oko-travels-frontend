@@ -196,9 +196,10 @@
   <script src="config.js"></script>
   <script src="translations.js"></script>
   <script>
-    // Obtener el tipo de producto de la URL
+    // Obtener parámetros de la URL
     const params = new URLSearchParams(window.location.search);
-    const tipo = params.get('tipo') || 'cruceros';
+    const tipo = params.get('tipo') || null;
+    const destino = params.get('destino') || null;
 
     // Mapeo de tipos a traducciones
     const tiposMap = {
@@ -210,10 +211,29 @@
       'destinos': { es: 'Destinos', en: 'Destinations', fr: 'Destinations' }
     };
 
+    // Mapeo de destinos
+    const destinosMap = {
+      'Caribe': 'Caribe',
+      'Europa': 'Europa',
+      'Oriente+Medio': 'Oriente Medio',
+      'USA': 'Orlando USA',
+      'Sudamerica': 'Sudamérica',
+      'Mexico': 'México',
+      'Asia': 'Asia',
+      'Africa': 'África'
+    };
+
     // Actualizar títulos
     function actualizarTitulos() {
       const idioma = localStorage.getItem('idioma') || 'es';
-      const nombre = tiposMap[tipo]?.[idioma] || tipo;
+      let nombre;
+
+      if (destino) {
+        nombre = destinosMap[destino] || destino;
+      } else {
+        nombre = tiposMap[tipo]?.[idioma] || tipo;
+      }
+
       document.getElementById('catalogo-titulo').textContent = nombre;
 
       const desc = {
@@ -229,8 +249,29 @@
       try {
         let productos = [];
 
+        // Si es filtro por destino
+        if (destino) {
+          const url = CONFIG.obtenerURL(`/productos`);
+          console.log('📍 Cargando todos los productos desde:', url);
+
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.success && data.datos) {
+            // Filtrar por destino (búsqueda parcial)
+            const destinoNormalizado = decodeURIComponent(destino)
+              .replace('+', ' ')
+              .toLowerCase();
+
+            productos = data.datos.filter(p => {
+              const destProd = (p.destino || '').toLowerCase();
+              return destProd.includes(destinoNormalizado) ||
+                     destProd.includes(destino.replace('+', ' ').toLowerCase());
+            });
+          }
+        }
         // Si es Disney o Parques, cargar también Disney
-        if (tipo === 'disney' || tipo === 'parques') {
+        else if (tipo === 'disney' || tipo === 'parques') {
           const urlDisney = CONFIG.obtenerURL(`/productos/tipo/disney`);
           const urlUniversal = CONFIG.obtenerURL(`/productos/tipo/universal`);
 

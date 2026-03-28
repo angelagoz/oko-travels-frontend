@@ -111,26 +111,26 @@ const translations = {
   fr: {
     // Navbar
     'nav.destinos': 'Destinations',
-    'nav.nosotros': 'À propos',
+    'nav.nosotros': 'À Propos',
     'nav.cruceros': 'Croisières',
     'nav.parques': 'Parcs',
     'nav.cotizar': 'Devis',
-    'nav.ir_sitio': 'Voir le site',
+    'nav.ir_sitio': 'Voir le Site',
     'nav.admin': 'Admin',
 
     // Hero Section
     'hero.cruceros_title': 'Les Meilleures Croisières du Monde',
-    'hero.cruceros_desc': 'Vivez des expériences inoubliables en mer',
+    'hero.cruceros_desc': 'Vivez des expériences inoubliables en mer. Caraïbes, Méditerranée, Danube et plus.',
     'hero.caribe_title': 'Des Plages Paradisiaques vous Attendent',
-    'hero.caribe_desc': 'Destinations exotiques avec sable blanc',
+    'hero.caribe_desc': 'Forfaits tout compris aux Caraïbes pour toute la famille. Sable blanc et eaux cristallines.',
     'hero.europa_title': 'L\'Europe vous Attend',
-    'hero.europa_desc': 'Découvrez l\'histoire et la culture',
+    'hero.europa_desc': 'Rome, Paris, Barcelone, Athènes. Tours complets avec vol, hôtel et guide en français.',
     'hero.disney_title': 'Vivez la Magie en Famille',
-    'hero.disney_desc': 'Parcs à thème de classe mondiale',
-    'hero.mediterraneo_title': 'Naviguez la Méditerranée',
-    'hero.mediterraneo_desc': 'Îles et ports historiques',
-    'hero.btn_cotizar': 'Devis Maintenant',
-    'hero.btn_ver': 'Voir',
+    'hero.disney_desc': 'Forfaits complets à Walt Disney World et Universal Studios. Hôtel, billets et transferts inclus.',
+    'hero.mediterraneo_title': 'L\'Italie, la Grèce et l\'Espagne en un Voyage',
+    'hero.mediterraneo_desc': 'L\'expérience ultime à bord des croisières les plus luxueuses de la Méditerranée.',
+    'hero.btn_cotizar': 'Demander un Devis',
+    'hero.btn_ver': 'Voir Plus',
 
     // Tabs
     'tabs.cruceros': '🚢 Croisières',

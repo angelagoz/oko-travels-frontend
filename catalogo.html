@@ -229,8 +229,8 @@
       try {
         let productos = [];
 
-        // Si es Disney, cargar también Universal
-        if (tipo === 'disney') {
+        // Si es Disney o Parques, cargar también Disney
+        if (tipo === 'disney' || tipo === 'parques') {
           const urlDisney = CONFIG.obtenerURL(`/productos/tipo/disney`);
           const urlUniversal = CONFIG.obtenerURL(`/productos/tipo/universal`);
 

@@ -13,7 +13,7 @@ const productoSchema = new mongoose.Schema({
     },
     tipo: {
         type: String,
-        enum: ['crucero', 'tour', 'disney', 'boleto', 'seguro'],
+        enum: ['crucero', 'cruceros', 'tour', 'tours', 'disney', 'universal', 'boleto', 'hotel', 'destinos', 'parques', 'seguro'],
         required: true
     },
     descripcion: String,

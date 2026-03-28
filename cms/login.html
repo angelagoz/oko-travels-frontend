@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CMS LUCHRIS TRAVELS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 420px;
+            padding: 50px 40px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo h1 {
+            color: #1565c0;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1565c0;
+            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #c62828;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #2e7d32;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(21, 101, 192, 0.3);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .btn-login:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .extra-links {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .extra-links a {
+            color: #1565c0;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-info {
+            background: #e3f2fd;
+            border: 1px solid #1565c0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 30px;
+            font-size: 13px;
+            color: #1565c0;
+        }
+
+        .demo-info strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #1565c0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .loading.show {
+            display: inline-block;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+
+            .logo h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>🛒 LUCHRIS</h1>
+            <p>Panel Administrativo</p>
+        </div>
+
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div id="error-message" class="error-message"></div>
+            <div id="success-message" class="success-message"></div>
+
+            <div class="form-group">
+                <label for="usuario">Usuario o Email</label>
+                <input
+                    type="text"
+                    id="usuario"
+                    name="usuario"
+                    placeholder="Ingresa tu usuario"
+                    required
+                    autofocus
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="contrasena">Contraseña</label>
+                <input
+                    type="password"
+                    id="contrasena"
+                    name="contrasena"
+                    placeholder="Ingresa tu contraseña"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn-login" id="btn-login">
+                <span class="loading" id="spinner"></span>
+                Ingresar al CMS
+            </button>
+        </form>
+
+        <div class="demo-info">
+            <strong>🔑 Credenciales de Demostración:</strong>
+            Usuario: <strong>admin</strong><br>
+            Contraseña: <strong>admin123</strong><br>
+            <small style="margin-top: 5px; display: block;">
+                Nota: Estos datos son de ejemplo. Cámbialos en producción.
+            </small>
+        </div>
+
+        <div class="extra-links">
+            <a href="../index.html">← Volver al sitio principal</a>
+        </div>
+    </div>
+
+    <script>
+        // Usuarios registrados (en producción, esto vendría del backend)
+        const usuariosRegistrados = [
+            {
+                id: 1,
+                usuario: 'admin',
+                email: 'admin@luchristravels.com',
+                contrasena: 'admin123',
+                nombre: 'Administrador',
+                rol: 'admin'
+            },
+            {
+                id: 2,
+                usuario: 'gerente',
+                email: 'gerente@luchristravels.com',
+                contrasena: 'gerente123',
+                nombre: 'Gerente',
+                rol: 'gerente'
+            }
+        ];
+
+        // Verificar si ya está logueado
+        function verificarSesion() {
+            const sesion = JSON.parse(localStorage.getItem('cms_sesion'));
+            if (sesion && sesion.activa) {
+                // Redirigir al dashboard
+                window.location.href = 'dashboard.html';
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const usuario = document.getElementById('usuario').value.trim();
+            const contrasena = document.getElementById('contrasena').value;
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            const btnLogin = document.getElementById('btn-login');
+            const spinner = document.getElementById('spinner');
+
+            // Limpiar mensajes previos
+            errorDiv.classList.remove('show');
+            successDiv.classList.remove('show');
+
+            // Validar campos
+            if (!usuario || !contrasena) {
+                mostrarError('Por favor completa todos los campos');
+                return;
+            }
+
+            // Mostrar spinner
+            btnLogin.disabled = true;
+            spinner.classList.add('show');
+
+            // Simular validación con delay (como si fuera una petición al backend)
+            setTimeout(() => {
+                // Buscar usuario
+                const usuarioEncontrado = usuariosRegistrados.find(u =>
+                    (u.usuario === usuario || u.email === usuario) &&
+                    u.contrasena === contrasena
+                );
+
+                if (usuarioEncontrado) {
+                    // Login exitoso
+                    const sesion = {
+                        activa: true,
+                        usuario_id: usuarioEncontrado.id,
+                        usuario: usuarioEncontrado.usuario,
+                        nombre: usuarioEncontrado.nombre,
+                        rol: usuarioEncontrado.rol,
+                        email: usuarioEncontrado.email,
+                        fecha_login: new Date().toISOString(),
+                        token: 'token_' + Date.now() + Math.random()
+                    };
+
+                    localStorage.setItem('cms_sesion', JSON.stringify(sesion));
+
+                    mostrarExito('¡Bienvenido ' + usuarioEncontrado.nombre + '!');
+
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    // Login fallido
+                    mostrarError('Usuario o contraseña incorrectos');
+                    document.getElementById('contrasena').value = '';
+                    btnLogin.disabled = false;
+                    spinner.classList.remove('show');
+                }
+            }, 800);
+        }
+
+        function mostrarError(mensaje) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = '❌ ' + mensaje;
+            errorDiv.classList.add('show');
+        }
+
+        function mostrarExito(mensaje) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = '✅ ' + mensaje;
+            successDiv.classList.add('show');
+        }
+
+        // Verificar sesión al cargar
+        window.addEventListener('load', verificarSesion);
+
+        // Enter para enviar formulario
+        document.getElementById('login-form').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleLogin(e);
+            }
+        });
+    </script>
+</body>
+</html>

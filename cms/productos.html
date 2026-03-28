@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - CMS LUCHRIS TRAVELS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, Arial; background: #f0f2f5; }
+
+        .container { display: flex; min-height: 100vh; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #1565c0;
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 12px 20px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #4fc3f7;
+            color: white;
+        }
+        .sidebar a.active {
+            background: rgba(255,255,255,0.2);
+            border-left-color: #4fc3f7;
+            color: white;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 { color: #333; font-size: 28px; }
+
+        .btn-agregar {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-agregar:hover {
+            background: #388e3c;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            color: #666;
+        }
+
+        .tab:hover {
+            border-color: #1565c0;
+            color: #1565c0;
+        }
+
+        .tab.active {
+            background: #1565c0;
+            color: white;
+            border-color: #1565c0;
+        }
+
+        /* Table */
+        .tabla-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background: #f5f5f5;
+            border-bottom: 2px solid #1565c0;
+        }
+
+        table th {
+            padding: 15px;
+            text-align: left;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* Action Buttons */
+        .acciones {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-accion {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-editar {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-editar:hover {
+            background: #388e3c;
+        }
+
+        .btn-eliminar {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-eliminar:hover {
+            background: #d32f2f;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state h2 {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #1565c0;
+        }
+
+        .modal-header h2 {
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-modal {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-primary-modal {
+            background: #1565c0;
+            color: white;
+        }
+
+        .btn-primary-modal:hover {
+            background: #0d47a1;
+        }
+
+        .btn-secondary-modal {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary-modal:hover {
+            background: #eee;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 0; transform: translateX(-100%); }
+            .main { margin-left: 0; }
+            .header { flex-direction: column; gap: 15px; }
+            .tabs { flex-wrap: wrap; }
+            table { font-size: 12px; }
+            table th, table td { padding: 10px; }
+            .acciones { flex-direction: column; }
+            .btn-accion { width: 100%; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>🛒 LUCHRIS CMS</h2>
+            <a href="dashboard.html">📊 Dashboard</a>
+            <a href="index.html#crucero">⛴️ Cruceros</a>
+            <a href="index.html#boleto">✈️ Boletos</a>
+            <a href="index.html#disney">🏰 Disney</a>
+            <a href="index.html#tour">🗺️ Tours</a>
+            <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
+            <a href="analisis.html">📈 Análisis</a>
+            <a href="cotizaciones.html">📋 Cotizaciones</a>
+            <a href="productos.html" class="active">🛍️ Productos</a>
+            <a href="../index.html">👁️ Ver Sitio</a>
+            <a href="#" onclick="logout()">🚪 Salir</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            <!-- Header -->
+            <div class="header">
+                <h1>🛍️ Gestionar Productos</h1>
+                <button class="btn-agregar" onclick="abrirModalAgregar()">➕ Agregar Producto</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" onclick="cambiarTab('crucero')">⛴️ Cruceros</div>
+                <div class="tab" onclick="cambiarTab('boleto')">✈️ Boletos</div>
+                <div class="tab" onclick="cambiarTab('disney')">🏰 Disney</div>
+                <div class="tab" onclick="cambiarTab('tour')">🗺️ Tours</div>
+            </div>
+
+            <!-- Table -->
+            <div class="tabla-container">
+                <table id="tabla-productos">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Tipo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-body">
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 40px;">
+                                <div class="empty-state">
+                                    <h2>📦 No hay productos</h2>
+                                    <p>Agrega productos para comenzar</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Agregar/Editar Producto -->
+    <div id="modal-producto" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-titulo">Agregar Producto</h2>
+                <button class="close-btn" onclick="cerrarModal()">&times;</button>
+            </div>
+
+            <form id="form-producto" onsubmit="guardarProducto(event)">
+                <div class="form-group">
+                    <label>Nombre del Producto *</label>
+                    <input type="text" id="nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción *</label>
+                    <textarea id="descripcion" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Precio Base ($) *</label>
+                        <input type="number" id="precio" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Producto *</label>
+                        <select id="tipo" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="crucero">Crucero</option>
+                            <option value="boleto">Boleto</option>
+                            <option value="disney">Disney</option>
+                            <option value="tour">Tour</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>URL de Imagen</label>
+                    <input type="url" id="imagen" placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label>Detalles Adicionales</label>
+                    <textarea id="detalles" placeholder="Incluye itinerario, fechas, horarios, etc."></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn-modal btn-primary-modal" id="btn-guardar">Guardar Producto</button>
+                    <button type="button" class="btn-modal btn-secondary-modal" onclick="cerrarModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let productosData = [];
+        let tipoActual = 'crucero';
+        let productoEditando = null;
+
+        function cargarProductos() {
+            const productosGuardados = JSON.parse(localStorage.getItem('productos')) || [];
+            productosData = productosGuardados;
+            mostrarProductosPorTipo();
+        }
+
+        function mostrarProductosPorTipo() {
+            const filtrados = productosData.filter(p => p.tipo === tipoActual);
+            mostrarProductos(filtrados);
+        }
+
+        function mostrarProductos(productos) {
+            const tbody = document.getElementById('tabla-body');
+
+            if (productos.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px;">
+                            <div class="empty-state">
+                                <h2>📦 No hay productos</h2>
+                                <p>Agrega productos para comenzar</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = productos.map(prod => `
+                <tr>
+                    <td><strong>${prod.nombre}</strong></td>
+                    <td>${prod.descripcion.substring(0, 40)}...</td>
+                    <td style="color: #c8102e; font-weight: bold;">$${parseFloat(prod.precio).toFixed(2)}</td>
+                    <td>${prod.tipo}</td>
+                    <td>
+                        <div class="acciones">
+                            <button class="btn-accion btn-editar" onclick="editarProducto('${prod.id}')">✏️ Editar</button>
+                            <button class="btn-accion btn-eliminar" onclick="eliminarProducto('${prod.id}')">🗑️ Eliminar</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function cambiarTab(tipo) {
+            tipoActual = tipo;
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            mostrarProductosPorTipo();
+        }
+
+        function abrirModalAgregar() {
+            productoEditando = null;
+            document.getElementById('modal-titulo').textContent = 'Agregar Producto';
+            document.getElementById('form-producto').reset();
+            document.getElementById('tipo').value = tipoActual;
+            document.getElementById('modal-producto').style.display = 'block';
+        }
+
+        function editarProducto(id) {
+            productoEditando = productosData.find(p => p.id === id);
+            if (!productoEditando) return;
+
+            document.getElementById('modal-titulo').textContent = 'Editar Producto';
+            document.getElementById('nombre').value = productoEditando.nombre;
+            document.getElementById('descripcion').value = productoEditando.descripcion;
+            document.getElementById('precio').value = productoEditando.precio;
+            document.getElementById('tipo').value = productoEditando.tipo;
+            document.getElementById('imagen').value = productoEditando.imagen || '';
+            document.getElementById('detalles').value = productoEditando.detalles || '';
+
+            document.getElementById('modal-producto').style.display = 'block';
+        }
+
+        function guardarProducto(e) {
+            e.preventDefault();
+
+            const producto = {
+                id: productoEditando?.id || 'prod-' + Date.now(),
+                nombre: document.getElementById('nombre').value,
+                descripcion: document.getElementById('descripcion').value,
+                precio: parseFloat(document.getElementById('precio').value),
+                tipo: document.getElementById('tipo').value,
+                imagen: document.getElementById('imagen').value,
+                detalles: document.getElementById('detalles').value,
+                fecha_creacion: productoEditando?.fecha_creacion || new Date().toISOString()
+            };
+
+            if (productoEditando) {
+                const index = productosData.findIndex(p => p.id === productoEditando.id);
+                productosData[index] = producto;
+            } else {
+                productosData.push(producto);
+            }
+
+            localStorage.setItem('productos', JSON.stringify(productosData));
+            cerrarModal();
+            mostrarProductosPorTipo();
+            alert(productoEditando ? '✅ Producto actualizado' : '✅ Producto agregado');
+        }
+
+        function eliminarProducto(id) {
+            if (!confirm('¿Estás seguro de que deseas eliminar este producto?')) return;
+
+            productosData = productosData.filter(p => p.id !== id);
+            localStorage.setItem('productos', JSON.stringify(productosData));
+            mostrarProductosPorTipo();
+            alert('✅ Producto eliminado');
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-producto').style.display = 'none';
+        }
+
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas salir?')) {
+                location.href = '../index.html';
+            }
+        }
+
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal-producto');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Cargar al abrir la página
+        cargarProductos();
+    </script>
+</body>
+</html>

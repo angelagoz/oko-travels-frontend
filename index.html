@@ -667,11 +667,19 @@ footer{
 .ideas-header{margin-bottom:24px;}
 .ideas-header h2{font-size:1.3rem;color:#333;margin-bottom:6px;font-weight:700;}
 .ideas-header p{font-size:.85rem;color:#666;}
-.ideas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:16px;margin-bottom:20px;}
+.ideas-grid{width:100%;height:auto;margin-bottom:20px;position:relative;}
+.ideas-grid.swiper-wrapper{display:flex;}
 .idea-card{background:white;padding:16px 12px;border-radius:10px;cursor:pointer;transition:all .3s;border:2px solid transparent;box-shadow:0 2px 6px rgba(0,0,0,0.06);}
 .idea-card:hover{background:#e8f0fe;border-color:#1565c0;box-shadow:0 3px 12px rgba(21,101,192,0.12);transform:translateY(-2px);}
 .idea-icon{font-size:2rem;margin-bottom:8px;}
 .idea-text{font-weight:600;color:#333;font-size:.8rem;line-height:1.3;}
+.ideas-grid .swiper-button-next,
+.ideas-grid .swiper-button-prev{color:#1565c0;top:50%;transform:translateY(-50%);}
+.ideas-grid .swiper-button-next:after,
+.ideas-grid .swiper-button-prev:after{font-size:24px;}
+.ideas-grid .swiper-pagination-bullet{background:#1565c0;}
+.ideas-grid .swiper-pagination-bullet-active{background:#c8102e;}
+
 .btn-ver-mas{background:#1565c0;color:white;border:none;padding:8px 24px;border-radius:6px;font-weight:700;cursor:pointer;transition:.3s;font-size:.85rem;}
 .btn-ver-mas:hover{background:#0d47a1;box-shadow:0 4px 12px rgba(21,101,192,0.3);}
 
@@ -872,31 +880,36 @@ footer{
       <h2 data-i18n="ideas.titulo">Nuestras ideas de viaje</h2>
       <p data-i18n="ideas.subtitulo">Aquí podrás ver nuestras ideas de viaje</p>
     </div>
-    <div class="ideas-grid">
-      <div class="idea-card" onclick="ir('cruceros')">
-        <div class="idea-icon">🚢</div>
-        <div class="idea-text" data-i18n="ideas.cruceros">Cruceros</div>
+    <div class="ideas-grid swiper" id="ideas-carousel">
+      <div class="swiper-wrapper">
+        <div class="idea-card swiper-slide" onclick="ir('cruceros')">
+          <div class="idea-icon">🚢</div>
+          <div class="idea-text" data-i18n="ideas.cruceros">Cruceros</div>
+        </div>
+        <div class="idea-card swiper-slide" onclick="ir('destinos')">
+          <div class="idea-icon">🌴</div>
+          <div class="idea-text" data-i18n="ideas.destinos">Destinos</div>
+        </div>
+        <div class="idea-card swiper-slide" onclick="ir('parques')">
+          <div class="idea-icon">🏰</div>
+          <div class="idea-text" data-i18n="ideas.parques">Parques Temáticos</div>
+        </div>
+        <div class="idea-card swiper-slide" onclick="ir('tours')">
+          <div class="idea-icon">✈️</div>
+          <div class="idea-text" data-i18n="ideas.tours">Tours Internacionales</div>
+        </div>
+        <div class="idea-card swiper-slide" onclick="ir('boletos')">
+          <div class="idea-icon">🎫</div>
+          <div class="idea-text" data-i18n="ideas.boletos">Boletos Aéreos</div>
+        </div>
+        <div class="idea-card swiper-slide" onclick="ir('luna-miel')">
+          <div class="idea-icon">💍</div>
+          <div class="idea-text" data-i18n="ideas.luna_miel">Luna de Miel</div>
+        </div>
       </div>
-      <div class="idea-card" onclick="ir('destinos')">
-        <div class="idea-icon">🌴</div>
-        <div class="idea-text" data-i18n="ideas.destinos">Destinos</div>
-      </div>
-      <div class="idea-card" onclick="ir('parques')">
-        <div class="idea-icon">🏰</div>
-        <div class="idea-text" data-i18n="ideas.parques">Parques Temáticos</div>
-      </div>
-      <div class="idea-card" onclick="ir('tours')">
-        <div class="idea-icon">✈️</div>
-        <div class="idea-text" data-i18n="ideas.tours">Tours Internacionales</div>
-      </div>
-      <div class="idea-card" onclick="ir('boletos')">
-        <div class="idea-icon">🎫</div>
-        <div class="idea-text" data-i18n="ideas.boletos">Boletos Aéreos</div>
-      </div>
-      <div class="idea-card" onclick="ir('luna-miel')">
-        <div class="idea-icon">💍</div>
-        <div class="idea-text" data-i18n="ideas.luna_miel">Luna de Miel</div>
-      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-pagination"></div>
     </div>
     <button class="btn-ver-mas" data-i18n="ideas.btn_ver_mas">Ver más</button>
   </div>
@@ -1823,6 +1836,25 @@ async function initializeSwipers() {
       }
     }
   });
+
+  // Inicializar Swiper para Ideas de Viaje
+  const ideasCarousel = document.getElementById('ideas-carousel');
+  if(ideasCarousel) {
+    new Swiper(ideasCarousel, {
+      spaceBetween: 16,
+      pagination: { el: '.ideas-grid .swiper-pagination', clickable: true },
+      navigation: {
+        nextEl: '.ideas-grid .swiper-button-next',
+        prevEl: '.ideas-grid .swiper-button-prev'
+      },
+      breakpoints: {
+        320: { slidesPerView: 1.5 },
+        480: { slidesPerView: 2.5 },
+        768: { slidesPerView: 3.5 },
+        1200: { slidesPerView: 5 }
+      }
+    });
+  }
 }
 
 // Ejecutar cargas de datos

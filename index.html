@@ -643,10 +643,10 @@ footer{
     <div class="brand">LUCHRIS <span>TRAVELS</span></div>
     <ul class="nav-menu">
       <li><a href="#destinos">Destinos</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
       <li><a href="#cruceros">Cruceros</a></li>
       <li><a href="#parques">Parques</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-      <li class="nav-carrito"><a href="carrito.html"><span class="carrito-badge" id="carrito-count">0</span>🛒 Carrito</a></li>
+      <li class="nav-carrito"><a href="carrito-simple.html"><span class="carrito-badge" id="carrito-count">0</span>🛒 Carrito</a></li>
       <li><a href="#cotizar" class="nav-cta">✈️ Cotizar</a></li>
     </ul>
     <button class="hbg" id="hbg" onclick="openMob()">
@@ -1290,7 +1290,7 @@ async function cargarCruceros() {
       console.log('✅ Cruceros encontrados:', data.datos.length);
       grid.innerHTML = data.datos.slice(0, 4).map(p => {
         const esMaritimo = p.salida === 'Miami' || p.salida === 'Republica Dominicana';
-        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">${esMaritimo ? '⛴️' : '🚢'}</div><div class="card-body"><div class="card-cat">${p.naviera}</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$999</strong></div><button class="card-cta">Cotizar</button></div></div></div>`;
+        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">${esMaritimo ? '⛴️' : '🚢'}</div><div class="card-body"><div class="card-cat">${p.naviera}</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base || 999}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base || 999}, 'crucero')">🛒 Agregar</button></div></div></div>`;
       }).join('');
     } else {
       console.log('❌ No hay cruceros o respuesta inválida');
@@ -1315,7 +1315,7 @@ async function cargarDisney() {
     if (data.success && data.datos && data.datos.length > 0) {
       console.log('✅ Paquetes Disney encontrados:', data.datos.length);
       grid.innerHTML = data.datos.slice(0, 4).map(p => {
-        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🏰</div><div class="card-body"><div class="card-cat">🎢 Paquete Disney</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta">Cotizar</button></div></div></div>`;
+        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🏰</div><div class="card-body"><div class="card-cat">🎢 Paquete Disney</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'disney')">🛒 Agregar</button></div></div></div>`;
       }).join('');
     } else {
       console.log('❌ No hay Disney o respuesta inválida');
@@ -1340,7 +1340,7 @@ async function cargarBoletos() {
     if (data.success && data.datos && data.datos.length > 0) {
       console.log('✅ Boletos encontrados:', data.datos.length);
       grid.innerHTML = data.datos.slice(0, 4).map(p => {
-        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">✈️</div><div class="card-body"><div class="card-cat">🛫 Vuelo Internacional</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta">Cotizar</button></div></div></div>`;
+        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">✈️</div><div class="card-body"><div class="card-cat">🛫 Vuelo Internacional</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'boleto')">🛒 Agregar</button></div></div></div>`;
       }).join('');
     } else {
       console.log('❌ No hay boletos o respuesta inválida');
@@ -1362,7 +1362,7 @@ async function mostrarTodosCruceros() {
     if (data.success && data.datos && data.datos.length > 0) {
       grid.innerHTML = data.datos.map(p => {
         const esMaritimo = p.salida === 'Miami' || p.salida === 'Republica Dominicana';
-        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">${esMaritimo ? '⛴️' : '🚢'}</div><div class="card-body"><div class="card-cat">${p.naviera}</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$999</strong></div><button class="card-cta">Cotizar</button></div></div></div>`;
+        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">${esMaritimo ? '⛴️' : '🚢'}</div><div class="card-body"><div class="card-cat">${p.naviera}</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base || 999}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base || 999}, 'crucero')">🛒 Agregar</button></div></div></div>`;
       }).join('');
       window.scrollTo({top: grid.offsetTop - 100, behavior: 'smooth'});
     }
@@ -1380,7 +1380,7 @@ async function mostrarTodosDisney() {
 
     if (data.success && data.datos && data.datos.length > 0) {
       grid.innerHTML = data.datos.map(p => {
-        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🏰</div><div class="card-body"><div class="card-cat">🎢 Paquete Disney</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta">Cotizar</button></div></div></div>`;
+        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🏰</div><div class="card-body"><div class="card-cat">🎢 Paquete Disney</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'disney')">🛒 Agregar</button></div></div></div>`;
       }).join('');
       window.scrollTo({top: grid.offsetTop - 100, behavior: 'smooth'});
     }
@@ -1398,7 +1398,7 @@ async function mostrarTodosBoletos() {
 
     if (data.success && data.datos && data.datos.length > 0) {
       grid.innerHTML = data.datos.map(p => {
-        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">✈️</div><div class="card-body"><div class="card-cat">🛫 Vuelo Internacional</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta">Cotizar</button></div></div></div>`;
+        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">✈️</div><div class="card-body"><div class="card-cat">🛫 Vuelo Internacional</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'boleto')">🛒 Agregar</button></div></div></div>`;
       }).join('');
       window.scrollTo({top: grid.offsetTop - 100, behavior: 'smooth'});
     }
@@ -1420,7 +1420,7 @@ async function cargarTours() {
     if (data.success && data.datos && data.datos.length > 0) {
       console.log('✅ Tours encontrados:', data.datos.length);
       grid.innerHTML = data.datos.slice(0, 4).map(p => {
-        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🌍</div><div class="card-body"><div class="card-cat">✈️ ${p.destino}</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta">Cotizar</button></div></div></div>`;
+        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🌍</div><div class="card-body"><div class="card-cat">✈️ ${p.destino}</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'tour')">🛒 Agregar</button></div></div></div>`;
       }).join('');
     } else {
       console.log('❌ No hay tours o respuesta inválida');
@@ -1441,7 +1441,7 @@ async function mostrarTodosTours() {
 
     if (data.success && data.datos && data.datos.length > 0) {
       grid.innerHTML = data.datos.map(p => {
-        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🌍</div><div class="card-body"><div class="card-cat">✈️ ${p.destino}</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta">Cotizar</button></div></div></div>`;
+        return `<div class="card"><div class="card-img" style="background:#1565c0;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🌍</div><div class="card-body"><div class="card-cat">✈️ ${p.destino}</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'tour')">🛒 Agregar</button></div></div></div>`;
       }).join('');
       window.scrollTo({top: grid.offsetTop - 100, behavior: 'smooth'});
     }
@@ -1537,25 +1537,7 @@ console.log('✅ LUCHRIS TRAVELS — Página dinámica cargada');
 </script>
 
 <!-- Carrito de Compras -->
-<script src="carrito-app.js"></script>
-<script>
-// Actualizar contador del carrito
-if (typeof carrito !== 'undefined') {
-  function actualizarContador() {
-    const contador = document.getElementById('carrito-count');
-    if (contador) {
-      const total = carrito.items.reduce((sum, item) => sum + item.cantidad, 0);
-      contador.textContent = total;
-    }
-  }
-
-  // Actualizar al cargar
-  actualizarContador();
-
-  // Actualizar cada segundo para cambios en otras pestañas
-  setInterval(actualizarContador, 1000);
-}
-</script>
+<script src="carrito-simple.js"></script>
 
 </body>
 </html>

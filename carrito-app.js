@@ -118,10 +118,12 @@ class CarritoApp {
             }
         });
 
-        // Evento del botón del carrito en navbar
-        const carritoBtn = document.querySelector('.carrito-btn');
+        // Evento del botón del carrito en navbar (buscar por múltiples selectores)
+        const carritoBtn = document.querySelector('.carrito-btn, [href="carrito-view.html"], [href="carrito.html"]');
         if (carritoBtn) {
-            carritoBtn.addEventListener('click', () => window.location.href = 'carrito.html');
+            if (!carritoBtn.href) {
+                carritoBtn.addEventListener('click', () => window.location.href = 'carrito-view.html');
+            }
         }
     }
 
@@ -133,11 +135,20 @@ class CarritoApp {
 
     // ACTUALIZAR CONTADOR EN NAVBAR
     actualizarContador() {
+        const cantidad = this.obtenerCantidad();
+
+        // Actualizar botón con clase .carrito-btn
         const carritoBtn = document.querySelector('.carrito-btn');
         if (carritoBtn) {
-            const cantidad = this.obtenerCantidad();
             const texto = cantidad > 0 ? `🛒 Carrito (${cantidad})` : '🛒 Carrito';
             carritoBtn.textContent = texto;
+        }
+
+        // Actualizar span con id carrito-count (nuevo formato)
+        const countSpan = document.getElementById('carrito-count');
+        if (countSpan) {
+            countSpan.textContent = cantidad;
+            countSpan.style.display = cantidad > 0 ? 'flex' : 'none';
         }
     }
 

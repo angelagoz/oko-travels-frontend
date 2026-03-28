@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito - LUCHRIS TRAVELS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial; background: #f5f5f5; }
+        .navbar { background: #fff; padding: 15px 30px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+        .navbar a { color: #1565c0; text-decoration: none; font-weight: bold; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #1565c0; margin-bottom: 30px; }
+        .carrito-items { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
+        .item:last-child { border-bottom: none; }
+        .item-info { flex: 1; }
+        .item-nombre { font-weight: bold; color: #333; }
+        .item-tipo { font-size: 0.9rem; color: #666; }
+        .item-precio { font-size: 1.2rem; font-weight: bold; color: #c8102e; }
+        .item-acciones { display: flex; gap: 10px; }
+        .btn-eliminar { background: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+        .btn-eliminar:hover { background: #d32f2f; }
+        .resumen { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .resumen-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .resumen-row.total { font-size: 1.3rem; font-weight: bold; color: #c8102e; border: none; }
+        .botones { display: flex; gap: 12px; margin-top: 20px; }
+        .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        .btn-primary { background: #1565c0; color: white; }
+        .btn-primary:hover { background: #0d47a1; }
+        .btn-secondary { background: #f5f5f5; color: #333; border: 1px solid #ddd; }
+        .btn-secondary:hover { background: #eee; }
+        .vacio { text-align: center; padding: 60px 20px; color: #999; }
+        .vacio h2 { margin-bottom: 15px; color: #666; }
+        .vacio a { color: #1565c0; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🛒 Mi Carrito</h2>
+        <a href="index.html">← Volver al sitio</a>
+    </div>
+
+    <div class="container">
+        <h1>Mi Carrito de Compras</h1>
+
+        <div id="carrito-vacio" class="vacio" style="display: none;">
+            <h2>Tu carrito está vacío 🛍️</h2>
+            <p>Agrega productos para comenzar a comprar</p>
+            <a href="index.html">Ver productos</a>
+        </div>
+
+        <div id="carrito-contenido" style="display: none;">
+            <div class="carrito-items" id="items-list"></div>
+
+            <div class="resumen">
+                <h2 style="margin-bottom: 20px;">Resumen de Compra</h2>
+                <div class="resumen-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0</span>
+                </div>
+                <div class="resumen-row">
+                    <span>Cantidad de productos:</span>
+                    <span id="cantidad-items">0</span>
+                </div>
+                <div class="resumen-row total">
+                    <span>Total:</span>
+                    <span id="total">$0</span>
+                </div>
+
+                <div class="botones">
+                    <button class="btn btn-secondary" onclick="location.href='index.html'">Seguir comprando</button>
+                    <button class="btn btn-primary" onclick="cotizar()">📋 Solicitar Cotización</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="carrito.js"></script>
+    <script>
+        function mostrarCarrito() {
+            if (carrito.items.length === 0) {
+                document.getElementById('carrito-vacio').style.display = 'block';
+                document.getElementById('carrito-contenido').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('carrito-vacio').style.display = 'none';
+            document.getElementById('carrito-contenido').style.display = 'block';
+
+            const lista = document.getElementById('items-list');
+            lista.innerHTML = carrito.items.map(item => `
+                <div class="item">
+                    <div class="item-info">
+                        <div class="item-nombre">${item.nombre}</div>
+                        <div class="item-tipo">${item.tipo} ${item.destino ? '• ' + item.destino : ''}</div>
+                    </div>
+                    <div class="item-precio">$${(item.precio_base * item.cantidad).toFixed(2)}</div>
+                    <div class="item-acciones">
+                        <span style="font-weight: bold;">x${item.cantidad}</span>
+                        <button class="btn-eliminar" onclick="eliminarItem('${item._id}')">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('subtotal').textContent = `$${carrito.getTotal().toFixed(2)}`;
+            document.getElementById('total').textContent = `$${carrito.getTotal().toFixed(2)}`;
+            document.getElementById('cantidad-items').textContent = carrito.getCantidad();
+        }
+
+        function eliminarItem(id) {
+            carrito.eliminar(id);
+            mostrarCarrito();
+        }
+
+        function cotizar() {
+            const items = carrito.items.map(i => `${i.nombre} (x${i.cantidad}) - $${(i.precio_base * i.cantidad).toFixed(2)}`).join('\n');
+            const mensaje = `Solicito cotización para:\n\n${items}\n\nTOTAL: $${carrito.getTotal().toFixed(2)}`;
+
+            // Guardar en localStorage y redirigir a cotización
+            localStorage.setItem('cotizacion', JSON.stringify({
+                items: carrito.items,
+                total: carrito.getTotal(),
+                fecha: new Date().toISOString()
+            }));
+
+            alert('✅ Cotización solicitada.\n\nNos contactaremos en breve con los detalles.\n\nTotal: $' + carrito.getTotal().toFixed(2));
+            carrito.vaciar();
+            mostrarCarrito();
+        }
+
+        // Cargar al abrir la página
+        mostrarCarrito();
+    </script>
+</body>
+</html>

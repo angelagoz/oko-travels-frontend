@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito - LUCHRIS TRAVELS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial; background: #f5f5f5; }
+        .navbar { background: #fff; padding: 15px 30px; border-bottom: 1px solid #ddd; }
+        .navbar a { color: #1565c0; text-decoration: none; font-weight: bold; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #1565c0; margin-bottom: 30px; }
+        .item { background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .item-info { flex: 1; }
+        .item-nombre { font-weight: bold; font-size: 1.1rem; }
+        .item-tipo { color: #666; font-size: 0.9rem; }
+        .item-precio { color: #c8102e; font-weight: bold; font-size: 1.2rem; margin-top: 10px; }
+        .btn-eliminar { background: #f44336; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
+        .btn-eliminar:hover { background: #d32f2f; }
+        .resumen { background: white; padding: 30px; border-radius: 8px; margin-top: 30px; }
+        .resumen-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .resumen-row.total { font-weight: bold; font-size: 1.3rem; color: #c8102e; border: none; margin-top: 20px; }
+        .botones { display: flex; gap: 12px; margin-top: 30px; }
+        .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-primary { background: #1565c0; color: white; }
+        .btn-primary:hover { background: #0d47a1; }
+        .btn-secondary { background: #f5f5f5; color: #333; border: 1px solid #ddd; }
+        .btn-secondary:hover { background: #eee; }
+        .vacio { text-align: center; padding: 60px 20px; }
+        .vacio h2 { color: #666; margin-bottom: 15px; }
+        .vacio a { color: #1565c0; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🛒 Mi Carrito</h2>
+        <a href="index.html">← Volver al sitio</a>
+    </div>
+
+    <div class="container">
+        <h1>Mi Carrito de Compras</h1>
+
+        <div id="carrito-vacio" class="vacio">
+            <h2>Tu carrito está vacío 🛍️</h2>
+            <p>Agrega productos para comenzar a comprar</p>
+            <a href="index.html">Ver productos</a>
+        </div>
+
+        <div id="carrito-contenido" style="display: none;">
+            <div id="items-list"></div>
+
+            <div class="resumen">
+                <h2>Resumen</h2>
+                <div class="resumen-row">
+                    <span>Cantidad de productos:</span>
+                    <span id="cantidad">0</span>
+                </div>
+                <div class="resumen-row total">
+                    <span>Total:</span>
+                    <span id="total">$0</span>
+                </div>
+
+                <div class="botones">
+                    <button class="btn btn-secondary" onclick="location.href='index.html'">← Seguir comprando</button>
+                    <button class="btn btn-primary" onclick="cotizar()">📋 Solicitar Cotización</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function mostrarCarrito() {
+            let carrito = JSON.parse(localStorage.getItem('carrito_productos')) || [];
+            let lista = document.getElementById('items-list');
+            let total = 0;
+
+            if (carrito.length === 0) {
+                document.getElementById('carrito-vacio').style.display = 'block';
+                document.getElementById('carrito-contenido').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('carrito-vacio').style.display = 'none';
+            document.getElementById('carrito-contenido').style.display = 'block';
+
+            lista.innerHTML = carrito.map((item, idx) => {
+                total += item.precio;
+                return `
+                    <div class="item">
+                        <div class="item-info">
+                            <div class="item-nombre">${item.nombre}</div>
+                            <div class="item-tipo">${item.tipo}</div>
+                            <div class="item-precio">$${item.precio}</div>
+                        </div>
+                        <button class="btn-eliminar" onclick="eliminar(${idx})">🗑️ Eliminar</button>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('cantidad').textContent = carrito.length;
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+        }
+
+        function eliminar(idx) {
+            let carrito = JSON.parse(localStorage.getItem('carrito_productos')) || [];
+            carrito.splice(idx, 1);
+            localStorage.setItem('carrito_productos', JSON.stringify(carrito));
+            mostrarCarrito();
+        }
+
+        function cotizar() {
+            let carrito = JSON.parse(localStorage.getItem('carrito_productos')) || [];
+            if (carrito.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+
+            let mensaje = 'Solicito cotización para:\n\n';
+            let total = 0;
+            carrito.forEach(item => {
+                mensaje += `${item.nombre} - $${item.precio}\n`;
+                total += item.precio;
+            });
+            mensaje += `\nTOTAL: $${total.toFixed(2)}`;
+
+            alert('✅ Cotización solicitada!\n\nNos contactaremos en breve.\n\n' + mensaje);
+
+            // Limpiar carrito
+            localStorage.setItem('carrito_productos', JSON.stringify([]));
+            mostrarCarrito();
+        }
+
+        // Mostrar carrito al cargar
+        mostrarCarrito();
+    </script>
+</body>
+</html>

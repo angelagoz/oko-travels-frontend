@@ -1699,21 +1699,75 @@ document.addEventListener('DOMContentLoaded', () => {
   cargarTours();
 });
 
-window.addEventListener('load', () => {
-  console.log('🔄 Página completamente cargada');
-  cargarCruceros();
-  cargarDisney();
-  cargarBoletos();
-  cargarUniversal();
-  cargarTours();
-});
+// Función para inicializar Swiper en todos los grids
+async function initializeSwipers() {
+  // Esperar a que Swiper esté disponible
+  if(typeof Swiper === 'undefined') {
+    setTimeout(initializeSwipers, 100);
+    return;
+  }
 
-// Ejecutar también en el scope global
+  document.querySelectorAll('.grid-4, .grid-3, .grid-2').forEach((grid) => {
+    if(grid.id && ['cruceros-grid','boletos-grid','disney-grid','universal-grid','tours-grid'].includes(grid.id)) {
+      const cards = grid.querySelectorAll('.card');
+
+      // Solo inicializar si hay tarjetas
+      if(cards.length > 0) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'swiper-wrapper';
+
+        cards.forEach(card => {
+          const clone = card.cloneNode(true);
+          clone.classList.add('swiper-slide');
+          wrapper.appendChild(clone);
+        });
+
+        grid.innerHTML = '';
+        grid.appendChild(wrapper);
+
+        const prevBtn = document.createElement('div');
+        prevBtn.className = 'swiper-button-prev';
+        grid.appendChild(prevBtn);
+
+        const nextBtn = document.createElement('div');
+        nextBtn.className = 'swiper-button-next';
+        grid.appendChild(nextBtn);
+
+        const pagination = document.createElement('div');
+        pagination.className = 'swiper-pagination';
+        grid.appendChild(pagination);
+
+        grid.classList.add('swiper');
+        grid.classList.remove('grid-4','grid-3','grid-2');
+
+        new Swiper(grid, {
+          spaceBetween: 20,
+          pagination: { el: '.swiper-pagination', clickable: true },
+          navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+          breakpoints: {
+            320: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1200: { slidesPerView: 4 }
+          }
+        });
+      }
+    }
+  });
+}
+
+// Ejecutar cargas de datos
 cargarCruceros();
 cargarDisney();
 cargarBoletos();
 cargarUniversal();
 cargarTours();
+
+// Inicializar Swiper después de que la página cargue
+window.addEventListener('load', () => {
+  console.log('🔄 Página completamente cargada');
+  // Esperar un poco para que los datos se inserten en el DOM
+  setTimeout(initializeSwipers, 500);
+});
 
 console.log('✅ LUCHRIS TRAVELS & TOURS — Página dinámica cargada');
 </script>
@@ -1723,35 +1777,6 @@ console.log('✅ LUCHRIS TRAVELS & TOURS — Página dinámica cargada');
 
 <!-- Swiper Carruseles -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-  // Convertir grillas en carruseles
-  document.querySelectorAll('.grid-4, .grid-3, .grid-2').forEach((grid, idx) => {
-    // Saltar grillas que no sean de productos
-    if(grid.id && ['cruceros-grid','boletos-grid','disney-grid','universal-grid','tours-grid'].includes(grid.id)) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'swiper-wrapper';
-      const cards = grid.querySelectorAll('.card');
-      cards.forEach(card => {
-        card.classList.add('swiper-slide');
-        wrapper.appendChild(card.cloneNode(true));
-      });
-      grid.innerHTML = `${wrapper.outerHTML}<div class="swiper-button-prev"></div><div class="swiper-button-next"></div><div class="swiper-pagination"></div>`;
-      grid.classList.add('swiper');
-      grid.classList.remove('grid-4','grid-3','grid-2');
-
-      new Swiper(grid, {
-        spaceBetween: 20,
-        pagination: { el: '.swiper-pagination', clickable: true },
-        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-        breakpoints: {
-          320: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1200: { slidesPerView: 4 }
-        }
-      });
-    }
-  });
-</script>
 
 </body>
 </html>

@@ -18,12 +18,25 @@ ul{list-style:none;}
   color:#fff;
   font-size:.78rem;
   font-weight:600;
-  padding:7px 0;
+  padding:0;
   text-align:center;
+}
+.topbar-inner{
+  max-width:1200px;
+  margin:0 auto;
   display:flex;
   justify-content:center;
   gap:32px;
+  padding:7px 24px;
   flex-wrap:wrap;
+}
+.topbar-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.topbar-icon{
+  font-size:1rem;
 }
 .topbar a{color:#fff;text-decoration:underline;}
 
@@ -627,6 +640,9 @@ footer{
   .trust-inner{justify-content:flex-start;flex-direction:column;gap:8px;}
 }
 @media(max-width:560px){
+  .topbar-inner{gap:16px;padding:6px 12px;}
+  .topbar{font-size:.7rem;}
+  .topbar-icon{font-size:.9rem;}
   .grid-3,.grid-4{grid-template-columns:1fr;}
   .loading-container{grid-template-columns:1fr;}
   .why-grid{grid-template-columns:1fr;}
@@ -636,15 +652,6 @@ footer{
 </head>
 <body>
 
-<!-- ── TOPBAR ── -->
-<div class="topbar">
-  <span>📞 <a href="tel:18295502847">+1 (829) 550-2847</a></span>
-  <span>📧 <a href="mailto:luchristravels@gmail.com">luchristravels@gmail.com</a></span>
-  <span>📍 Baní, República Dominicana</span>
-  <span>⏰ Lun–Sáb 8:00AM–6:00PM</span>
-</div>
-
-<!-- ── NAVBAR ── -->
 <!-- ── TOPBAR ── -->
 <div class="topbar">
   <div class="topbar-inner">

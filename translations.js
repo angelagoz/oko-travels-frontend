@@ -61,6 +61,17 @@ const translations = {
     'footer.politica': 'Política de Privacidad',
     'footer.empresa': 'LUCHRIS TRAVELS & TOURS',
 
+    // Ideas de Viaje
+    'ideas.titulo': 'Nuestras ideas de viaje',
+    'ideas.subtitulo': 'Aquí podrás ver nuestras ideas de viaje',
+    'ideas.cruceros': 'Cruceros',
+    'ideas.destinos': 'Destinos',
+    'ideas.parques': 'Parques Temáticos',
+    'ideas.tours': 'Tours Internacionales',
+    'ideas.boletos': 'Boletos Aéreos',
+    'ideas.luna_miel': 'Luna de Miel',
+    'ideas.btn_ver_mas': 'Ver más',
+
     // Textos comunes
     'common.cargar': 'Cargando...',
     'common.error': 'Algo salió mal',
@@ -129,6 +140,17 @@ const translations = {
     'footer.politica': 'Privacy Policy',
     'footer.empresa': 'LUCHRIS TRAVELS & TOURS',
 
+    // Ideas de Viaje
+    'ideas.titulo': 'Our Travel Ideas',
+    'ideas.subtitulo': 'Here you can see our travel ideas',
+    'ideas.cruceros': 'Cruises',
+    'ideas.destinos': 'Destinations',
+    'ideas.parques': 'Theme Parks',
+    'ideas.tours': 'International Tours',
+    'ideas.boletos': 'Air Tickets',
+    'ideas.luna_miel': 'Honeymoon',
+    'ideas.btn_ver_mas': 'View More',
+
     // Textos comunes
     'common.cargar': 'Loading...',
     'common.error': 'Something went wrong',
@@ -196,6 +218,17 @@ const translations = {
     'footer.contacto': 'Contact',
     'footer.politica': 'Politique de Confidentialité',
     'footer.empresa': 'LUCHRIS TRAVELS & TOURS',
+
+    // Ideas de Viaje
+    'ideas.titulo': 'Nos Idées de Voyage',
+    'ideas.subtitulo': 'Ici, vous pouvez voir nos idées de voyage',
+    'ideas.cruceros': 'Croisières',
+    'ideas.destinos': 'Destinations',
+    'ideas.parques': 'Parcs à Thème',
+    'ideas.tours': 'Tours Internationaux',
+    'ideas.boletos': 'Billets Aériens',
+    'ideas.luna_miel': 'Lune de Miel',
+    'ideas.btn_ver_mas': 'Voir Plus',
 
     // Textos comunes
     'common.cargar': 'Chargement...',

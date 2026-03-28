@@ -660,6 +660,25 @@ footer{
 /* Selector de idioma */
 .nav-lang select{padding:6px 10px;border:1px solid #ddd;border-radius:4px;cursor:pointer;font-weight:600;background:#fff;font-size:.8rem;transition:.2s;}
 .nav-lang select:hover{border-color:#1565c0;box-shadow:0 2px 4px rgba(21,101,192,0.1);}
+
+/* Ideas de Viaje */
+.ideas-viaje{padding:60px 24px;background:#f8f9fa;text-align:center;}
+.ideas-container{max-width:1200px;margin:0 auto;}
+.ideas-header{margin-bottom:50px;}
+.ideas-header h2{font-size:2rem;color:#333;margin-bottom:10px;font-weight:900;}
+.ideas-header p{font-size:1rem;color:#666;}
+.ideas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:24px;margin-bottom:40px;}
+.idea-card{background:white;padding:30px 20px;border-radius:12px;cursor:pointer;transition:all .3s;border:2px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+.idea-card:hover{background:#e8f0fe;border-color:#1565c0;box-shadow:0 4px 16px rgba(21,101,192,0.15);transform:translateY(-4px);}
+.idea-icon{font-size:3rem;margin-bottom:12px;}
+.idea-text{font-weight:700;color:#333;font-size:.9rem;}
+.btn-ver-mas{background:#1565c0;color:white;border:none;padding:12px 32px;border-radius:6px;font-weight:700;cursor:pointer;transition:.3s;}
+.btn-ver-mas:hover{background:#0d47a1;box-shadow:0 4px 12px rgba(21,101,192,0.3);}
+
+@media(max-width:768px){
+.ideas-header h2{font-size:1.5rem;}
+.ideas-grid{grid-template-columns:repeat(3,1fr);gap:16px;}
+}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <script src="translations.js"></script>
@@ -795,6 +814,43 @@ footer{
   <div class="hero-dots" id="heroDots"></div>
   <button class="harr l" onclick="cambiarSlide(-1)">&#8249;</button>
   <button class="harr r" onclick="cambiarSlide(1)">&#8250;</button>
+</section>
+
+<!-- ── IDEAS DE VIAJE ── -->
+<section class="ideas-viaje">
+  <div class="ideas-container">
+    <div class="ideas-header">
+      <h2 data-i18n="ideas.titulo">Nuestras ideas de viaje</h2>
+      <p data-i18n="ideas.subtitulo">Aquí podrás ver nuestras ideas de viaje</p>
+    </div>
+    <div class="ideas-grid">
+      <div class="idea-card" onclick="ir('cruceros')">
+        <div class="idea-icon">🚢</div>
+        <div class="idea-text" data-i18n="ideas.cruceros">Cruceros</div>
+      </div>
+      <div class="idea-card" onclick="ir('destinos')">
+        <div class="idea-icon">🌴</div>
+        <div class="idea-text" data-i18n="ideas.destinos">Destinos</div>
+      </div>
+      <div class="idea-card" onclick="ir('parques')">
+        <div class="idea-icon">🏰</div>
+        <div class="idea-text" data-i18n="ideas.parques">Parques Temáticos</div>
+      </div>
+      <div class="idea-card" onclick="ir('tours')">
+        <div class="idea-icon">✈️</div>
+        <div class="idea-text" data-i18n="ideas.tours">Tours Internacionales</div>
+      </div>
+      <div class="idea-card" onclick="ir('boletos')">
+        <div class="idea-icon">🎫</div>
+        <div class="idea-text" data-i18n="ideas.boletos">Boletos Aéreos</div>
+      </div>
+      <div class="idea-card" onclick="ir('luna-miel')">
+        <div class="idea-icon">💍</div>
+        <div class="idea-text" data-i18n="ideas.luna_miel">Luna de Miel</div>
+      </div>
+    </div>
+    <button class="btn-ver-mas" data-i18n="ideas.btn_ver_mas">Ver más</button>
+  </div>
 </section>
 
 <!-- ── BUSCADOR ── -->

@@ -1468,20 +1468,29 @@ async function cargarBoletos() {
 async function cargarUniversal() {
   const grid = document.getElementById('universal-grid');
   try {
-    console.log('🔄 Cargando Universal desde:', CONFIG.obtenerURL('/productos/tipo/universal'));
-    const response = await fetch(CONFIG.obtenerURL('/productos/tipo/universal'));
+    console.log('🔄 Cargando Universal desde tours de Orlando...');
+    const response = await fetch(CONFIG.obtenerURL('/productos/tipo/tour'));
     const data = await response.json();
 
-    console.log('📊 Universal respuesta:', data);
+    console.log('📊 Tours respuesta:', data);
 
     if (data.success && data.datos && data.datos.length > 0) {
-      console.log('✅ Paquetes Universal encontrados:', data.datos.length);
-      grid.innerHTML = data.datos.slice(0, 4).map(p => {
-        return `<div class="card"><div class="card-img" style="background:#FF6B35;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🎢</div><div class="card-body"><div class="card-cat">🎢 Universal Studios</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'universal')">🛒 Agregar</button></div></div></div>`;
-      }).join('');
+      // Filtrar solo los tours de Orlando (que son los paquetes de Universal)
+      const universalPackages = data.datos.filter(p =>
+        p.destino && p.destino.includes('Orlando')
+      );
+
+      console.log('✅ Paquetes Universal encontrados:', universalPackages.length);
+
+      if (universalPackages.length > 0) {
+        grid.innerHTML = universalPackages.slice(0, 4).map(p => {
+          return `<div class="card"><div class="card-img" style="background:#FF6B35;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🎢</div><div class="card-body"><div class="card-cat">🎢 Universal Studios</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'universal')">🛒 Agregar</button></div></div></div>`;
+        }).join('');
+      } else {
+        console.log('❌ No hay paquetes Universal, mostrando ejemplos');
+      }
     } else {
-      console.log('❌ No hay Universal en API, mostrando paquetes de ejemplo');
-      // Dejar los paquetes de ejemplo que están en el HTML
+      console.log('❌ Error en respuesta, mostrando paquetes de ejemplo');
     }
   } catch (error) {
     console.error('❌ Error cargando Universal:', error);
@@ -1548,14 +1557,21 @@ async function mostrarTodosBoletos() {
 async function mostrarTodosUniversal() {
   const grid = document.getElementById('universal-grid');
   try {
-    const response = await fetch(CONFIG.obtenerURL('/productos/tipo/universal'));
+    const response = await fetch(CONFIG.obtenerURL('/productos/tipo/tour'));
     const data = await response.json();
 
     if (data.success && data.datos && data.datos.length > 0) {
-      grid.innerHTML = data.datos.map(p => {
-        return `<div class="card"><div class="card-img" style="background:#FF6B35;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🎢</div><div class="card-body"><div class="card-cat">🎢 Universal Studios</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'universal')">🛒 Agregar</button></div></div></div>`;
-      }).join('');
-      window.scrollTo({top: grid.offsetTop - 100, behavior: 'smooth'});
+      // Filtrar solo los tours de Orlando
+      const universalPackages = data.datos.filter(p =>
+        p.destino && p.destino.includes('Orlando')
+      );
+
+      if (universalPackages.length > 0) {
+        grid.innerHTML = universalPackages.map(p => {
+          return `<div class="card"><div class="card-img" style="background:#FF6B35;color:white;display:flex;align-items:center;justify-content:center;font-size:2rem">🎢</div><div class="card-body"><div class="card-cat">🎢 Universal Studios</div><div class="card-title">${p.nombre}</div><div class="card-desc">${p.descripcion}</div><div class="card-footer"><div class="precio">Desde <strong>$${p.precio_base}</strong></div><button class="card-cta" onclick="agregarCarrito('${p.nombre}', ${p.precio_base}, 'universal')">🛒 Agregar</button></div></div></div>`;
+        }).join('');
+        window.scrollTo({top: grid.offsetTop - 100, behavior: 'smooth'});
+      }
     }
   } catch (error) {
     console.error('Error:', error);

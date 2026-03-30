@@ -1243,23 +1243,37 @@ function sendForm(btn) {
 
 /* ===== CARGAR PRODUCTOS DESDE API ===== */
 const API_URL = 'https://luchris-travels-backend.onrender.com/api';
+console.log('✅ Script cargado. API URL:', API_URL);
 
 async function cargarProductos(tipo, contenedorId) {
   try {
-    const response = await fetch(`${API_URL}/productos/tipo/${tipo}`);
+    console.log(`📍 Cargando ${tipo} en ${contenedorId}...`);
+    const url = `${API_URL}/productos/tipo/${tipo}`;
+    console.log(`🔗 Fetch URL:`, url);
+
+    const response = await fetch(url);
+    console.log(`📡 Response status: ${response.status}`);
+
     const data = await response.json();
+    console.log(`✅ Datos recibidos:`, data);
+
     if (!data.success || !data.datos || data.datos.length === 0) {
-      console.warn(`No hay productos para ${tipo}`);
+      console.warn(`⚠️ No hay productos para ${tipo}`);
       return;
     }
+
     const container = document.getElementById(contenedorId);
+    console.log(`🎯 Contenedor encontrado:`, container);
+
     if (!container) {
-      console.warn(`Contenedor no encontrado: ${contenedorId}`);
+      console.error(`❌ Contenedor no encontrado: ${contenedorId}`);
       return;
     }
 
     container.innerHTML = '';
-    data.datos.forEach(p => {
+    console.log(`🗑️ Contenedor limpiado. Insertando ${data.datos.length} productos...`);
+
+    data.datos.forEach((p, i) => {
       const card = document.createElement('div');
       card.className = 'card fade-up';
       card.innerHTML = `
@@ -1278,12 +1292,15 @@ async function cargarProductos(tipo, contenedorId) {
       `;
       container.appendChild(card);
     });
+    console.log(`✅ ${data.datos.length} productos insertados en ${contenedorId}`);
   } catch (error) {
-    console.error(`Error cargando ${tipo}:`, error);
+    console.error(`❌ Error cargando ${tipo}:`, error);
   }
 }
 
+console.log('⏳ Esperando DOMContentLoaded...');
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('✨ DOMContentLoaded disponibl. Iniciando carga de productos...');
   cargarProductos('crucero', 'cruceros-grid');
   cargarProductos('tour', 'destinos-grid');
   cargarProductos('disney', 'parques-grid');

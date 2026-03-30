@@ -1374,7 +1374,7 @@ const API_URL = 'https://luchris-travels-backend.onrender.com/api';
 
 async function cargarProductos(tipo, contenedorId) {
   try {
-    const response = await fetch(`${API_URL}/productos?tipo=${tipo}`);
+    const response = await fetch(`${API_URL}/productos/tipo/${tipo}`);
     const data = await response.json();
     if (!data.success || !data.datos || data.datos.length === 0) return;
     const container = document.getElementById(contenedorId);

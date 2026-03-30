@@ -1364,6 +1364,14 @@ function sendForm(btn) {
 }
 
 /* ===== CARGAR PRODUCTOS DESDE API ===== */
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+  cargarProductos('crucero', 'cruceros-grid');
+  cargarProductos('hotel', 'hoteles-grid');
+  cargarProductos('boleto', 'boletos-grid');
+  cargarProductos('tour', 'destinos-grid');
+  cargarProductos('disney', 'parques-grid');
+});
 const API_URL = 'https://luchris-travels-backend.onrender.com/api';
 
 async function cargarProductos(tipo, contenedorId) {

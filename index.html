@@ -1364,25 +1364,20 @@ function sendForm(btn) {
 }
 
 /* ===== CARGAR PRODUCTOS DESDE API ===== */
-// Ejecutar al cargar la página
-document.addEventListener('DOMContentLoaded', () => {
-  cargarProductos('tour', 'destinos-grid');
-  cargarProductos('disney', 'parques-grid');
-  cargarProductos('crucero', 'cruceros-grid');
-});
 const API_URL = 'https://luchris-travels-backend.onrender.com/api';
 
 async function cargarProductos(tipo, contenedorId) {
   try {
     const response = await fetch(`${API_URL}/productos/tipo/${tipo}`);
     const data = await response.json();
-    if (!data.success || !data.datos || data.datos.length === 0) return;
+    if (!data.success || !data.datos || data.datos.length === 0) {
+      console.warn(`No hay productos para ${tipo}`);
+      return;
+    }
     const container = document.getElementById(contenedorId);
-    if (!container) return;
-
-    // Para parques-grid, mantener la estructura existente (parks)
-    if (contenedorId === 'parques-grid') {
-      return; // Mantener hardcoded
+    if (!container) {
+      console.warn(`Contenedor no encontrado: ${contenedorId}`);
+      return;
     }
 
     container.innerHTML = '';
@@ -1410,16 +1405,10 @@ async function cargarProductos(tipo, contenedorId) {
   }
 }
 
-async function cargarCruceros() { await cargarProductos('crucero', 'cruceros-grid'); }
-async function cargarHoteles() { await cargarProductos('hotel', 'hoteles-grid'); }
-async function cargarBoletos() { await cargarProductos('boleto', 'boletos-grid'); }
-async function cargarDestinos() { await cargarProductos('tour', 'destinos-grid'); }
-
 document.addEventListener('DOMContentLoaded', () => {
-  cargarCruceros();
-  cargarHoteles();
-  cargarBoletos();
-  cargarDestinos();
+  cargarProductos('crucero', 'cruceros-grid');
+  cargarProductos('tour', 'destinos-grid');
+  cargarProductos('disney', 'parques-grid');
 });
 </script>
 </body>

@@ -32,12 +32,19 @@ router.get('/tipo/:tipo', async (req, res) => {
 });
 
 // ========================================
-// GET - LISTAR TODOS LOS PRODUCTOS
+// GET - LISTAR TODOS O POR TIPO
 // ========================================
 
 router.get('/', async (req, res) => {
     try {
-        const productos = await Producto.find({ estado: 'activo' }).sort({ createdAt: -1 });
+        const { tipo } = req.query;
+
+        let filter = { estado: 'activo' };
+        if (tipo) {
+            filter.tipo = tipo;
+        }
+
+        const productos = await Producto.find(filter).sort({ createdAt: -1 });
 
         res.json({
             success: true,

@@ -1260,6 +1260,7 @@ async function cargarProductos(tipo, contenedorId) {
         </div>
       `;
       container.appendChild(card);
+      setTimeout(() => card.classList.add('visible'), 10 + i * 50);
     });
     console.log(`✅ ${data.datos.length} productos insertados en ${contenedorId}`);
   } catch (error) {

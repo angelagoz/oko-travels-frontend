@@ -516,18 +516,27 @@ img { display:block; max-width:100%; }
    WHY US
 ============================================= */
 .why-grid {
-  display: grid; grid-template-columns: repeat(4,1fr); gap: 20px;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 24px;
 }
 .why-card {
-  background: var(--white); border-radius: var(--radius);
-  padding: 28px 24px; text-align: center;
-  box-shadow: var(--shadow);
-  transition: transform .25s, box-shadow .25s;
+  background: var(--white); border-radius: 16px;
+  padding: 36px 24px 28px; text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,.06);
+  transition: transform .3s, box-shadow .3s;
+  border: 1px solid rgba(0,0,0,.04);
+  position: relative;
 }
-.why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow2); }
-.why-icon { font-size: 2.4rem; margin-bottom: 14px; }
-.why-card h4 { font-size: 1rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
-.why-card p { font-size: .82rem; color: var(--gray); line-height: 1.6; }
+.why-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(21,101,192,.15); }
+.why-card:hover .why-icon { background: var(--blue); color: var(--white); }
+.why-icon {
+  width: 64px; height: 64px; border-radius: 16px;
+  background: linear-gradient(135deg, #e8f0fe, #d2e3fc);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px; font-size: 1.5rem; color: var(--blue);
+  transition: all .3s;
+}
+.why-card h4 { font-size: 1.05rem; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
+.why-card p { font-size: .84rem; color: var(--gray); line-height: 1.65; }
 
 /* =============================================
    TESTIMONIALS
@@ -1135,22 +1144,22 @@ footer {
   </div>
   <div class="why-grid">
     <div class="why-card fade-up">
-      <div class="why-icon">🏆</div>
+      <div class="why-icon"><i class="fas fa-award"></i></div>
       <h4>15+ Años de Experiencia</h4>
       <p>Más de una década creando viajes inolvidables para familias dominicanas.</p>
     </div>
     <div class="why-card fade-up">
-      <div class="why-icon">💬</div>
+      <div class="why-icon"><i class="fas fa-headset"></i></div>
       <h4>Asesoría Personalizada</h4>
       <p>Te acompañamos en cada paso — desde la cotización hasta que regresas a casa.</p>
     </div>
     <div class="why-card fade-up">
-      <div class="why-icon">💰</div>
+      <div class="why-icon"><i class="fas fa-hand-holding-usd"></i></div>
       <h4>Mejor Precio Garantizado</h4>
       <p>Negociamos directamente con navieras y hoteles para ofrecerte el mejor precio.</p>
     </div>
     <div class="why-card fade-up">
-      <div class="why-icon">🌍</div>
+      <div class="why-icon"><i class="fas fa-globe-americas"></i></div>
       <h4>+120 Destinos</h4>
       <p>Desde el Caribe hasta Asia — tenemos paquetes para cualquier destino del mundo.</p>
     </div>

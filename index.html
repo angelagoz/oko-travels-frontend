@@ -120,14 +120,22 @@ img { display:block; max-width:100%; }
   border-radius: 0;
 }
 
+.hero-slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.hero-slide.active { opacity: 1; }
+.hero-slide::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(21,101,192,.75) 0%, rgba(21,101,192,.2) 60%, transparent 100%);
+}
 .hero-video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(21,101,192,.75) 0%, rgba(21,101,192,.2) 60%, transparent 100%);
 }
 
 .hero-content {
@@ -710,10 +718,18 @@ footer {
   HERO SLIDER
 ============================== -->
 <section class="hero" id="inicio">
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="videos/hero-royal-caribbean.mp4" type="video/mp4">
-  </video>
-  <div class="hero-overlay"></div>
+  <!-- Slide 1: Video Royal Caribbean -->
+  <div class="hero-slide active">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="videos/hero-royal-caribbean.mp4" type="video/mp4">
+    </video>
+  </div>
+  <!-- Slide 2: Disney Cruise -->
+  <div class="hero-slide" style="background-image:url('images/hero-disney.jpg')"></div>
+  <!-- Slide 3: Globos Capadocia -->
+  <div class="hero-slide" style="background-image:url('images/hero-globos.jpg')"></div>
+  <!-- Slide 4: Crucero -->
+  <div class="hero-slide" style="background-image:url('images/hero-crucero.jpg')"></div>
 
   <div class="hero-content">
     <h1>Tu próxima aventura<br>comienza aquí</h1>
@@ -723,6 +739,10 @@ footer {
       <a href="#servicios" class="btn-outline-white">Ver Servicios</a>
     </div>
   </div>
+
+  <div class="hero-dots" id="heroDots"></div>
+  <button class="hero-arrow left" onclick="heroChange(-1)">‹</button>
+  <button class="hero-arrow right" onclick="heroChange(1)">›</button>
 </section>
 
 <!-- ==============================
@@ -1154,14 +1174,18 @@ slides.forEach((_, i) => {
 });
 
 function goTo(n) {
+  const oldVideo = slides[cur].querySelector('video');
+  if (oldVideo) oldVideo.pause();
   slides[cur].classList.remove('active');
   dotsEl.children[cur].classList.remove('active');
   cur = (n + slides.length) % slides.length;
   slides[cur].classList.add('active');
   dotsEl.children[cur].classList.add('active');
+  const newVideo = slides[cur].querySelector('video');
+  if (newVideo) { newVideo.currentTime = 0; newVideo.play(); }
 }
 function heroChange(dir) { goTo(cur + dir); }
-const autoSlide = setInterval(() => goTo(cur + 1), 5000);
+const autoSlide = setInterval(() => goTo(cur + 1), 6000);
 
 /* CATEGORY PILLS */
 document.querySelectorAll('.cat-pill').forEach(p => {

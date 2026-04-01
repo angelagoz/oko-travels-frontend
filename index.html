@@ -871,44 +871,64 @@ footer {
     <label>Destino</label>
     <div class="search-input-wrap">
       <i class="fas fa-map-marker-alt"></i>
-      <input type="text" id="destino-input" placeholder="¿A dónde quieres ir?" list="destinos-list">
-      <datalist id="destinos-list">
-        <option value="El Caribe">
-        <option value="Cancún, México">
-        <option value="Cozumel, México">
-        <option value="Playa del Carmen">
-        <option value="Miami, Florida">
-        <option value="Bermudas">
-        <option value="Bahamas">
-        <option value="Jamaica">
-        <option value="Puerto Rico">
-        <option value="Islas Vírgenes">
-        <option value="Curacao">
-        <option value="Aruba">
-        <option value="Barbados">
-        <option value="Santa Lucía">
-        <option value="Haití">
-        <option value="República Dominicana">
-        <option value="Europa">
-        <option value="Mediterráneo">
-        <option value="París, Francia">
-        <option value="Barcelona, España">
-        <option value="Roma, Italia">
-        <option value="Venecia, Italia">
-        <option value="Estambul, Turquía">
-        <option value="Grecia">
-        <option value="Crucero Fluvial">
-        <option value="Ámsterdam, Holanda">
-        <option value="Praga, República Checa">
-        <option value="Disney World, Orlando">
-        <option value="Universal Studios, Orlando">
-        <option value="Las Vegas, Nevada">
-        <option value="Nueva York">
-        <option value="San Francisco">
-        <option value="Los Angeles">
-        <option value="Hawái">
-        <option value="Alaska">
-      </datalist>
+      <select id="destino-input">
+        <option value="">¿A dónde quieres ir?</option>
+        <optgroup label="🏝️ Caribe">
+          <option>El Caribe</option>
+          <option>Bahamas</option>
+          <option>Jamaica</option>
+          <option>Puerto Rico</option>
+          <option>Islas Vírgenes</option>
+          <option>Curacao</option>
+          <option>Aruba</option>
+          <option>Barbados</option>
+          <option>Santa Lucía</option>
+          <option>Bermudas</option>
+          <option>República Dominicana</option>
+          <option>Haití</option>
+        </optgroup>
+        <optgroup label="🇲🇽 México">
+          <option>Cancún</option>
+          <option>Cozumel</option>
+          <option>Playa del Carmen</option>
+          <option>Riviera Maya</option>
+        </optgroup>
+        <optgroup label="🇺🇸 Estados Unidos">
+          <option>Miami, Florida</option>
+          <option>Disney World, Orlando</option>
+          <option>Universal Studios, Orlando</option>
+          <option>Nueva York</option>
+          <option>Las Vegas</option>
+          <option>San Francisco</option>
+          <option>Los Angeles</option>
+          <option>Hawái</option>
+          <option>Alaska</option>
+        </optgroup>
+        <optgroup label="🇪🇺 Europa">
+          <option>Mediterráneo</option>
+          <option>París, Francia</option>
+          <option>Barcelona, España</option>
+          <option>Roma, Italia</option>
+          <option>Venecia, Italia</option>
+          <option>Estambul, Turquía</option>
+          <option>Grecia</option>
+          <option>Ámsterdam, Holanda</option>
+          <option>Praga, República Checa</option>
+          <option>Londres, Inglaterra</option>
+        </optgroup>
+        <optgroup label="🚢 Cruceros Fluviales">
+          <option>Río Danubio</option>
+          <option>Río Rin</option>
+          <option>Río Sena</option>
+        </optgroup>
+        <optgroup label="🌍 Otros">
+          <option>Dubai</option>
+          <option>Panamá</option>
+          <option>Colombia</option>
+          <option>Asia</option>
+          <option>Otro destino</option>
+        </optgroup>
+      </select>
     </div>
   </div>
   <div class="search-group">
@@ -1411,67 +1431,43 @@ function sendForm(btn) {
 
 /* BÚSQUEDA DE VIAJES */
 function buscarViaje() {
-  console.log('🔍 Función buscarViaje ejecutada');
+  var searchBar = document.querySelector('.search-bar');
+  var allSelects = searchBar.querySelectorAll('select');
+  var tipoViaje = allSelects[0] ? allSelects[0].value : '';
+  var destino = allSelects[1] ? allSelects[1].value : '';
+  var fechaInput = document.getElementById('fecha-viaje');
+  var fechaViaje = fechaInput ? fechaInput.value : '';
+  var pasajeros = allSelects[2] ? allSelects[2].value : '';
 
-  // Obtener elementos
-  const searchBar = document.querySelector('.search-bar');
-  const selects = searchBar.querySelectorAll('select');
-  const destino = document.getElementById('destino-input');
-  const fechaInput = document.getElementById('fecha-viaje');
-
-  console.log('Destino:', destino?.value);
-  console.log('Fecha:', fechaInput?.value);
-
-  // Validar destino
-  if (!destino || !destino.value.trim()) {
+  if (!destino || destino === '') {
     alert('⚠️ Por favor selecciona un destino');
-    destino?.focus();
     return;
   }
 
-  // Obtener valores
-  const tipoViaje = selects[0]?.value || '';
-  const pasajeros = selects[1]?.value || '';
-  const fechaViaje = fechaInput?.value || '';
+  var mensaje = 'Hola, me interesa viajar a ' + destino + '.';
+  if (tipoViaje && tipoViaje !== 'Selecciona...') mensaje += ' Tipo de viaje: ' + tipoViaje + '.';
+  if (pasajeros) mensaje += ' Pasajeros: ' + pasajeros + '.';
+  if (fechaViaje) mensaje += ' Fecha: ' + fechaViaje + '.';
 
-  console.log('✅ Datos capturados:', { tipoViaje, destino: destino.value, fechaViaje, pasajeros });
+  var textarea = document.querySelector('#contacto textarea');
+  if (textarea) textarea.value = mensaje;
 
-  // Guardar en sessionStorage
-  sessionStorage.setItem('busqueda', JSON.stringify({
-    tipoViaje,
-    destino: destino.value,
-    fechaViaje,
-    pasajeros
-  }));
-
-  // Pre-llenar formulario de contacto
-  const textarea = document.querySelector('textarea');
-  if (textarea) {
-    textarea.value = `Me interesa viajar a ${destino.value}. Tipo de viaje: ${tipoViaje}. Pasajeros: ${pasajeros}${fechaViaje ? '. Fecha: ' + fechaViaje : ''}.`;
+  var contacto = document.getElementById('contacto');
+  if (contacto) {
+    window.scrollTo({ top: contacto.offsetTop - 70, behavior: 'smooth' });
   }
-
-  // Scroll suave a contacto
-  const contactSection = document.getElementById('contacto');
-  if (contactSection) {
-    window.scrollTo({
-      top: contactSection.offsetTop - 70,
-      behavior: 'smooth'
-    });
-  }
-
-  console.log('✅ Búsqueda completada');
 }
 
-/* INICIALIZAR MIN DATE EN FECHA DE VIAJE */
-document.addEventListener('DOMContentLoaded', () => {
-  const fechaInput = document.getElementById('fecha-viaje');
+/* INICIALIZAR FECHA MÍNIMA (HOY) */
+(function() {
+  var fechaInput = document.getElementById('fecha-viaje');
   if (fechaInput) {
-    // Establecer la fecha mínima a hoy
-    const hoy = new Date().toISOString().split('T')[0];
-    fechaInput.setAttribute('min', hoy);
-    console.log('📅 Fecha mínima establecida a:', hoy);
+    var hoy = new Date();
+    var mes = ('0' + (hoy.getMonth() + 1)).slice(-2);
+    var dia = ('0' + hoy.getDate()).slice(-2);
+    fechaInput.setAttribute('min', hoy.getFullYear() + '-' + mes + '-' + dia);
   }
-});
+})();
 
 /* ===== CARGAR PRODUCTOS DESDE API ===== */
 const API_URL = 'https://luchris-travels-backend.onrender.com/api';

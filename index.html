@@ -871,7 +871,44 @@ footer {
     <label>Destino</label>
     <div class="search-input-wrap">
       <i class="fas fa-map-marker-alt"></i>
-      <input type="text" placeholder="¿A dónde quieres ir?">
+      <input type="text" id="destino-input" placeholder="¿A dónde quieres ir?" list="destinos-list">
+      <datalist id="destinos-list">
+        <option value="El Caribe">
+        <option value="Cancún, México">
+        <option value="Cozumel, México">
+        <option value="Playa del Carmen">
+        <option value="Miami, Florida">
+        <option value="Bermudas">
+        <option value="Bahamas">
+        <option value="Jamaica">
+        <option value="Puerto Rico">
+        <option value="Islas Vírgenes">
+        <option value="Curacao">
+        <option value="Aruba">
+        <option value="Barbados">
+        <option value="Santa Lucía">
+        <option value="Haití">
+        <option value="República Dominicana">
+        <option value="Europa">
+        <option value="Mediterráneo">
+        <option value="París, Francia">
+        <option value="Barcelona, España">
+        <option value="Roma, Italia">
+        <option value="Venecia, Italia">
+        <option value="Estambul, Turquía">
+        <option value="Grecia">
+        <option value="Crucero Fluvial">
+        <option value="Ámsterdam, Holanda">
+        <option value="Praga, República Checa">
+        <option value="Disney World, Orlando">
+        <option value="Universal Studios, Orlando">
+        <option value="Las Vegas, Nevada">
+        <option value="Nueva York">
+        <option value="San Francisco">
+        <option value="Los Angeles">
+        <option value="Hawái">
+        <option value="Alaska">
+      </datalist>
     </div>
   </div>
   <div class="search-group">
@@ -893,7 +930,7 @@ footer {
       </select>
     </div>
   </div>
-  <button class="btn-search" onclick="alert('¡Te contactaremos pronto!')"><i class="fas fa-search"></i> Buscar</button>
+  <button class="btn-search" onclick="buscarViaje()"><i class="fas fa-search"></i> Buscar</button>
 </div>
 
 <!-- ==============================
@@ -1370,6 +1407,33 @@ function sendForm(btn) {
   btn.style.background = '#16a34a';
   btn.disabled = true;
   setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.disabled = false; }, 5000);
+}
+
+/* BÚSQUEDA DE VIAJES */
+function buscarViaje() {
+  const tipoViaje = document.querySelector('.search-bar select').value;
+  const destino = document.getElementById('destino-input').value;
+  const fechaViaje = document.querySelector('.search-bar input[type="date"]').value;
+  const pasajeros = document.querySelectorAll('.search-bar select')[1].value;
+
+  if (!destino.trim()) {
+    alert('⚠️ Por favor selecciona un destino');
+    return;
+  }
+
+  // Guardar búsqueda en sessionStorage
+  sessionStorage.setItem('busqueda', JSON.stringify({
+    tipoViaje,
+    destino,
+    fechaViaje,
+    pasajeros
+  }));
+
+  // Ir a sección de contacto y pre-llenar el formulario
+  document.querySelector('textarea').value = `Me interesa viajar a ${destino}. Tipo de viaje: ${tipoViaje}. Pasajeros: ${pasajeros}${fechaViaje ? '. Fecha: ' + fechaViaje : ''}.`;
+
+  // Scroll suave a contacto
+  window.scrollTo({ top: document.getElementById('contacto').offsetTop - 70, behavior: 'smooth' });
 }
 
 /* ===== CARGAR PRODUCTOS DESDE API ===== */

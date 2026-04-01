@@ -915,7 +915,7 @@ footer {
     <label>Fecha de viaje</label>
     <div class="search-input-wrap">
       <i class="fas fa-calendar-alt"></i>
-      <input type="date">
+      <input type="date" id="fecha-viaje">
     </div>
   </div>
   <div class="search-group">
@@ -1411,30 +1411,67 @@ function sendForm(btn) {
 
 /* BÚSQUEDA DE VIAJES */
 function buscarViaje() {
-  const tipoViaje = document.querySelector('.search-bar select').value;
-  const destino = document.getElementById('destino-input').value;
-  const fechaViaje = document.querySelector('.search-bar input[type="date"]').value;
-  const pasajeros = document.querySelectorAll('.search-bar select')[1].value;
+  console.log('🔍 Función buscarViaje ejecutada');
 
-  if (!destino.trim()) {
+  // Obtener elementos
+  const searchBar = document.querySelector('.search-bar');
+  const selects = searchBar.querySelectorAll('select');
+  const destino = document.getElementById('destino-input');
+  const fechaInput = document.getElementById('fecha-viaje');
+
+  console.log('Destino:', destino?.value);
+  console.log('Fecha:', fechaInput?.value);
+
+  // Validar destino
+  if (!destino || !destino.value.trim()) {
     alert('⚠️ Por favor selecciona un destino');
+    destino?.focus();
     return;
   }
 
-  // Guardar búsqueda en sessionStorage
+  // Obtener valores
+  const tipoViaje = selects[0]?.value || '';
+  const pasajeros = selects[1]?.value || '';
+  const fechaViaje = fechaInput?.value || '';
+
+  console.log('✅ Datos capturados:', { tipoViaje, destino: destino.value, fechaViaje, pasajeros });
+
+  // Guardar en sessionStorage
   sessionStorage.setItem('busqueda', JSON.stringify({
     tipoViaje,
-    destino,
+    destino: destino.value,
     fechaViaje,
     pasajeros
   }));
 
-  // Ir a sección de contacto y pre-llenar el formulario
-  document.querySelector('textarea').value = `Me interesa viajar a ${destino}. Tipo de viaje: ${tipoViaje}. Pasajeros: ${pasajeros}${fechaViaje ? '. Fecha: ' + fechaViaje : ''}.`;
+  // Pre-llenar formulario de contacto
+  const textarea = document.querySelector('textarea');
+  if (textarea) {
+    textarea.value = `Me interesa viajar a ${destino.value}. Tipo de viaje: ${tipoViaje}. Pasajeros: ${pasajeros}${fechaViaje ? '. Fecha: ' + fechaViaje : ''}.`;
+  }
 
   // Scroll suave a contacto
-  window.scrollTo({ top: document.getElementById('contacto').offsetTop - 70, behavior: 'smooth' });
+  const contactSection = document.getElementById('contacto');
+  if (contactSection) {
+    window.scrollTo({
+      top: contactSection.offsetTop - 70,
+      behavior: 'smooth'
+    });
+  }
+
+  console.log('✅ Búsqueda completada');
 }
+
+/* INICIALIZAR MIN DATE EN FECHA DE VIAJE */
+document.addEventListener('DOMContentLoaded', () => {
+  const fechaInput = document.getElementById('fecha-viaje');
+  if (fechaInput) {
+    // Establecer la fecha mínima a hoy
+    const hoy = new Date().toISOString().split('T')[0];
+    fechaInput.setAttribute('min', hoy);
+    console.log('📅 Fecha mínima establecida a:', hoy);
+  }
+});
 
 /* ===== CARGAR PRODUCTOS DESDE API ===== */
 const API_URL = 'https://luchris-travels-backend.onrender.com/api';

@@ -686,6 +686,28 @@ Backend → Procesa con Stripe → Webhook → Actualiza Reserva →
 
 ---
 
+### ✅ BOTÓN BUSCAR REPARADO + VALIDACIÓN DE FECHAS (01/04/2026)
+
+**Problemas Resueltos:**
+1. ❌ El botón "Buscar" no funcionaba
+   - ✅ Reescrita función `buscarViaje()` con mejor selección de elementos
+   - ✅ Agregada validación robusta con console logging
+   - ✅ Ahora captura correctamente todos los datos del formulario
+
+2. ❌ Las fechas pasadas podían seleccionarse
+   - ✅ Agregado atributo `min` con fecha de hoy
+   - ✅ Input de fecha bloqueado para fechas anteriores a hoy
+   - ✅ Inicialización automática al cargar la página
+
+**Cambios Técnicos:**
+- ID agregado: `id="fecha-viaje"` al input de fecha
+- Nueva función DOMContentLoaded que establece `min` en la fecha actual
+- Mejores selectores de elementos (por ID en lugar de querySelector genéricos)
+- Console logs para debugging fácil
+- Validación mejorada con mensajes de error claros
+
+---
+
 ### ⏳ PRÓXIMOS PASOS:
 - Poblar BD con productos iniciales
 - Verificar carga dinámica en catálogo

@@ -558,6 +558,38 @@ img { display:block; max-width:100%; }
 .stars { color: var(--gold); font-size: .75rem; margin-top: 3px; }
 
 /* =============================================
+   NAVIERAS POR CATEGORÍA
+============================================= */
+.navieras-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+}
+.naviera-category {
+  background: var(--white); border-radius: var(--radius);
+  padding: 28px; box-shadow: var(--shadow);
+  transition: transform .25s, box-shadow .25s;
+}
+.naviera-category:hover { transform: translateY(-4px); box-shadow: var(--shadow2); }
+.category-title {
+  font-size: 1.15rem; font-weight: 800; color: var(--dark);
+  margin-bottom: 18px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--blue);
+}
+.naviera-list {
+  list-style: none; padding: 0; margin: 0;
+}
+.naviera-list li {
+  font-size: .9rem; color: var(--dark); margin-bottom: 12px;
+  padding-left: 20px; position: relative; line-height: 1.5;
+}
+.naviera-list li:before {
+  content: "▸"; color: var(--blue); font-weight: bold;
+  position: absolute; left: 0;
+}
+.naviera-list strong {
+  font-weight: 700; color: var(--blue);
+}
+
+/* =============================================
    CONTACT SECTION
 ============================================= */
 .contact-wrap {
@@ -732,6 +764,7 @@ footer {
   .parks-grid { grid-template-columns: 1fr; }
   .testi-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr 1fr; }
+  .navieras-grid { grid-template-columns: 1fr; }
   .contact-wrap { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
@@ -980,6 +1013,60 @@ footer {
     <div class="ticker-item"><img src="logos/VCL-logo-color.png" alt="Voyages to Antiquity"></div><span class="ticker-sep">✦</span>
   </div>
 </div>
+
+<!-- ==============================
+  NAVIERAS POR CATEGORÍA
+============================== -->
+<section class="section" style="background: #f8f9fa;">
+  <div class="fade-up">
+    <h2 class="section-title">Navieras Asociadas por Categoría</h2>
+    <p class="section-sub">Trabajamos con las mejores líneas de cruceros del mundo</p>
+  </div>
+
+  <div class="navieras-grid">
+    <!-- LÍNEAS PREMIUM/LUJO -->
+    <div class="naviera-category fade-up">
+      <h3 class="category-title">🏆 Líneas Premium & Lujo</h3>
+      <ul class="naviera-list">
+        <li><strong>Cunard</strong> - Lujo tradicional británico</li>
+        <li><strong>Oceania Cruises</strong> - Destinos exclusivos</li>
+        <li><strong>Regent Seven Seas</strong> - Ultra-lujo todo incluido</li>
+        <li><strong>Silversea</strong> - Cruceros de lujo boutique</li>
+        <li><strong>Crystal Cruises</strong> - Experiencias de primera clase</li>
+        <li><strong>Seabourn</strong> - Lujo y elegancia</li>
+        <li><strong>Azamara</strong> - Viajes íntimos y exclusivos</li>
+      </ul>
+    </div>
+
+    <!-- LÍNEAS ESTÁNDAR/MASIVAS -->
+    <div class="naviera-category fade-up">
+      <h3 class="category-title">🚢 Líneas Estándar</h3>
+      <ul class="naviera-list">
+        <li><strong>Carnival Cruise Line</strong> - Diversión familiar</li>
+        <li><strong>Royal Caribbean</strong> - Innovación y aventura</li>
+        <li><strong>MSC Cruceros</strong> - Estilo europeo</li>
+        <li><strong>Disney Cruise Line</strong> - Magia familiar</li>
+        <li><strong>Norwegian Cruise Line</strong> - Libertad sin reglas</li>
+        <li><strong>Princess Cruises</strong> - Elegancia moderna</li>
+        <li><strong>Holland America Line</strong> - Tradición holandesa</li>
+        <li><strong>Costa Cruceros</strong> - Diversión mediterránea</li>
+      </ul>
+    </div>
+
+    <!-- LÍNEAS BOUTIQUE/ESPECIALIZADAS -->
+    <div class="naviera-category fade-up">
+      <h3 class="category-title">✨ Líneas Boutique & Especializadas</h3>
+      <ul class="naviera-list">
+        <li><strong>Virgin Voyages</strong> - Experiencia moderna y audaz</li>
+        <li><strong>Margaritaville at Sea</strong> - Ambiente relajado tropical</li>
+        <li><strong>Celestyal Cruises</strong> - Cultura y historia griega</li>
+        <li><strong>Explora Journeys</strong> - Viajes inmersivos</li>
+        <li><strong>AmaWaterways</strong> - Cruceros fluviales europeos</li>
+        <li><strong>Voyages to Antiquity</strong> - Patrimonio e historia</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <!-- ==============================
   POR QUÉ ELEGIRNOS

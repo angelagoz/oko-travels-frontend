@@ -120,15 +120,12 @@ img { display:block; max-width:100%; }
   border-radius: 0;
 }
 
-.hero-slide {
+.hero-video {
   position: absolute; inset: 0;
-  background-size: cover; background-position: center;
-  opacity: 0;
-  transition: opacity 1.2s ease;
+  width: 100%; height: 100%;
+  object-fit: cover;
 }
-.hero-slide.active { opacity: 1; }
-.hero-slide::after {
-  content: '';
+.hero-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(to right, rgba(21,101,192,.75) 0%, rgba(21,101,192,.2) 60%, transparent 100%);
 }
@@ -713,11 +710,10 @@ footer {
   HERO SLIDER
 ============================== -->
 <section class="hero" id="inicio">
-  <div class="hero-slide active" style="background-image:url('https://picsum.photos/id/1011/1920/800')"></div>
-  <div class="hero-slide" style="background-image:url('https://picsum.photos/id/1015/1920/800')"></div>
-  <div class="hero-slide" style="background-image:url('https://picsum.photos/id/1001/1920/800')"></div>
-  <div class="hero-slide" style="background-image:url('https://picsum.photos/id/1041/1920/800')"></div>
-  <div class="hero-slide" style="background-image:url('https://picsum.photos/id/1035/1920/800')"></div>
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="videos/hero-royal-caribbean.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
 
   <div class="hero-content">
     <h1>Tu próxima aventura<br>comienza aquí</h1>
@@ -727,10 +723,6 @@ footer {
       <a href="#servicios" class="btn-outline-white">Ver Servicios</a>
     </div>
   </div>
-
-  <div class="hero-dots" id="heroDots"></div>
-  <button class="hero-arrow left" onclick="heroChange(-1)">‹</button>
-  <button class="hero-arrow right" onclick="heroChange(1)">›</button>
 </section>
 
 <!-- ==============================

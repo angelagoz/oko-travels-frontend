@@ -663,6 +663,29 @@ Backend → Procesa con Stripe → Webhook → Actualiza Reserva →
 
 ---
 
+### ✅ BÚSQUEDA DE DESTINOS FUNCIONAL (01/04/2026)
+
+**Problema:** Input de "Destino" no tenía funcionalidad
+
+**Solución Implementada:**
+- ✅ Agregado datalist con 36 destinos sugeridos
+- ✅ Destinos incluyen: Caribe, Europa, USA, México, Disney, Universal
+- ✅ Función JavaScript `buscarViaje()` completamente operativa
+
+**Funcionalidad:**
+1. Usuario selecciona tipo de viaje, destino, fecha y pasajeros
+2. Click en "Buscar" captura todos los datos
+3. Pre-llena automáticamente el formulario de contacto
+4. Scroll suave hasta la sección de contacto
+5. Datos guardados en sessionStorage
+
+**Destinos Disponibles:**
+- 🏝️ Caribe: El Caribe, Cancún, Cozumel, Playa del Carmen, Miami, Bermudas, Bahamas, Jamaica, Puerto Rico, Islas Vírgenes, Curacao, Aruba, Barbados, Santa Lucía, Haití, República Dominicana
+- 🇪🇺 Europa: París, Barcelona, Roma, Venecia, Estambul, Grecia, Ámsterdam, Praga, Mediterráneo
+- 🎢 USA: Disney World, Universal Studios, Las Vegas, Nueva York, San Francisco, Los Angeles, Hawái, Alaska
+
+---
+
 ### ⏳ PRÓXIMOS PASOS:
 - Poblar BD con productos iniciales
 - Verificar carga dinámica en catálogo

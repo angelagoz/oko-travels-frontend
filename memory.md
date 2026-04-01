@@ -548,3 +548,51 @@ Backend → Procesa con Stripe → Webhook → Actualiza Reserva →
 ### 📝 EN PROGRESO:
 - Poblando BD manualmente con 10 productos iniciales
 - Verificando que carguen en catálogo dinámico
+
+---
+
+## 🚀 SESIÓN 31/03/2026 - 01/04/2026: LOGOS Y HERO CARRUSEL
+
+**Última actualización**: 2026-04-01
+
+### ✅ COMPLETADO:
+
+**1. Fix Logos de Navieras:**
+- ✅ Corregidas rutas de logos (`/logos/` → `logos/` para GitHub Pages)
+- ✅ Subidos 12 logos faltantes que no estaban en git
+- ✅ Restaurada sección navieras al estado correcto (3 categorías)
+- ✅ Reemplazados todos los links externos rotos (Wikimedia, Twitter) por logos locales
+- ✅ Ajustados tamaños: Cunard (110px), Oceania (120px), Celebrity (110px)
+- ✅ Cambiado Cunard de .jpg a .png (mejor calidad)
+- ✅ Carnival logo sustituido por versión correcta desde carpeta LOGOS NAVIERAS
+
+**2. Hero Carrusel con Video + Fotos:**
+- ✅ Video Royal Caribbean (hero-royal-caribbean.mp4) como slide 1
+- ✅ 7 fotos adicionales en carrusel:
+  - hero-disney.jpg (Disney Cruise)
+  - hero-globos.jpg (Capadocia globos)
+  - hero-crucero.jpg (crucero)
+  - hero-slide5.jpg, hero-slide6.jpg, hero-slide7.jpg, hero-slide8.jpg (fotos propias)
+- ✅ Autoplay video con pause/play al cambiar slides
+- ✅ Rotación automática cada 6 segundos
+- ✅ Flechas y dots de navegación funcionales
+- ✅ Overlay azul degradado sobre todos los slides
+
+**3. Archivos Creados/Modificados:**
+- Carpeta `images/` creada con 7 fotos hero
+- Carpeta `videos/` creada con 1 video hero
+- `index.html` actualizado (hero, navieras, CSS, JS)
+
+### 📊 Estado Actual:
+| Componente | Status | URL |
+|-----------|--------|-----|
+| Frontend | ✅ VIVO | https://angelagoz.github.io/luchris-travels-frontend/ |
+| Backend | ✅ VIVO | https://luchris-travels-backend.onrender.com/api |
+| Hero | ✅ Video + 7 fotos carrusel | Funcionando |
+| Logos Navieras | ✅ Todos locales y funcionando | 3 categorías |
+
+### ⏳ PRÓXIMOS PASOS:
+- Poblar BD con productos iniciales
+- Verificar carga dinámica en catálogo
+- Página de detalle de producto (producto-detalle.html)
+- Mejorar secciones restantes de la página

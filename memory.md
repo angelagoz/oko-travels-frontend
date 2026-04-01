@@ -636,6 +636,33 @@ Backend → Procesa con Stripe → Webhook → Actualiza Reserva →
 
 ---
 
+### ✅ NAVIERAS POR CATEGORÍA (01/04/2026)
+
+**Nueva Sección:** "Navieras Asociadas por Categoría"
+- ✅ Ubicada debajo del ticker de logos
+- ✅ Organiza las 22 navieras en 3 categorías profesionales
+- ✅ Cada categoría en una tarjeta con efectos hover
+- ✅ Responsive: 3 columnas desktop, 1 columna mobile
+
+**Categorías:**
+1. **🏆 Líneas Premium & Lujo** (7 navieras)
+   - Cunard, Oceania, Regent, Silversea, Crystal, Seabourn, Azamara
+
+2. **🚢 Líneas Estándar** (8 navieras)
+   - Carnival, Royal Caribbean, MSC, Disney, Norwegian, Princess, Holland America, Costa
+
+3. **✨ Líneas Boutique & Especializadas** (6 navieras)
+   - Virgin Voyages, Margaritaville, Celestyal, Explora, AmaWaterways, Voyages to Antiquity
+
+**Características CSS:**
+- Tarjetas con sombras y efectos hover
+- Títulos con bordes inferiores azules
+- Bullets azules en listas
+- Nombres de navieras en azul bold
+- Espaciado y alineación profesional
+
+---
+
 ### ⏳ PRÓXIMOS PASOS:
 - Poblar BD con productos iniciales
 - Verificar carga dinámica en catálogo

@@ -591,6 +591,41 @@ Backend → Procesa con Stripe → Webhook → Actualiza Reserva →
 | Hero | ✅ Video + 7 fotos carrusel | Funcionando |
 | Logos Navieras | ✅ Todos locales y funcionando | 3 categorías |
 
+### ✅ TICKER LOGOS - UNIFORM SIZING (01/04/2026 - 15:XX)
+
+**Problema Resuelto:**
+- ❌ Logos tenían diferentes proporciones ancho/alto
+- ❌ Aunque tenían misma altura, se veían de tamaños diferentes
+- ❌ Falta de uniformidad visual en el ticker
+
+**Solución Implementada:**
+- ✅ .ticker-item: Contenedor cuadrado 100x100px centrado
+- ✅ Logos con max-height 80px, max-width 90px
+- ✅ object-fit: contain mantiene proporciones
+- ✅ Flexbox centra los logos dentro del contenedor
+- ✅ TODOS los logos ahora se ven exactamente iguales
+
+**CSS Actualizado:**
+```css
+.ticker-item {
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  width: 100px; height: 100px;
+}
+.ticker-item img {
+  max-height: 80px !important; max-width: 90px !important; object-fit: contain;
+  filter: grayscale(100%);
+  opacity: .5;
+  transition: all .3s;
+}
+```
+
+**Resultado Final:**
+- ✅ Aspecto profesional uniforme
+- ✅ Todos los 16 logos visualmente idénticos
+- ✅ Funciona perfectamente en desktop y mobile
+
+---
+
 ### ⏳ PRÓXIMOS PASOS:
 - Poblar BD con productos iniciales
 - Verificar carga dinámica en catálogo

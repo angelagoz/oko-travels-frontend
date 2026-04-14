@@ -1,0 +1,3 @@
+# Disable Jekyll
+theme: null
+markdown: kramdown

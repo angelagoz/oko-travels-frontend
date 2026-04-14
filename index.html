@@ -1,782 +1,2786 @@
 <!DOCTYPE html>
 <html lang="es">
+<!--
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║                                                                            ║
+  ║                        🌍 OKO TRAVELS - Web SPA 🌍                        ║
+  ║                    Professional Travel Agency Website                     ║
+  ║                                                                            ║
+  ║  ✨ Features:                                                              ║
+  ║  • Responsive Design (Mobile-First Approach)                              ║
+  ║  • Dynamic Blog with Search & Filters                                     ║
+  ║  • Professional Photo Gallery                                             ║
+  ║  • Advanced Visual Effects & Animations                                   ║
+  ║  • Email Subscription System                                              ║
+  ║  • Carousel Hero Section with 4 Rotating Slides                           ║
+  ║  • Modern UI/UX with Brand Colors (#5BB4D4, #F79A2B)                      ║
+  ║  • Font Awesome 6.4.0 Icons                                               ║
+  ║                                                                            ║
+  ║  📱 Responsive Breakpoints:                                                ║
+  ║  • Desktop: 1200px+                                                       ║
+  ║  • Tablet: 768px - 1199px                                                 ║
+  ║  • Mobile: 480px - 767px                                                  ║
+  ║  • Small Mobile: < 480px                                                  ║
+  ║                                                                            ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OKO TRAVELS - Viajes Inolvidables desde República Dominicana</title>
-    <meta name="description" content="Agencia de viajes especializada en cruceros, tours, Disney y vacaciones desde República Dominicana.">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; background: #f8f9fa; color: #333; }
-        a { text-decoration: none; color: inherit; }
-        img { display: block; max-width: 100%; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OKO TRAVELS - Agencia de Viajes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        /* CSS Variables */
-        :root {
-            --primary: #0D6A4F;
-            --primary-dark: #095340;
-            --accent: #FF8C00;
-            --accent-dark: #E67E00;
-            --light: #f8f9fa;
-            --white: #ffffff;
-            --dark: #1a1a1a;
-            --gray: #666;
-            --border: #e0e0e0;
-        }
+:root {
+  --primary: #5BB4D4;
+  --secondary: #F79A2B;
+  --accent: #F5C547;
+  --dark: #1A3A4A;
+  --light: #f7f8fc;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-        /* ===================== NAVBAR ===================== */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            padding: 15px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 999;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .nav-logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-        .nav-links a {
-            font-weight: 600;
-            color: var(--dark);
-            transition: color 0.3s;
-            font-size: 14px;
-        }
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        .btn-contact {
-            background: var(--accent);
-            color: var(--white);
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .btn-contact:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-        }
-        .hamburger { display: none; cursor: pointer; font-size: 24px; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fff;
+  color: var(--dark);
+  overflow-x: hidden;
+}
 
-        /* ===================== CAROUSEL ===================== */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: 650px;
-            overflow: hidden;
-            background: #000;
-            margin-top: 70px;
-        }
-        .carousel-slide {
-            display: none;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            background-size: cover;
-            background-position: center;
-        }
-        .carousel-slide.active {
-            display: flex;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-        .carousel-slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(13, 106, 79, 0.35) 0%, rgba(0, 0, 0, 0.5) 100%);
-        }
-        .carousel-slide video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .slide-content {
-            z-index: 2;
-            color: white;
-            text-align: center;
-            max-width: 900px;
-            padding: 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-        .slide-content h1 {
-            font-size: 56px;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
-            font-weight: 700;
-            animation: slideUp 0.8s ease-out 0.2s both;
-        }
-        .slide-content p {
-            font-size: 20px;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
-            animation: slideUp 0.8s ease-out 0.4s both;
-        }
-        .slide-btn {
-            display: inline-block;
-            padding: 14px 35px;
-            background: var(--accent);
-            color: white;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s;
-            animation: slideUp 0.8s ease-out 0.6s both;
-        }
-        .slide-btn:hover {
-            background: var(--accent-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.4);
-        }
-        .carousel-control {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .carousel-control:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-        .carousel-prev { left: 20px; }
-        .carousel-next { right: 20px; }
-        .carousel-indicators {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 10;
-        }
-        .indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        .indicator:hover {
-            background: rgba(255, 255, 255, 0.8);
-            transform: scale(1.2);
-        }
-        .indicator.active {
-            background: var(--accent);
-            width: 30px;
-            border-radius: 6px;
-            border-color: white;
-        }
-        .video-controls {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            z-index: 11;
-            display: none;
-        }
-        .carousel-slide.active.video .video-controls {
-            display: block;
-        }
-        .video-btn {
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .video-btn:hover {
-            background: rgba(0, 0, 0, 0.9);
-        }
+/* ===== NAVBAR ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(91, 180, 212, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  z-index: 1000;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+}
 
-        /* ===================== SECTION ABOUT ===================== */
-        .section {
-            padding: 80px 60px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .section-title {
-            font-size: 42px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .section-subtitle {
-            font-size: 16px;
-            color: var(--gray);
-            text-align: center;
-            margin-bottom: 50px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-        .about-card {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s;
-        }
-        .about-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-        }
-        .about-card-icon {
-            font-size: 48px;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
-        .about-card h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: var(--dark);
-        }
-        .about-card p {
-            color: var(--gray);
-            line-height: 1.6;
-            font-size: 14px;
-        }
+.brand {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-        /* ===================== PRODUCTS SECTION ===================== */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 25px;
-        }
-        .product-card {
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s;
-        }
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        .product-image {
-            width: 100%;
-            height: 200px;
-            background: #e0e0e0;
-            overflow: hidden;
-        }
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .product-info {
-            padding: 20px;
-        }
-        .product-category {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        .product-name {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-        .product-description {
-            font-size: 13px;
-            color: var(--gray);
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-        .product-price {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 12px;
-        }
-        .btn-producto {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-        .btn-producto:hover {
-            background: var(--primary-dark);
-        }
+.brand i {
+  color: var(--primary);
+}
 
-        /* ===================== CTA SECTION ===================== */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            text-align: center;
-            padding: 80px 60px;
-            border-radius: 12px;
-            margin: 80px auto;
-            max-width: 1400px;
-        }
-        .cta-section h2 {
-            font-size: 42px;
-            margin-bottom: 20px;
-        }
-        .cta-section p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            opacity: 0.95;
-        }
-        .cta-button {
-            background: var(--accent);
-            color: var(--dark);
-            padding: 15px 40px;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-            transition: all 0.3s;
-            display: inline-block;
-        }
-        .cta-button:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-        }
+.brand span {
+  color: var(--primary);
+}
 
-        /* ===================== FOOTER ===================== */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 60px 40px 20px;
-            margin-top: 80px;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            max-width: 1400px;
-            margin: 0 auto 40px;
-        }
-        .footer-section h4 {
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-        .footer-section a {
-            display: block;
-            margin-bottom: 10px;
-            color: rgba(255,255,255,0.8);
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-        .footer-section a:hover {
-            color: var(--accent);
-        }
-        .footer-contact {
-            font-size: 14px;
-            line-height: 1.8;
-            color: rgba(255,255,255,0.8);
-        }
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 30px;
-            text-align: center;
-            color: rgba(255,255,255,0.6);
-            font-size: 13px;
-        }
+.nav-center {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
 
-        /* ===================== ANIMATIONS ===================== */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+.nav-link {
+  color: var(--dark);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: var(--transition);
+  position: relative;
+}
 
-        /* ===================== RESPONSIVE ===================== */
-        @media (max-width: 768px) {
-            .carousel-container { height: 400px; margin-top: 60px; }
-            nav { padding: 12px 20px; }
-            .nav-links { display: none; }
-            .hamburger { display: block; }
-            .section { padding: 50px 20px; }
-            .section-title { font-size: 32px; }
-            .slide-content { padding: 30px; }
-            .slide-content h1 { font-size: 36px; }
-            .about-grid { gap: 20px; }
-            .footer-grid { gap: 30px; }
-        }
-    </style>
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: var(--transition);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: var(--primary);
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--dark);
+}
+
+.nav-right {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.contact-btn {
+  background: linear-gradient(135deg, var(--primary) 0%, #3a8fb3 100%);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(91, 180, 212, 0.25);
+}
+
+/* ===== POLISH & REFINEMENTS ===== */
+/* Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Refined input focus states */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(91, 180, 212, 0.1);
+}
+
+/* Improved button states */
+button {
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Badge styling for new articles */
+.article-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--secondary) 0%, #d97a1a 100%);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 8px;
+}
+
+/* Loading animation for lazy images */
+img[loading="lazy"] {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Improved form styling */
+input[type="text"], input[type="email"], select {
+  appearance: none;
+}
+
+select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235BB4D4' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
+/* Tooltip styling */
+[title] {
+  position: relative;
+}
+
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--dark);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Improved pagination or navigation indicators */
+.carousel-dot {
+  transition: all 0.3s ease;
+}
+
+.carousel-dot:hover {
+  transform: scale(1.2);
+}
+
+/* Text selection styling */
+::selection {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Scrollbar styling (webkit browsers) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  position: fixed;
+  left: -350px;
+  top: 70px;
+  width: 350px;
+  height: calc(100vh - 70px);
+  background: linear-gradient(180deg, #fff 0%, var(--light) 100%);
+  border-right: 1px solid rgba(91, 180, 212, 0.1);
+  padding: 30px 0;
+  z-index: 999;
+  transition: var(--transition);
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-section {
+  margin-bottom: 10px;
+}
+
+.sidebar-title {
+  padding: 15px 25px;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sidebar-item {
+  padding: 12px 25px;
+  color: var(--dark);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-item:hover {
+  background: rgba(91, 180, 212, 0.1);
+  border-left-color: var(--primary);
+  padding-left: 22px;
+}
+
+.sidebar-item.active {
+  background: rgba(91, 180, 212, 0.15);
+  border-left-color: var(--primary);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.sidebar-item i {
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+.sidebar-overlay.open {
+  display: block;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+  margin-top: 70px;
+  min-height: 100vh;
+}
+
+.page {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: var(--transition);
+  animation: pageEnter 0.5s ease forwards;
+}
+
+.page.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #3a8fb3 100%);
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.1;
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  max-width: 700px;
+  padding: 0 30px;
+  animation: fadeInUp 0.8s ease;
+}
+
+.hero h1 {
+  font-size: 4.2rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+  opacity: 0.98;
+  line-height: 1.6;
+  color: #fff;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary, .btn-white {
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  background: var(--secondary);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(247, 154, 43, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(247, 154, 43, 0.4);
+}
+
+.btn-white {
+  background: #fff;
+  color: var(--primary);
+}
+
+.btn-white:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== EFECTOS VISUALES AVANZADOS ===== */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(91, 180, 212, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(91, 180, 212, 0.6);
+  }
+}
+
+@keyframes floatEffect {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Botones con efecto glow */
+.btn-primary, .btn-white {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+/* Tarjetas flotantes */
+.card {
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(91, 180, 212, 0.1), rgba(247, 154, 43, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 12px;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Efectos en iconos */
+.section-title i, [style*="font-size: 2.5rem"] i, [style*="font-size: 3rem"] i {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover .section-title i {
+  transform: scale(1.2) rotate(5deg);
+  color: var(--secondary);
+}
+
+/* Links con subrayado elegante */
+a {
+  position: relative;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--secondary);
+  transition: width 0.3s ease;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+/* Efecto de "brillo" en cards al pasar el mouse */
+@keyframes cardShine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Sombras dinámicas */
+.card {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card:hover {
+  box-shadow: 0 20px 40px rgba(91, 180, 212, 0.15);
+}
+
+/* ===== SECTION WRAPPER ===== */
+.section {
+  padding: 80px 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(91, 180, 212, 0.02) 0%, rgba(247, 154, 43, 0.02) 100%);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.section-header {
+  margin-bottom: 60px;
+  animation: fadeInUp 0.8s ease;
+}
+
+.section-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--dark);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.section-title i {
+  color: var(--primary);
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: #888;
+  line-height: 1.6;
+}
+
+/* ===== CARDS GRID ===== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: var(--transition);
+  cursor: pointer;
+  animation: fadeInUp 0.6s ease;
+  border-top: 4px solid var(--primary);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(91, 180, 212, 0.2);
+}
+
+.card:hover .card-arrow {
+  opacity: 1 !important;
+  transform: translateX(5px);
+}
+
+.card-img {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-img::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.2), transparent);
+  pointer-events: none;
+}
+
+.card-content {
+  padding: 25px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.card-badge {
+  display: inline-block;
+  background: rgba(91, 180, 212, 0.1);
+  color: var(--primary);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ===== SUBSECTIONS ===== */
+.subsections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+.subsection-btn {
+  padding: 20px;
+  background: var(--light);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.subsection-btn:hover {
+  border-color: var(--primary);
+  background: rgba(91, 180, 212, 0.05);
+}
+
+.subsection-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-section {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 60px 30px;
+  border-radius: 12px;
+  margin-top: 60px;
+  animation: fadeInUp 0.8s ease;
+}
+
+.contact-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.contact-section p {
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.contact-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.contact-item i {
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* ===== RESPONSIVE ===== */
+/* ===== TABLET (768px and below) ===== */
+@media(max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+    height: 60px;
+  }
+
+  .brand {
+    font-size: 1.3rem;
+  }
+
+  .nav-center {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .hero {
+    height: 350px;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+  }
+
+  .section {
+    padding: 50px 20px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .sidebar {
+    width: 280px;
+    left: -280px;
+  }
+
+  .contact-info {
+    grid-template-columns: 1fr;
+  }
+
+  /* Blog articles grid - 2 columnas en tablet */
+  [style*="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  /* Tips para viajar - 2 columnas en tablet */
+  [style*="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+}
+
+/* ===== MOBILE (480px and below) ===== */
+@media(max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .navbar {
+    padding: 0 15px;
+    height: 55px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .brand {
+    font-size: 1.1rem;
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  .nav-right {
+    gap: 10px;
+  }
+
+  .contact-btn {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+
+  .hero {
+    height: 280px;
+    margin-top: 55px;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+    line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  .carousel-dot {
+    width: 8px !important;
+    height: 8px !important;
+    margin: 0 3px !important;
+  }
+
+  .section {
+    padding: 35px 15px;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-primary, .btn-white {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.95rem;
+    padding: 12px 20px;
+  }
+
+  /* Blog articles - 1 columna en móvil */
+  [style*="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))"] {
+    grid-template-columns: 1fr !important;
+    gap: 15px !important;
+  }
+
+  /* Tips para viajar - 1 columna en móvil */
+  [style*="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))"] {
+    grid-template-columns: 1fr !important;
+    gap: 15px !important;
+  }
+
+  /* Modal blog responsivo */
+  #blog-modal {
+    padding: 10px !important;
+  }
+
+  #blog-modal > div {
+    padding: 25px !important;
+    max-height: 90vh !important;
+  }
+
+  #blog-modal h2 {
+    font-size: 1.5rem !important;
+  }
+
+  #blog-modal h3 {
+    font-size: 1.2rem !important;
+  }
+
+  #blog-modal h4 {
+    font-size: 1.05rem !important;
+    margin-top: 15px !important;
+  }
+
+  #blog-modal p, #blog-modal li {
+    font-size: 0.95rem !important;
+  }
+
+  /* Suscripción form responsivo */
+  [style*="background: linear-gradient(135deg, var(--primary)"] {
+    padding: 30px 15px !important;
+  }
+
+  [style*="max-width: 500px"] {
+    max-width: 100% !important;
+    flex-direction: column !important;
+  }
+
+  [style*="max-width: 500px"] input {
+    min-width: 100% !important;
+  }
+
+  [style*="max-width: 500px"] button {
+    width: 100% !important;
+  }
+
+  /* Tipografía más pequeña en listas */
+  ul {
+    font-size: 0.9rem !important;
+  }
+
+  li {
+    margin-bottom: 5px;
+  }
+
+  /* Touch-friendly buttons en móvil (min 44px de alto) */
+  button, input[type="button"], input[type="submit"], .btn-primary, .btn-white {
+    min-height: 44px !important;
+    font-size: 1rem !important;
+  }
+
+  /* Espaciado mejorado entre secciones */
+  .section {
+    margin-bottom: 20px;
+  }
+
+  /* Imágenes responsivas */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Footer responsive */
+  footer {
+    padding: 30px 15px !important;
+  }
+
+  footer h3 {
+    font-size: 1.1rem !important;
+  }
+
+  footer p {
+    font-size: 0.9rem !important;
+  }
+
+  /* Cards de artículos con padding mejor */
+  [style*="padding: 25px"] {
+    padding: 20px !important;
+  }
+
+  /* Reducir padding de tips */
+  [style*="padding: 30px; border-radius: 12px"] {
+    padding: 20px !important;
+  }
+
+  /* Íconos más grandes para mejor interacción */
+  i {
+    font-size: 1.8rem !important;
+  }
+}
+  </style>
 </head>
 <body>
-    <!-- NAVBAR -->
-    <nav>
-        <div class="nav-logo">🌴 OKO TRAVELS</div>
-        <div class="nav-links">
-            <a href="#home">Inicio</a>
-            <a href="#productos">Productos</a>
-            <a href="#about">Nosotros</a>
-            <a href="#footer">Contacto</a>
-            <a href="cms-productos-pro.html" class="btn-contact">Panel CMS</a>
-        </div>
-        <div class="hamburger">☰</div>
-    </nav>
 
-    <!-- CAROUSEL -->
-    <div class="carousel-container" id="carousel">
-        <!-- Slide 1: Cruceros -->
-        <div class="carousel-slide active fade" style="background-image: url('images/hero-crucero.jpg');">
-            <div class="slide-content">
-                <h1>⛴️ Vive Experiencias Inolvidables</h1>
-                <p>Descubre los mejores cruceros desde República Dominicana</p>
-                <a href="#productos" class="slide-btn">Explorar Cruceros</a>
-            </div>
-        </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="brand">
+    <i class="fas fa-globe"></i>
+    OKO <span>TRAVELS</span>
+  </div>
+  <div class="nav-center" id="navCenter">
+    <a href="#" class="nav-link active" onclick="navigateTo('home')">Inicio</a>
+    <a href="#" class="nav-link" onclick="navigateTo('cruceros')">Cruceros</a>
+    <a href="#" class="nav-link" onclick="navigateTo('destinos')">Destinos</a>
+    <a href="#" class="nav-link" onclick="navigateTo('parques')">Parques</a>
+    <a href="#" class="nav-link" onclick="navigateTo('hoteles')">Hoteles</a>
+    <a href="#" class="nav-link" onclick="navigateTo('blog')">Blog</a>
+  </div>
+  <div class="nav-right">
+    <button class="contact-btn" onclick="navigateTo('contacto')">
+      <i class="fas fa-whatsapp"></i> Contactar
+    </button>
+    <button class="menu-toggle" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</nav>
 
-        <!-- Slide 2: Tours -->
-        <div class="carousel-slide" style="background-image: url('images/hero-globos.jpg');">
-            <div class="slide-content">
-                <h1>🌍 Tours Internacionales</h1>
-                <p>Visita los destinos más hermosos del mundo con nosotros</p>
-                <a href="#productos" class="slide-btn">Ver Tours</a>
-            </div>
-        </div>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-title">Menú Principal</div>
+    <div class="sidebar-item active" onclick="navigateTo('home')">
+      <i class="fas fa-home"></i> Inicio
+    </div>
+    <div class="sidebar-item" onclick="navigateTo('cruceros')">
+      <i class="fas fa-ship"></i> Cruceros
+    </div>
+    <div class="sidebar-item" onclick="navigateTo('destinos')">
+      <i class="fas fa-map"></i> Destinos
+    </div>
+    <div class="sidebar-item" onclick="navigateTo('parques')">
+      <i class="fas fa-star"></i> Parques
+    </div>
+    <div class="sidebar-item" onclick="navigateTo('hoteles')">
+      <i class="fas fa-building"></i> Hoteles
+    </div>
+    <div class="sidebar-item" onclick="navigateTo('blog')">
+      <i class="fas fa-blog"></i> Blog
+    </div>
+    <div class="sidebar-item" onclick="navigateTo('contacto')">
+      <i class="fas fa-phone"></i> Contacto
+    </div>
+  </div>
+</div>
 
-        <!-- Slide 3: Disney -->
-        <div class="carousel-slide" style="background-image: url('images/hero-disney.jpg');">
-            <div class="slide-content">
-                <h1>🏰 Experiencias Disney</h1>
-                <p>Crea recuerdos mágicos con tu familia en los parques Disney</p>
-                <a href="#productos" class="slide-btn">Reservar Ahora</a>
-            </div>
-        </div>
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-        <!-- Slide 4: Video -->
-        <div class="carousel-slide video" style="background-color: #000;">
-            <video id="videoSlide" muted playsinline>
-                <source src="videos/hero-royal-caribbean.mp4" type="video/mp4">
-            </video>
-            <div class="video-controls">
-                <button class="video-btn" id="muteBtn" onclick="toggleMute()" title="Silenciar">🔊</button>
-            </div>
-            <div class="slide-content">
-                <h1>🎬 Aventuras Épicas</h1>
-                <p>Siente la emoción de viajar con nosotros</p>
-                <a href="#contacto" class="slide-btn">Contactar</a>
-            </div>
-        </div>
+<!-- MAIN CONTENT -->
+<main class="main-content">
 
-        <!-- Controls -->
-        <button class="carousel-control carousel-prev" onclick="previousSlide()">❮</button>
-        <button class="carousel-control carousel-next" onclick="nextSlide()">❯</button>
-
-        <!-- Indicators -->
-        <div class="carousel-indicators">
-            <span class="indicator active" onclick="goToSlide(0)"></span>
-            <span class="indicator" onclick="goToSlide(1)"></span>
-            <span class="indicator" onclick="goToSlide(2)"></span>
-            <span class="indicator" onclick="goToSlide(3)"></span>
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <!-- CAROUSEL HERO -->
+    <div style="position: relative; width: 100%; height: 600px; overflow: hidden; margin-top: 70px;">
+      <!-- Slides -->
+      <div class="carousel-slide active" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&h=1080&fit=crop') center/cover, linear-gradient(135deg, rgba(91, 180, 212, 0.7) 0%, rgba(58, 143, 179, 0.7) 100%); background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; opacity: 1; transition: opacity 0.5s ease; z-index: 1;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml,%3Csvg width=%2760%27 height=%2760%27 viewBox=%270 0 60 60%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg fill=%27none%27 fill-rule=%27evenodd%27%3E%3Cg fill=%27%23ffffff%27 fill-opacity=%270.05%27%3E%3Cpath d=%27M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); opacity: 0.1;"></div>
+        <div class="hero-content" style="position: relative; z-index: 2;">
+          <h1>Viaja con OKO TRAVELS</h1>
+          <p>Descubre los mejores destinos, cruceros, parques y hoteles del mundo</p>
+          <div class="hero-btns">
+            <button class="btn-primary" onclick="navigateTo('cruceros')">
+              <i class="fas fa-ship"></i> Explorar Cruceros
+            </button>
+            <button class="btn-white" onclick="navigateTo('destinos')">
+              <i class="fas fa-map"></i> Ver Destinos
+            </button>
+          </div>
         </div>
+      </div>
+
+      <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop') center/cover, linear-gradient(135deg, rgba(231, 76, 60, 0.7) 0%, rgba(192, 57, 43, 0.7) 100%); background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.5s ease; z-index: 1;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml,%3Csvg width=%2760%27 height=%2760%27 viewBox=%270 0 60 60%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg fill=%27none%27 fill-rule=%27evenodd%27%3E%3Cg fill=%27%23ffffff%27 fill-opacity=%270.05%27%3E%3Cpath d=%27M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); opacity: 0.1;"></div>
+        <div class="hero-content" style="position: relative; z-index: 2;">
+          <h1>Cruceros de Lujo</h1>
+          <p>Navega por los mares más hermosos con las mejores compañías</p>
+          <div class="hero-btns">
+            <button class="btn-primary" onclick="navigateTo('cruceros')">
+              <i class="fas fa-ship"></i> Ver Cruceros
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop') center/cover, linear-gradient(135deg, rgba(39, 174, 96, 0.7) 0%, rgba(34, 153, 84, 0.7) 100%); background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.5s ease; z-index: 1;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml,%3Csvg width=%2760%27 height=%2760%27 viewBox=%270 0 60 60%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg fill=%27none%27 fill-rule=%27evenodd%27%3E%3Cg fill=%27%23ffffff%27 fill-opacity=%270.05%27%3E%3Cpath d=%27M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); opacity: 0.1;"></div>
+        <div class="hero-content" style="position: relative; z-index: 2;">
+          <h1>Destinos Exóticos</h1>
+          <p>Explora los lugares más hermosos del mundo</p>
+          <div class="hero-btns">
+            <button class="btn-primary" onclick="navigateTo('destinos')">
+              <i class="fas fa-map"></i> Descubrir Destinos
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1578610519429-6e8b5c0f0d9c?w=1920&h=1080&fit=crop') center/cover, linear-gradient(135deg, rgba(142, 68, 173, 0.7) 0%, rgba(108, 52, 131, 0.7) 100%); background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.5s ease; z-index: 1;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml,%3Csvg width=%2760%27 height=%2760%27 viewBox=%270 0 60 60%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg fill=%27none%27 fill-rule=%27evenodd%27%3E%3Cg fill=%27%23ffffff%27 fill-opacity=%270.05%27%3E%3Cpath d=%27M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); opacity: 0.1;"></div>
+        <div class="hero-content" style="position: relative; z-index: 2;">
+          <h1>Parques Mágicos</h1>
+          <p>Vive la magia con tu familia en Disney y Universal</p>
+          <div class="hero-btns">
+            <button class="btn-primary" onclick="navigateTo('parques')">
+              <i class="fas fa-wand-magic-sparkles"></i> Ver Parques
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indicadores -->
+      <div style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10;">
+        <div class="carousel-dot active" onclick="goToSlide(0)" style="width: 12px; height: 12px; border-radius: 50%; background: #fff; cursor: pointer; transition: var(--transition);"></div>
+        <div class="carousel-dot" onclick="goToSlide(1)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: var(--transition);"></div>
+        <div class="carousel-dot" onclick="goToSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: var(--transition);"></div>
+        <div class="carousel-dot" onclick="goToSlide(3)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: var(--transition);"></div>
+      </div>
     </div>
 
-    <!-- ABOUT SECTION -->
-    <section class="section" id="about">
-        <h2 class="section-title">¿Quiénes Somos?</h2>
-        <p class="section-subtitle">Tu agencia de confianza para viajes inolvidables desde República Dominicana</p>
-        <div class="about-grid">
-            <div class="about-card">
-                <div class="about-card-icon">✈️</div>
-                <h3>Experiencia</h3>
-                <p>Más de 8 años ofreciendo los mejores viajes y paquetes turísticos de calidad.</p>
-            </div>
-            <div class="about-card">
-                <div class="about-card-icon">🌍</div>
-                <h3>Destinos</h3>
-                <p>Acceso a cruceros, tours y paquetes en 50+ destinos alrededor del mundo.</p>
-            </div>
-            <div class="about-card">
-                <div class="about-card-icon">💰</div>
-                <h3>Precios</h3>
-                <p>Mejores precios garantizados con ofertas exclusivas para nuestros clientes.</p>
-            </div>
-            <div class="about-card">
-                <div class="about-card-icon">🎯</div>
-                <h3>Confianza</h3>
-                <p>Soporte 24/7 y garantía de satisfacción en todos nuestros servicios.</p>
-            </div>
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-check-circle"></i> ¿Por Qué Elegirnos?</h2>
+        <p class="section-subtitle">15+ años de experiencia creando viajes perfectos y memorables para miles de clientes satisfechos</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+        <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--primary); transition: var(--transition); animation: fadeInUp 0.6s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(91, 180, 212, 0.15)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #fff;">
+            <i class="fas fa-compass"></i>
+          </div>
+          <div style="padding: 20px;">
+            <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--dark); margin: 0 0 6px 0;">Especialistas</h3>
+            <p style="font-size: 0.8rem; color: #777; line-height: 1.5; margin: 0;">15+ años de experiencia</p>
+          </div>
         </div>
-    </section>
-
-    <!-- PRODUCTS SECTION -->
-    <section class="section" style="background: var(--light);" id="productos">
-        <h2 class="section-title">Nuestros Productos</h2>
-        <p class="section-subtitle">Explora una variedad de opciones para tu próximo viaje</p>
-        <div class="products-grid" id="productosContainer">
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--gray);">
-                <p>Cargando productos...</p>
-            </div>
+        <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--primary); transition: var(--transition); animation: fadeInUp 0.7s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(91, 180, 212, 0.15)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #fff;">
+            <i class="fas fa-tags"></i>
+          </div>
+          <div style="padding: 20px;">
+            <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--dark); margin: 0 0 6px 0;">Mejores Precios</h3>
+            <p style="font-size: 0.8rem; color: #777; line-height: 1.5; margin: 0;">Precios competitivos</p>
+          </div>
         </div>
-    </section>
-
-    <!-- CTA SECTION -->
-    <section class="cta-section">
-        <h2>¿Listo para Tu Próxima Aventura?</h2>
-        <p>Contáctanos hoy y recibe una cotización personalizada</p>
-        <button class="cta-button" onclick="document.getElementById('footer').scrollIntoView({behavior:'smooth'})">Contactar Ahora</button>
-    </section>
-
-    <!-- FOOTER -->
-    <footer id="footer">
-        <div class="footer-grid">
-            <div class="footer-section">
-                <h4>🌴 OKO TRAVELS</h4>
-                <p class="footer-contact">
-                    Teléfono: +1 (829) 550-2847<br>
-                    Email: info@okotravels.com<br>
-                    Ubicación: Baní, República Dominicana
-                </p>
-            </div>
-            <div class="footer-section">
-                <h4>Destinos Populares</h4>
-                <a href="#">Cruceros Caribeños</a>
-                <a href="#">Disney World</a>
-                <a href="#">Europa</a>
-                <a href="#">Turquía</a>
-                <a href="#">México</a>
-            </div>
-            <div class="footer-section">
-                <h4>Servicios</h4>
-                <a href="#">Paquetes Vacacionales</a>
-                <a href="#">Hoteles</a>
-                <a href="#">Vuelos</a>
-                <a href="#">Seguros de Viaje</a>
-                <a href="#">Tours Guiados</a>
-            </div>
-            <div class="footer-section">
-                <h4>Información</h4>
-                <a href="about.html">Sobre Nosotros</a>
-                <a href="#">Políticas de Privacidad</a>
-                <a href="#">Términos y Condiciones</a>
-                <a href="#">Preguntas Frecuentes</a>
-                <a href="#">Blog</a>
-            </div>
+        <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--primary); transition: var(--transition); animation: fadeInUp 0.8s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(91, 180, 212, 0.15)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #fff;">
+            <i class="fas fa-headset"></i>
+          </div>
+          <div style="padding: 20px;">
+            <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--dark); margin: 0 0 6px 0;">Soporte 24/7</h3>
+            <p style="font-size: 0.8rem; color: #777; line-height: 1.5; margin: 0;">Siempre disponibles</p>
+          </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 OKO TRAVELS. Todos los derechos reservados. | Viajes desde República Dominicana</p>
+        <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--primary); transition: var(--transition); animation: fadeInUp 0.9s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(91, 180, 212, 0.15)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #fff;">
+            <i class="fas fa-award"></i>
+          </div>
+          <div style="padding: 20px;">
+            <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--dark); margin: 0 0 6px 0;">99% Satisfacción</h3>
+            <p style="font-size: 0.8rem; color: #777; line-height: 1.5; margin: 0;">Clientes felices</p>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script>
-        // API Configuration
-        const API_URL = 'https://luchris-travels-backend.onrender.com/api';
+    <!-- NUESTRAS NAVIERAS -->
+    <div style="margin-top: 100px; padding-top: 80px; border-top: 2px solid var(--light);">
+      <div class="section-header" style="margin-bottom: 60px;">
+        <h2 class="section-title"><i class="fas fa-ship"></i> Nuestras Navieras Asociadas</h2>
+        <p class="section-subtitle">Trabajamos con las mejores compañías de cruceros del mundo</p>
+      </div>
 
-        // Carousel variables
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const indicators = document.querySelectorAll('.indicator');
-        let autoPlayInterval;
-        let isVideoMuted = true;
-        const carousel = document.getElementById('carousel');
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto;">
+        <!-- ROYAL CARIBBEAN -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: var(--transition); animation: fadeInUp 0.6s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="font-size: 3rem; margin-bottom: 15px; color: #C41E3A;">
+            <i class="fas fa-ship"></i>
+          </div>
+          <h4 style="font-weight: 800; color: var(--dark); margin: 0 0 8px 0; font-size: 1rem;">Royal Caribbean</h4>
+          <p style="color: #888; font-size: 0.8rem; margin: 0;">Lujo • Marítimo</p>
+        </div>
 
-        // Carousel functions
-        function showSlide(n) {
-            slides.forEach((s, idx) => {
-                s.classList.remove('active', 'fade', 'slideLeft', 'slideRight');
-                if (idx === n) {
-                    s.classList.add('active');
-                    if (idx > currentSlide) {
-                        s.classList.add('slideLeft');
-                    } else if (idx < currentSlide) {
-                        s.classList.add('slideRight');
-                    } else {
-                        s.classList.add('fade');
-                    }
+        <!-- PRINCESS CRUISES -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: var(--transition); animation: fadeInUp 0.7s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="font-size: 3rem; margin-bottom: 15px; color: #1B4965;">
+            <i class="fas fa-water"></i>
+          </div>
+          <h4 style="font-weight: 800; color: var(--dark); margin: 0 0 8px 0; font-size: 1rem;">Princess Cruises</h4>
+          <p style="color: #888; font-size: 0.8rem; margin: 0;">Premium • Elegante</p>
+        </div>
 
-                    if (s.classList.contains('video')) {
-                        const video = s.querySelector('video');
-                        if (video) {
-                            video.play();
-                        }
-                    }
-                } else {
-                    const video = s.querySelector('video');
-                    if (video) {
-                        video.pause();
-                        video.currentTime = 0;
-                    }
-                }
-            });
+        <!-- DISNEY CRUISE -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: var(--transition); animation: fadeInUp 0.8s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="font-size: 3rem; margin-bottom: 15px; color: #7B2CBF;">
+            <i class="fas fa-crown"></i>
+          </div>
+          <h4 style="font-weight: 800; color: var(--dark); margin: 0 0 8px 0; font-size: 1rem;">Disney Cruise</h4>
+          <p style="color: #888; font-size: 0.8rem; margin: 0;">Familiar • Mágico</p>
+        </div>
 
-            indicators.forEach((i, idx) => {
-                i.classList.toggle('active', idx === n);
-            });
+        <!-- CARNIVAL CRUISES -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: var(--transition); animation: fadeInUp 0.9s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="font-size: 3rem; margin-bottom: 15px; color: #E74C3C;">
+            <i class="fas fa-sailboat"></i>
+          </div>
+          <h4 style="font-weight: 800; color: var(--dark); margin: 0 0 8px 0; font-size: 1rem;">Carnival Cruises</h4>
+          <p style="color: #888; font-size: 0.8rem; margin: 0;">Popular • Diversión</p>
+        </div>
 
-            currentSlide = n;
-            resetAutoPlay();
+        <!-- NORWEGIAN CRUISE -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: var(--transition); animation: fadeInUp 1s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="font-size: 3rem; margin-bottom: 15px; color: #2E86AB;">
+            <i class="fas fa-compass"></i>
+          </div>
+          <h4 style="font-weight: 800; color: var(--dark); margin: 0 0 8px 0; font-size: 1rem;">Norwegian Cruise</h4>
+          <p style="color: #888; font-size: 0.8rem; margin: 0;">Moderno • Libertad</p>
+        </div>
+
+        <!-- CRUCEROS FLUVIALES -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: var(--transition); animation: fadeInUp 1.1s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'">
+          <div style="font-size: 3rem; margin-bottom: 15px; color: #27AE60;">
+            <i class="fas fa-anchor"></i>
+          </div>
+          <h4 style="font-weight: 800; color: var(--dark); margin: 0 0 8px 0; font-size: 1rem;">Cruceros Fluviales</h4>
+          <p style="color: #888; font-size: 0.8rem; margin: 0;">Río • Lujo</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIOS -->
+    <div style="margin-top: 100px; padding-top: 80px; border-top: 2px solid var(--light);">
+      <div class="section-header" style="margin-bottom: 60px;">
+        <h2 class="section-title"><i class="fas fa-quote-left"></i> Lo que Dicen Nuestros Clientes</h2>
+        <p class="section-subtitle">Miles de viajeros felices que confiaron en nosotros para sus mejores viajes</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+        <!-- TESTIMONIO 1 -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid var(--primary); animation: fadeInUp 0.6s ease; transition: var(--transition);" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)'">
+          <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.8rem; flex-shrink: 0;">
+              <i class="fas fa-user"></i>
+            </div>
+            <div>
+              <h4 style="font-weight: 800; color: var(--dark); margin: 0; font-size: 1rem;">Maura Rodriguez</h4>
+              <p style="color: #888; font-size: 0.85rem; margin: 4px 0 0 0;">Crucero Brasil 2024</p>
+            </div>
+          </div>
+          <div style="color: var(--secondary); margin-bottom: 15px; font-size: 0.95rem;">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p style="color: #666; line-height: 1.7; margin: 0; font-size: 0.95rem;">
+            "Contacté a OKO TRAVELS sin saber qué crucero elegir para Brasil. Su equipo me explicó todas las opciones, me mostró itinerarios detallados y consiguió un precio que no encontré en otros lados. El soporte antes, durante y después del viaje fue impecable. Resolvieron un cambio de fecha en minutos. ¡Definitivamente ellos entienden el negocio de viajes!"
+          </p>
+        </div>
+
+        <!-- TESTIMONIO 2 -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid var(--secondary); animation: fadeInUp 0.7s ease; transition: var(--transition);" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)'">
+          <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.8rem; flex-shrink: 0;">
+              <i class="fas fa-user"></i>
+            </div>
+            <div>
+              <h4 style="font-weight: 800; color: var(--dark); margin: 0; font-size: 1rem;">Javier Cabrera</h4>
+              <p style="color: #888; font-size: 0.85rem; margin: 4px 0 0 0;">Familia - Disney & Parques</p>
+            </div>
+          </div>
+          <div style="color: var(--secondary); margin-bottom: 15px; font-size: 0.95rem;">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p style="color: #666; line-height: 1.7; margin: 0; font-size: 0.95rem;">
+            "Las mejores vacaciones en familia. Mis hijos no paraban de sonreír en Disney. Los precios fueron muy competitivos y el atención 24/7 fue invaluable."
+          </p>
+        </div>
+
+        <!-- TESTIMONIO 3 -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid #27AE60; animation: fadeInUp 0.8s ease; transition: var(--transition);" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)'">
+          <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #27AE60 0%, #229954 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.8rem; flex-shrink: 0;">
+              <i class="fas fa-user"></i>
+            </div>
+            <div>
+              <h4 style="font-weight: 800; color: var(--dark); margin: 0; font-size: 1rem;">Laura Martínez</h4>
+              <p style="color: #888; font-size: 0.85rem; margin: 4px 0 0 0;">Circuito Europa 2024</p>
+            </div>
+          </div>
+          <div style="color: var(--secondary); margin-bottom: 15px; font-size: 0.95rem;">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p style="color: #666; line-height: 1.7; margin: 0; font-size: 0.95rem;">
+            "Viajé a Europa y todo estuvo perfectamente organizado. Los hoteles fueron increíbles y los circuitos muy bien planificados. ¡Recomiendo 100%!"
+          </p>
+        </div>
+
+        <!-- TESTIMONIO 4 -->
+        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid #8E44AD; animation: fadeInUp 0.9s ease; transition: var(--transition);" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)'">
+          <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #8E44AD 0%, #6C3483 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.8rem; flex-shrink: 0;">
+              <i class="fas fa-user"></i>
+            </div>
+            <div>
+              <h4 style="font-weight: 800; color: var(--dark); margin: 0; font-size: 1rem;">Carlos Díaz</h4>
+              <p style="color: #888; font-size: 0.85rem; margin: 4px 0 0 0;">Crucero Lujo Royal Caribbean</p>
+            </div>
+          </div>
+          <div style="color: var(--secondary); margin-bottom: 15px; font-size: 0.95rem;">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p style="color: #666; line-height: 1.7; margin: 0; font-size: 0.95rem;">
+            "Fue la mejor experiencia de viaje de mi vida. El equipo de OKO TRAVELS cuidó cada detalle. Definitivamente son los expertos en viajes."
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA FINAL -->
+    <div style="background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: #fff; padding: 100px 30px; border-radius: 16px; text-align: center; margin-top: 80px; animation: fadeInUp 0.8s ease;">
+      <h2 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 20px;">¿Listo para tu próximo viaje?</h2>
+      <p style="font-size: 1.15rem; opacity: 0.95; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+        Contáctanos ahora y descubre las mejores opciones de viajes, cruceros, hoteles y destinos diseñados especialmente para ti.
+      </p>
+      <a href="https://wa.me/18294451844?text=Hola%20OKO%20TRAVELS,%20me%20gustaría%20cotizar%20un%20viaje.%20¿Puedes%20ayudarme?" target="_blank" style="display: inline-flex; align-items: center; gap: 12px; background: var(--secondary); color: #fff; padding: 16px 40px; border-radius: 10px; text-decoration: none; font-weight: 800; font-size: 1.05rem; transition: var(--transition); box-shadow: 0 8px 25px rgba(247, 154, 43, 0.3);">
+        <i class="fas fa-whatsapp" style="font-size: 1.3rem;"></i>
+        Cotizar Ahora por WhatsApp
+      </a>
+      <style>
+        a[href*="wa.me"]:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 35px rgba(247, 154, 43, 0.4) !important;
         }
+      </style>
+    </div>
+  </div>
 
-        function goToSlide(n) {
-            showSlide(n);
-        }
+  <!-- CRUCEROS PAGE -->
+  <div class="page" id="page-cruceros">
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-ship"></i> Cruceros</h2>
+        <p class="section-subtitle">Explora los mejores cruceros por el Caribe y el mundo con las navieras más prestigiosas</p>
+      </div>
 
-        function nextSlide() {
-            showSlide((currentSlide + 1) % slides.length);
-        }
+      <div class="subsections">
+        <div class="subsection-btn active" onclick="filterCruise('todos')">Todos</div>
+        <div class="subsection-btn" onclick="filterCruise('maritimos')">Marítimos</div>
+        <div class="subsection-btn" onclick="filterCruise('fluviales')">Fluviales</div>
+        <div class="subsection-btn" onclick="filterCruise('lujo')">Lujo</div>
+        <div class="subsection-btn" onclick="filterCruise('populares')">Populares</div>
+      </div>
 
-        function previousSlide() {
-            showSlide((currentSlide - 1 + slides.length) % slides.length);
-        }
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-img"><i class="fas fa-ship"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Royal Caribbean</h3>
+            <p class="card-text">Cruceros de clase mundial con experiencias increíbles</p>
+            <span class="card-badge">Marítimo • Lujo</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-water"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Princess Cruises</h3>
+            <p class="card-text">Viajes elegantes por el Caribe y Mediterráneo</p>
+            <span class="card-badge">Marítimo • Premium</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-anchor"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Cruceros Fluviales</h3>
+            <p class="card-text">Experimenta ríos europeos de manera única</p>
+            <span class="card-badge">Fluvial • Lujo</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-crown"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Disney Cruise</h3>
+            <p class="card-text">Vacaciones mágicas para toda la familia</p>
+            <span class="card-badge">Familiar • Premium</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-sailboat"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Carnival Cruises</h3>
+            <p class="card-text">Diversión y valor en cada viaje</p>
+            <span class="card-badge">Popular • Económico</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-compass"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Norwegian Cruise</h3>
+            <p class="card-text">Libertad y flexibilidad en tus viajes</p>
+            <span class="card-badge">Popular • Moderno</span>
+          </div>
+        </div>
+      </div>
 
-        function startAutoPlay() {
-            autoPlayInterval = setInterval(() => {
-                nextSlide();
-            }, 5000);
-        }
+      <div class="contact-section">
+        <h3>¿Listo para tu próximo crucero?</h3>
+        <p>Cotiza ahora y recibe las mejores opciones directamente a tu WhatsApp</p>
+        <button class="btn-primary" onclick="navigateTo('contacto')" style="margin-top: 20px;">
+          <i class="fas fa-whatsapp"></i> Cotizar Crucero
+        </button>
+      </div>
+    </div>
+  </div>
 
-        function resetAutoPlay() {
-            clearInterval(autoPlayInterval);
-            startAutoPlay();
-        }
+  <!-- DESTINOS PAGE -->
+  <div class="page" id="page-destinos">
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-map"></i> Destinos y Circuitos</h2>
+        <p class="section-subtitle">Descubre los destinos más hermosos del mundo con nuestros circuitos especialmente diseñados</p>
+      </div>
 
-        function toggleMute() {
-            const video = slides[currentSlide].querySelector('video');
-            const btn = document.getElementById('muteBtn');
-            if (video) {
-                isVideoMuted = !isVideoMuted;
-                video.muted = isVideoMuted;
-                btn.textContent = isVideoMuted ? '🔊' : '🔇';
-            }
-        }
+      <div class="subsections">
+        <div class="subsection-btn active" onclick="filterDestino('todos')">Todos</div>
+        <div class="subsection-btn" onclick="filterDestino('caribe')">Caribe</div>
+        <div class="subsection-btn" onclick="filterDestino('europa')">Europa</div>
+        <div class="subsection-btn" onclick="filterDestino('america')">América</div>
+        <div class="subsection-btn" onclick="filterDestino('exotico')">Exótico</div>
+      </div>
 
-        carousel.addEventListener('mouseenter', () => {
-            clearInterval(autoPlayInterval);
-        });
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-img"><i class="fas fa-umbrella-beach"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Caribe Clásico</h3>
+            <p class="card-text">Playas de ensueño y aguas cristalinas</p>
+            <span class="card-badge">Caribe</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-monument"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">París & Europa</h3>
+            <p class="card-text">Cultura, arte y gastronomía europea</p>
+            <span class="card-badge">Europa</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-gopuram"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Dubai & Oriente Medio</h3>
+            <p class="card-text">Lujo y modernidad en el desierto</p>
+            <span class="card-badge">Exótico</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-mountain"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Turquía Mágica</h3>
+            <p class="card-text">Historia, misticismo y naturaleza</p>
+            <span class="card-badge">Europa</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-tree"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Costa Rica Adventure</h3>
+            <p class="card-text">Naturaleza y aventura en América Central</p>
+            <span class="card-badge">América</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-dna"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">México Antiguo</h3>
+            <p class="card-text">Ruinas, playas y tradición mexicana</p>
+            <span class="card-badge">América</span>
+          </div>
+        </div>
+      </div>
 
-        carousel.addEventListener('mouseleave', () => {
-            startAutoPlay();
-        });
+      <div class="contact-section">
+        <h3>Diseñemos tu circuito ideal</h3>
+        <p>Contáctanos para crear un itinerario personalizado a tu medida</p>
+        <button class="btn-primary" onclick="navigateTo('contacto')" style="margin-top: 20px;">
+          <i class="fas fa-whatsapp"></i> Solicitar Circuito
+        </button>
+      </div>
+    </div>
+  </div>
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') previousSlide();
-            if (e.key === 'ArrowRight') nextSlide();
-        });
+  <!-- PARQUES PAGE -->
+  <div class="page" id="page-parques">
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-star"></i> Parques Temáticos</h2>
+        <p class="section-subtitle">Vive experiencias mágicas en los parques más famosos del mundo para toda la familia</p>
+      </div>
 
-        // Products loading from API
-        async function cargarProductos() {
-            try {
-                const response = await fetch(`${API_URL}/productos`);
-                const data = await response.json();
+      <div class="subsections">
+        <div class="subsection-btn active" onclick="filterParque('todos')">Todos</div>
+        <div class="subsection-btn" onclick="filterParque('disney')">Disney</div>
+        <div class="subsection-btn" onclick="filterParque('universal')">Universal</div>
+      </div>
 
-                if (data.success && data.datos) {
-                    const container = document.getElementById('productosContainer');
-                    const productos = data.datos.filter(p => p.estado === 'activo').slice(0, 12);
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-img"><i class="fas fa-chess-rook"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Disney World Orlando</h3>
+            <p class="card-text">4 parques temáticos llenos de magia y fantasía</p>
+            <span class="card-badge">Disney • Familiar</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-wand-magic-sparkles"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Disneyland California</h3>
+            <p class="card-text">El parque original con todos los clásicos</p>
+            <span class="card-badge">Disney • Clásico</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-roller-coaster"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Universal Orlando</h3>
+            <p class="card-text">Aventura y acción en parques de clase mundial</p>
+            <span class="card-badge">Universal • Aventura</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-dinosaur"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Islands of Adventure</h3>
+            <p class="card-text">Islas temáticas con atracciones emocionantes</p>
+            <span class="card-badge">Universal • Premium</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-ring"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Disney Cruise & Resort</h3>
+            <p class="card-text">Experiencia completa desde resort hasta parques</p>
+            <span class="card-badge">Disney • Luxe</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-star"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Universal Aventura Completa</h3>
+            <p class="card-text">Paquetes todo incluido para familias</p>
+            <span class="card-badge">Universal • Completo</span>
+          </div>
+        </div>
+      </div>
 
-                    if (productos.length === 0) {
-                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--gray);">No hay productos disponibles</div>';
-                        return;
-                    }
+      <div class="contact-section">
+        <h3>¡Haz realidad la magia!</h3>
+        <p>Cotiza tu paquete de parques con hotel y transporte incluido</p>
+        <button class="btn-primary" onclick="navigateTo('contacto')" style="margin-top: 20px;">
+          <i class="fas fa-whatsapp"></i> Cotizar Parques
+        </button>
+      </div>
+    </div>
+  </div>
 
-                    container.innerHTML = productos.map(producto => {
-                        const icono = {
-                            'crucero': '⛴️',
-                            'tour': '🎒',
-                            'disney': '🏰',
-                            'boleto': '✈️',
-                            'hotel': '🏨',
-                            'seguro': '🛡️',
-                            'destinos': '🌍'
-                        }[producto.tipo] || '📍';
+  <!-- HOTELES PAGE -->
+  <div class="page" id="page-hoteles">
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-building"></i> Hoteles</h2>
+        <p class="section-subtitle">Alojamientos premium en los mejores destinos del mundo seleccionados por nuestros expertos</p>
+      </div>
 
-                        const imagenUrl = producto.fotos && producto.fotos[0]
-                            ? producto.fotos[0]
-                            : producto.foto_principal;
+      <div class="subsections">
+        <div class="subsection-btn active" onclick="filterHotel('todos')">Todos</div>
+        <div class="subsection-btn" onclick="filterHotel('lujo')">Lujo 5⭐</div>
+        <div class="subsection-btn" onclick="filterHotel('premium')">Premium 4⭐</div>
+        <div class="subsection-btn" onclick="filterHotel('confort')">Confort 3⭐</div>
+        <div class="subsection-btn" onclick="filterHotel('resorts')">Resorts All-Inclusive</div>
+      </div>
 
-                        return `
-                            <div class="product-card">
-                                <div class="product-image">
-                                    ${imagenUrl
-                                        ? `<img src="${imagenUrl}" alt="${producto.nombre}">`
-                                        : `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 48px;">${icono}</div>`
-                                    }
-                                </div>
-                                <div class="product-info">
-                                    <span class="product-category">${icono} ${producto.tipo.toUpperCase()}</span>
-                                    <div class="product-name">${producto.nombre}</div>
-                                    <p class="product-description">${producto.descripcion ? producto.descripcion.substring(0, 80) + '...' : 'Producto destacado'}</p>
-                                    <div class="product-price">$${parseFloat(producto.precio_base).toFixed(2)}</div>
-                                    <button class="btn-producto" onclick="alert('Producto: ${producto.nombre}\nPrecio: $${parseFloat(producto.precio_base).toFixed(2)}\n\nContactanos para reservar!')">Ver Detalles</button>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-                }
-            } catch (error) {
-                console.error('Error cargando productos:', error);
-                document.getElementById('productosContainer').innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: red;">Error cargando productos</div>';
-            }
-        }
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-img"><i class="fas fa-crown"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Marriott Luxury</h3>
+            <p class="card-text">Hoteles de 5 estrellas con servicio mundial</p>
+            <span class="card-badge">Lujo • Premium</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-palmtree"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Resorts All-Inclusive</h3>
+            <p class="card-text">Todo incluido en el Caribe y playa</p>
+            <span class="card-badge">Resort • Familia</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-hotel"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Hilton Hotels</h3>
+            <p class="card-text">Cadena premium con ubicaciones estratégicas</p>
+            <span class="card-badge">Premium • Confiable</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-gopuram"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Hyatt & Luxury Suites</h3>
+            <p class="card-text">Hoteles boutique y de lujo exclusivos</p>
+            <span class="card-badge">Lujo • Exclusivo</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-city"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Radisson & IHG</h3>
+            <p class="card-text">Buena relación calidad-precio en todo el mundo</p>
+            <span class="card-badge">Confort • Económico</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img"><i class="fas fa-gem"></i></div>
+          <div class="card-content">
+            <h3 class="card-title">Boutique Hotels</h3>
+            <p class="card-text">Alojamientos únicos y con carácter personal</p>
+            <span class="card-badge">Especial • Auténtico</span>
+          </div>
+        </div>
+      </div>
 
-        // Initialize
-        showSlide(0);
-        startAutoPlay();
-        cargarProductos();
-    </script>
+      <div class="contact-section">
+        <h3>Reserva tu alojamiento perfecto</h3>
+        <p>Te ayudamos a encontrar el hotel ideal para tu viaje con las mejores tarifas</p>
+        <button class="btn-primary" onclick="navigateTo('contacto')" style="margin-top: 20px;">
+          <i class="fas fa-whatsapp"></i> Reservar Hotel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOG PAGE -->
+  <div class="page" id="page-blog">
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-pen-fancy"></i> Blog de Viajes</h2>
+        <p class="section-subtitle">Descubre artículos, tips y guías completas sobre los mejores destinos y cruceros</p>
+      </div>
+
+      <!-- BUSCADOR Y FILTROS -->
+      <div style="background: linear-gradient(135deg, rgba(91, 180, 212, 0.1) 0%, rgba(247, 154, 43, 0.1) 100%); padding: 30px; border-radius: 12px; margin-bottom: 40px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+          <!-- Buscador -->
+          <div style="position: relative;">
+            <input type="text" id="blogSearch" placeholder="🔍 Buscar artículos..." style="width: 100%; padding: 14px 18px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1rem; font-family: inherit; transition: var(--transition);" oninput="filterBlogArticles()" onfocus="this.style.borderColor='var(--secondary)'" onblur="this.style.borderColor='var(--primary)'">
+          </div>
+
+          <!-- Ordenar -->
+          <div style="position: relative;">
+            <select id="blogSort" style="width: 100%; padding: 14px 18px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1rem; font-family: inherit; background: #fff; cursor: pointer; transition: var(--transition);" onchange="filterBlogArticles()">
+              <option value="fecha">Ordenar por: Más Reciente</option>
+              <option value="titulo">Ordenar por: Título (A-Z)</option>
+              <option value="popularidad">Ordenar por: Popularidad</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Filtros por Categoría -->
+        <div>
+          <p style="font-size: 0.95rem; font-weight: 600; color: var(--dark); margin: 0 0 10px 0;">Filtrar por tipo:</p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button onclick="filterByCategory('todos')" style="padding: 8px 16px; background: var(--primary); color: #fff; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: var(--transition);" class="filter-btn-active">
+              Todos
+            </button>
+            <button onclick="filterByCategory('cruceros')" style="padding: 8px 16px; background: #fff; color: var(--dark); border: 2px solid var(--primary); border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: var(--transition);" class="filter-btn">
+              <i class="fas fa-ship" style="margin-right: 5px;"></i> Cruceros
+            </button>
+            <button onclick="filterByCategory('playas')" style="padding: 8px 16px; background: #fff; color: var(--dark); border: 2px solid var(--primary); border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: var(--transition);" class="filter-btn">
+              <i class="fas fa-umbrella-beach" style="margin-right: 5px;"></i> Playas
+            </button>
+            <button onclick="filterByCategory('parques')" style="padding: 8px 16px; background: #fff; color: var(--dark); border: 2px solid var(--primary); border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: var(--transition);" class="filter-btn">
+              <i class="fas fa-crown" style="margin-right: 5px;"></i> Parques
+            </button>
+            <button onclick="clearFilters()" style="padding: 8px 16px; background: var(--secondary); color: #fff; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: var(--transition);">
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOG ARTICLES GRID -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px;">
+        <!-- ARTÍCULO 1: CRUCEROS MARÍTIMOS -->
+        <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer; transition: var(--transition); animation: fadeInUp 0.6s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)'" onclick="showBlogArticle('maritimo')">
+          <div style="width: 100%; height: 200px; background: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop') center/cover; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #fff; position: relative;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.2);"></div>
+          </div>
+          <div style="padding: 25px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--dark); margin: 0 0 10px 0;">Cruceros Marítimos</h3>
+            <p style="color: #666; font-size: 0.95rem; line-height: 1.6; margin: 0;">Explora los mejores cruceros por el Caribe, Mediterráneo y costas del mundo...</p>
+            <div style="margin-top: 15px; color: var(--primary); font-weight: 700; font-size: 0.9rem;">
+              Leer más <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARTÍCULO 2: CRUCEROS FLUVIALES -->
+        <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer; transition: var(--transition); animation: fadeInUp 0.7s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)'" onclick="showBlogArticle('fluvial')">
+          <div style="width: 100%; height: 200px; background: url('https://images.unsplash.com/photo-1570213970321-01e34e8e6c62?w=600&h=400&fit=crop') center/cover; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #fff; position: relative;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.2);"></div>
+          </div>
+          <div style="padding: 25px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--dark); margin: 0 0 10px 0;">Cruceros Fluviales</h3>
+            <p style="color: #666; font-size: 0.95rem; line-height: 1.6; margin: 0;">Navega por ríos europeos como el Danubio, Rin y Loira con lujo y comodidad...</p>
+            <div style="margin-top: 15px; color: var(--primary); font-weight: 700; font-size: 0.9rem;">
+              Leer más <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARTÍCULO 3: PUNTA CANA -->
+        <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer; transition: var(--transition); animation: fadeInUp 0.8s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)'" onclick="showBlogArticle('puntacana')">
+          <div style="width: 100%; height: 200px; background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop') center/cover; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #fff; position: relative;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.2);"></div>
+          </div>
+          <div style="padding: 25px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--dark); margin: 0 0 10px 0;">Punta Cana</h3>
+            <p style="color: #666; font-size: 0.95rem; line-height: 1.6; margin: 0;">Descubre el paraíso caribeño con playas de arena blanca y resorts all-inclusive...</p>
+            <div style="margin-top: 15px; color: var(--primary); font-weight: 700; font-size: 0.9rem;">
+              Leer más <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARTÍCULO 4: DISNEY -->
+        <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer; transition: var(--transition); animation: fadeInUp 0.9s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)'" onclick="showBlogArticle('disney')">
+          <div style="width: 100%; height: 200px; background: url('https://images.unsplash.com/photo-1578610519429-6e8b5c0f0d9c?w=600&h=400&fit=crop') center/cover; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #fff; position: relative;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.2);"></div>
+          </div>
+          <div style="padding: 25px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--dark); margin: 0 0 10px 0;">Disney</h3>
+            <p style="color: #666; font-size: 0.95rem; line-height: 1.6; margin: 0;">Vive la magia de Disney World Orlando con toda tu familia en el destino perfecto...</p>
+            <div style="margin-top: 15px; color: var(--primary); font-weight: 700; font-size: 0.9rem;">
+              Leer más <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARTÍCULO 5: LAS TERRENAS -->
+        <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer; transition: var(--transition); animation: fadeInUp 1s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)'" onclick="showBlogArticle('terrenas')">
+          <div style="width: 100%; height: 200px; background: url('https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&h=400&fit=crop') center/cover; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #fff; position: relative;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.2);"></div>
+          </div>
+          <div style="padding: 25px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--dark); margin: 0 0 10px 0;">Las Terrenas</h3>
+            <p style="color: #666; font-size: 0.95rem; line-height: 1.6; margin: 0;">Relájate en la joya escondida de Punta Cana con playas tranquilas y auténticas...</p>
+            <div style="margin-top: 15px; color: var(--primary); font-weight: 700; font-size: 0.9rem;">
+              Leer más <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN TIPS PARA VIAJAR -->
+      <div style="margin-bottom: 60px;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <h2 style="font-size: 2.2rem; font-weight: 900; color: var(--dark); margin-bottom: 10px;">
+            <i class="fas fa-lightbulb" style="color: var(--secondary); margin-right: 10px;"></i>Tips para Viajar
+          </h2>
+          <p style="font-size: 1.1rem; color: #666;">Consejos prácticos para que tu viaje sea perfecto y sin complicaciones</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+          <!-- TIP 1: DOCUMENTACIÓN -->
+          <div style="background: linear-gradient(135deg, #5BB4D4 0%, #3a8fb3 100%); color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: var(--transition); animation: fadeInUp 0.6s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 30px rgba(91, 180, 212, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+            <div style="font-size: 2.5rem; margin-bottom: 15px;">
+              <i class="fas fa-passport"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin: 0 0 10px 0;">Documentación</h3>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+              <li>Pasaporte válido (6+ meses)</li>
+              <li>Visas requeridas</li>
+              <li>Cédula o DNI</li>
+              <li>Seguros de viaje</li>
+              <li>Copias digitales</li>
+            </ul>
+          </div>
+
+          <!-- TIP 2: MALETAS -->
+          <div style="background: linear-gradient(135deg, #F79A2B 0%, #d97a1a 100%); color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: var(--transition); animation: fadeInUp 0.7s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 30px rgba(247, 154, 43, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+            <div style="font-size: 2.5rem; margin-bottom: 15px;">
+              <i class="fas fa-suitcase"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin: 0 0 10px 0;">Qué Empacar</h3>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+              <li>Ropa según el clima</li>
+              <li>Bloqueador solar SPF 50+</li>
+              <li>Medicinas básicas</li>
+              <li>Cables y adaptadores</li>
+              <li>Zapatos cómodos</li>
+            </ul>
+          </div>
+
+          <!-- TIP 3: DINERO -->
+          <div style="background: linear-gradient(135deg, #27AE60 0%, #1e8449 100%); color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: var(--transition); animation: fadeInUp 0.8s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 30px rgba(39, 174, 96, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+            <div style="font-size: 2.5rem; margin-bottom: 15px;">
+              <i class="fas fa-wallet"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin: 0 0 10px 0;">Dinero</h3>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+              <li>Tarjetas de crédito</li>
+              <li>Efectivo local</li>
+              <li>Avisa a tu banco</li>
+              <li>Retiros en ATMs</li>
+              <li>Tipo de cambio actual</li>
+            </ul>
+          </div>
+
+          <!-- TIP 4: SALUD Y SEGURIDAD -->
+          <div style="background: linear-gradient(135deg, #E74C3C 0%, #c0392b 100%); color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: var(--transition); animation: fadeInUp 0.9s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 30px rgba(231, 76, 60, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+            <div style="font-size: 2.5rem; margin-bottom: 15px;">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin: 0 0 10px 0;">Salud</h3>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+              <li>Vacunas requeridas</li>
+              <li>Seguro médico</li>
+              <li>Botiquín básico</li>
+              <li>Mantente hidratado</li>
+              <li>Evita agua sin filtrar</li>
+            </ul>
+          </div>
+
+          <!-- TIP 5: RESERVAS -->
+          <div style="background: linear-gradient(135deg, #8E44AD 0%, #6c3483 100%); color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: var(--transition); animation: fadeInUp 1s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 30px rgba(142, 68, 173, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+            <div style="font-size: 2.5rem; margin-bottom: 15px;">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin: 0 0 10px 0;">Reservas</h3>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+              <li>Vuelos con anticipación</li>
+              <li>Hoteles confirmados</li>
+              <li>Tours pre-booking</li>
+              <li>Transportes reservados</li>
+              <li>Cancellation policy</li>
+            </ul>
+          </div>
+
+          <!-- TIP 6: VIAJE INTELIGENTE -->
+          <div style="background: linear-gradient(135deg, #3498DB 0%, #2980b9 100%); color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: var(--transition); animation: fadeInUp 1.1s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 30px rgba(52, 152, 219, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+            <div style="font-size: 2.5rem; margin-bottom: 15px;">
+              <i class="fas fa-plane-departure"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin: 0 0 10px 0;">Viaje Inteligente</h3>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+              <li>Llega al aeropuerto temprano</li>
+              <li>Desactiva roaming internacional</li>
+              <li>Comparte tu itinerario</li>
+              <li>Conoce costumbres locales</li>
+              <li>Ten números de emergencia</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMULARIO SUSCRIPCIÓN -->
+      <div style="background: linear-gradient(135deg, var(--primary) 0%, #3a8fb3 100%); color: #fff; padding: 50px 30px; border-radius: 12px; text-align: center; animation: fadeInUp 0.8s ease;">
+        <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 15px;">Suscríbete a Nuestro Blog</h3>
+        <p style="font-size: 1rem; margin-bottom: 30px; opacity: 0.95;">Recibe tips de viaje, ofertas exclusivas y artículos nuevos directamente en tu correo</p>
+        <div style="max-width: 500px; margin: 0 auto; display: flex; gap: 10px; flex-wrap: wrap;">
+          <input type="email" id="emailSuscripcion" placeholder="Tu correo electrónico" style="flex: 1; min-width: 200px; padding: 14px 18px; border: none; border-radius: 8px; font-size: 1rem; font-family: inherit;" required>
+          <button onclick="suscribirse()" style="padding: 14px 28px; background: var(--secondary); color: #fff; border: none; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: var(--transition); white-space: nowrap;">
+            Suscribirse
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACTO PAGE -->
+  <div class="page" id="page-contacto">
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-phone"></i> Contáctanos</h2>
+        <p class="section-subtitle">Estamos listos para ayudarte a planificar tu próximo viaje de ensueño</p>
+      </div>
+
+      <div class="contact-section" style="background: linear-gradient(135deg, var(--primary) 0%, #3a8fb3 100%); margin-bottom: 40px;">
+        <h3>Información de Contacto</h3>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <strong>Teléfono</strong><br>
+              +1 (829) 445-1844
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <strong>Email</strong><br>
+              info@okotravels.com
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <strong>Ubicación</strong><br>
+              Baní, República Dominicana
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <strong>Horario</strong><br>
+              Lun–Sáb 8:00AM–5:00PM
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; padding: 40px;">
+        <h3 style="margin-bottom: 20px;">¿Listo para tu aventura?</h3>
+        <p style="margin-bottom: 30px; font-size: 1.1rem;">Contáctanos por WhatsApp para cotizaciones rápidas y respuestas inmediatas</p>
+        <a href="https://wa.me/18294451844?text=Hola%20OKO%20TRAVELS,%20me%20gustaría%20cotizar%20un%20viaje.%20¿Puedes%20ayudarme?" target="_blank" class="btn-primary">
+          <i class="fas fa-whatsapp"></i> Contactar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer style="background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&h=1080&fit=crop') center/cover, linear-gradient(135deg, rgba(26, 58, 74, 0.9) 0%, rgba(42, 90, 122, 0.9) 100%); background-blend-mode: overlay; color: #fff; padding: 60px 30px 30px; margin-top: 80px;">
+  <div style="max-width: 1400px; margin: 0 auto;">
+    <!-- FOOTER CONTENT -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
+
+      <!-- ABOUT -->
+      <div style="animation: fadeInUp 0.6s ease;">
+        <h3 style="font-size: 1.3rem; font-weight: 900; margin-bottom: 15px; color: var(--secondary);">
+          <i class="fas fa-globe"></i> OKO TRAVELS
+        </h3>
+        <p style="font-size: 0.95rem; line-height: 1.7; opacity: 0.9; margin: 0;">
+          Tu agencia de viajes de confianza con más de 10 años de experiencia. Especialistas en cruceros, destinos exóticos, parques temáticos y hoteles de lujo en todo el mundo.
+        </p>
+      </div>
+
+      <!-- CONTACTO -->
+      <div style="animation: fadeInUp 0.7s ease;">
+        <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; color: var(--secondary);">
+          <i class="fas fa-phone"></i> Contacto
+        </h4>
+        <div style="font-size: 0.95rem; line-height: 1.8;">
+          <div style="margin-bottom: 12px;">
+            <strong>Teléfono:</strong><br>
+            <a href="tel:+18294451844" style="color: #fff; text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--secondary)'" onmouseout="this.style.color='#fff'">
+              +1 (829) 445-1844
+            </a>
+          </div>
+          <div style="margin-bottom: 12px;">
+            <strong>Email:</strong><br>
+            <a href="mailto:info@okotravels.com" style="color: #fff; text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--secondary)'" onmouseout="this.style.color='#fff'">
+              info@okotravels.com
+            </a><br>
+            <a href="mailto:reservas@okotravels.com" style="color: #fff; text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--secondary)'" onmouseout="this.style.color='#fff'">
+              reservas@okotravels.com
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- UBICACIÓN -->
+      <div style="animation: fadeInUp 0.8s ease;">
+        <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; color: var(--secondary);">
+          <i class="fas fa-map-marker-alt"></i> Ubicación
+        </h4>
+        <div style="font-size: 0.95rem; line-height: 1.8;">
+          <div style="margin-bottom: 15px;">
+            <strong>Dirección:</strong><br>
+            Baní, República Dominicana
+          </div>
+          <div style="margin-bottom: 15px;">
+            <strong>Horario:</strong><br>
+            Lunes - Sábado<br>
+            8:00 AM - 5:00 PM
+          </div>
+          <div>
+            <strong>Disponibilidad:</strong><br>
+            <span style="color: var(--secondary);">WhatsApp 24/7</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENLACES RÁPIDOS -->
+      <div style="animation: fadeInUp 0.9s ease;">
+        <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; color: var(--secondary);">
+          <i class="fas fa-link"></i> Enlaces Rápidos
+        </h4>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem;">
+          <li style="margin-bottom: 10px;">
+            <a href="#" onclick="navigateTo('cruceros')" style="color: #fff; text-decoration: none; transition: var(--transition); cursor: pointer;" onmouseover="this.style.color='var(--secondary)'" onmouseout="this.style.color='#fff'">
+              <i class="fas fa-chevron-right"></i> Cruceros
+            </a>
+          </li>
+          <li style="margin-bottom: 10px;">
+            <a href="#" onclick="navigateTo('destinos')" style="color: #fff; text-decoration: none; transition: var(--transition); cursor: pointer;" onmouseover="this.style.color='var(--secondary)'" onmouseout="this.style.color='#fff'">
+              <i class="fas fa-chevron-right"></i> Destinos
+            </a>
+          </li>
+          <li style="margin-bottom: 10px;">
+            <a href="#" onclick="navigateTo('parques')" style="color: #fff; text-decoration: none; transition: var(--transition); cursor: pointer;" onmouseover="this.style.color='var(--secondary)'" onmouseout="this.style.color='#fff'">
+              <i class="fas fa-chevron-right"></i> Parques
+            </a>
+          </li>
+          <li style="margin-bottom: 10px;">
+            <a href="#" onclick="navigateTo('hoteles')" style="color: #fff; text-decoration: none; transition: var(--transition); cursor: pointer;" onmouseover="this.style.color='var(--secondary)'" onmouseout="this.style.color='#fff'">
+              <i class="fas fa-chevron-right"></i> Hoteles
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- FOOTER BOTTOM -->
+    <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 30px; text-align: center;">
+      <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 15px;">
+        <p style="margin: 0;">
+          © 2024 OKO TRAVELS. Todos los derechos reservados.<br>
+          Especialistas en Viajes • Cruceros • Destinos • Parques • Hoteles
+        </p>
+      </div>
+      <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">
+        Desarrollado con <i class="fas fa-heart" style="color: var(--secondary);"></i> para tus mejores viajes
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// CAROUSEL - AUTO ROTATE EVERY 4 SECONDS
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel-slide');
+const dots = document.querySelectorAll('.carousel-dot');
+const totalSlides = slides.length;
+
+function showSlide(n) {
+  slides.forEach(slide => slide.style.opacity = '0');
+  dots.forEach(dot => dot.style.background = 'rgba(255,255,255,0.5)');
+
+  if (n >= totalSlides) currentSlide = 0;
+  if (n < 0) currentSlide = totalSlides - 1;
+
+  slides[currentSlide].style.opacity = '1';
+  dots[currentSlide].style.background = '#fff';
+}
+
+function nextSlide() {
+  currentSlide++;
+  if (currentSlide >= totalSlides) currentSlide = 0;
+  showSlide(currentSlide);
+}
+
+function goToSlide(n) {
+  currentSlide = n;
+  showSlide(currentSlide);
+  clearInterval(carouselInterval);
+  carouselInterval = setInterval(nextSlide, 4000);
+}
+
+let carouselInterval = setInterval(nextSlide, 4000);
+showSlide(0);
+
+// PAGE NAVIGATION
+function navigateTo(pageName) {
+  // Hide all pages
+  const pages = document.querySelectorAll('.page');
+  pages.forEach(page => page.classList.remove('active'));
+
+  // Show selected page
+  const targetPage = document.getElementById(`page-${pageName}`);
+  if (targetPage) {
+    targetPage.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // Update active nav links
+  const navLinks = document.querySelectorAll('.nav-link');
+  navLinks.forEach(link => link.classList.remove('active'));
+  const activeLink = Array.from(navLinks).find(link => link.textContent.toLowerCase().includes(pageName));
+  if (activeLink) activeLink.classList.add('active');
+
+  // Update sidebar items
+  const sidebarItems = document.querySelectorAll('.sidebar-item');
+  sidebarItems.forEach(item => item.classList.remove('active'));
+  const activeSidebar = Array.from(sidebarItems).find(item => item.textContent.toLowerCase().includes(pageName));
+  if (activeSidebar) activeSidebar.classList.add('active');
+
+  // Close sidebar
+  closeSidebar();
+}
+
+// SIDEBAR TOGGLE
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  sidebar.classList.remove('open');
+  overlay.classList.remove('open');
+}
+
+// FILTERS
+function filterCruise(type) {
+  updateFilter(event, type);
+}
+
+function filterDestino(type) {
+  updateFilter(event, type);
+}
+
+function filterParque(type) {
+  updateFilter(event, type);
+}
+
+function filterHotel(type) {
+  updateFilter(event, type);
+}
+
+function updateFilter(e, type) {
+  const buttons = e.target.parentElement.querySelectorAll('.subsection-btn');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  e.target.classList.add('active');
+}
+
+// BLOG ARTICLES DATA
+const blogArticles = {
+  maritimo: {
+    title: 'Cruceros Marítimos por el Caribe',
+    icon: 'fa-ship',
+    description: 'Explora los destinos más hermosos del Caribe en lujosos cruceros con las mejores navieras internacionales.',
+    content: `
+      <h3>La Mejor Experiencia en Cruceros Marítimos</h3>
+      <p>Los cruceros marítimos por el Caribe ofrecen una experiencia incomparable de lujo y entretenimiento. Desde República Dominicana, puedes embarcarte en viajes de 7 a 14 días que te llevarán a destinos paradisíacos.</p>
+
+      <h4>Destinos Principales</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Puerto Príncipe, Haití</strong> - Cultura vibrante y playas tranquilas</li>
+        <li><strong>Montego Bay, Jamaica</strong> - Playas de arena blanca y arrecifes coralinos</li>
+        <li><strong>Gran Caimán</strong> - Aguas cristalinas perfectas para buceo</li>
+        <li><strong>Bahamas</strong> - Islas exóticas con entretenimiento de clase mundial</li>
+        <li><strong>Cartagena, Colombia</strong> - Patrimonio histórico y playas caribeñas</li>
+      </ul>
+
+      <h4>Servicios Incluidos</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Alojamiento en camarotes de lujo con vistas al mar</li>
+        <li>Alimentación completa (desayuno, almuerzo, cena y refrigerios)</li>
+        <li>Entretenimiento noche (shows, conciertos, discoteca)</li>
+        <li>Actividades diurnas (piscinas, gym, talleres, conferencias)</li>
+        <li>Asistencia médica y seguro de viaje</li>
+      </ul>
+
+      <h4>Consejos de Viaje</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Embarque con 2-3 horas de anticipación</li>
+        <li>Lleva documentos de viaje (pasaporte válido)</li>
+        <li>Empaca ropa ligera, bloqueador solar y gafas de sol</li>
+        <li>Aprende sobre los puertos de escala antes de viajar</li>
+        <li>Aprovecha el spa y las actividades premium</li>
+        <li>Mantente hidratado en todo momento</li>
+      </ul>
+
+      <h4>Mejores Épocas para Viajar</h4>
+      <p><strong>Temporada Alta (Diciembre-Marzo):</strong> Clima perfecto, precios más altos, mayor ocupación</p>
+      <p><strong>Temporada Media (Abril-Mayo, Septiembre-Noviembre):</strong> Buen clima, precios moderados</p>
+      <p><strong>Temporada Baja (Junio-Agosto):</strong> Precios bajos, más calor y humedad, posibles huracanes</p>
+
+      <h4>Rangos de Precios Aproximados (por persona)</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Camarote Interior:</strong> $600 - $1,200 USD</li>
+        <li><strong>Camarote Exterior:</strong> $900 - $1,800 USD</li>
+        <li><strong>Balcón Privado:</strong> $1,200 - $2,500 USD</li>
+        <li><strong>Suite Premium:</strong> $2,000 - $4,500 USD</li>
+      </ul>
+
+      <p style="margin-top: 20px; font-style: italic; color: #666;">Los precios varían según la naviera, duración del crucero, temporada y disponibilidad. Consulta con nuestros asesores para ofertas especiales.</p>
+    `
+  },
+  fluvial: {
+    title: 'Cruceros Fluviales Internacionales',
+    icon: 'fa-anchor',
+    description: 'Descubre la magia de navegar ríos históricos en pequeños cruceros de lujo con experiencias personalizadas.',
+    content: `
+      <h3>Cruceros Fluviales: Viajes Exclusivos en Ríos Históricos</h3>
+      <p>Los cruceros fluviales ofrecen una experiencia más íntima y personalizada que los cruceros marítimos. Navega por algunos de los ríos más históricos y pintorescos del mundo con grupos reducidos y servicios de primera categoría.</p>
+
+      <h4>Destinos de Cruceros Fluviales</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Danubio (Europa)</strong> - Budapest, Viena, Praga y pueblos medievales</li>
+        <li><strong>Rin (Alemania-Francia)</strong> - Viñedos, castillos y ciudades históricas</li>
+        <li><strong>Nilo (Egipto)</strong> - Templos antiguos, pirámides y patrimonio faraónico</li>
+        <li><strong>Mekong (Camboya-Vietnam)</strong> - Templos antiguos, mercados flotantes y aldeas</li>
+        <li><strong>Amazonas (Perú-Brasil)</strong> - Biodiversidad única y cultura indígena</li>
+      </ul>
+
+      <h4>Características Especiales</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Grupos pequeños (máximo 200-400 pasajeros)</li>
+        <li>Acceso a pueblos y ciudades no accesibles para grandes cruceros</li>
+        <li>Tours guiados especializados en cada parada</li>
+        <li>Atmósfera íntima y elegante</li>
+        <li>Personal multilingüe y altamente capacitado</li>
+        <li>Cubierta de observación panorámica</li>
+      </ul>
+
+      <h4>Consejos Prácticos</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Viaja ligero - las cabinas son más compactas</li>
+        <li>Trae zapatos cómodos para los tours a pie</li>
+        <li>Usa protección solar (el agua refleja mucho el sol)</li>
+        <li>Ten binoculares para observar la fauna</li>
+        <li>Aprende sobre la historia de cada región</li>
+        <li>Participa en las charlas educativas a bordo</li>
+      </ul>
+
+      <h4>Mejores Épocas</h4>
+      <p><strong>Danubio/Rin:</strong> Abril-Octubre (floraciones primaverales, viñedos en otoño)</p>
+      <p><strong>Nilo:</strong> Noviembre-Marzo (clima templado)</p>
+      <p><strong>Mekong:</strong> Noviembre-Febrero (estación seca)</p>
+      <p><strong>Amazonas:</strong> Junio-Octubre (nivel de agua favorable)</p>
+
+      <h4>Rangos de Precios Aproximados (por persona)</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Cabina Estándar:</strong> $2,500 - $4,500 USD</li>
+        <li><strong>Cabina Superior:</strong> $4,500 - $7,000 USD</li>
+        <li><strong>Suites:</strong> $7,000 - $12,000 USD</li>
+        <li><strong>Suites Premium:</strong> $12,000 - $25,000 USD</li>
+      </ul>
+
+      <p style="margin-top: 20px; font-style: italic; color: #666;">Estos viajes incluyen tours, comidas y entretenimiento. Los precios varían según la duración (7-14 días típicamente).</p>
+    `
+  },
+  puntacana: {
+    title: 'Punta Cana: Paraíso Dominicano',
+    icon: 'fa-umbrella-beach',
+    description: 'Vive la magia de Punta Cana con playas de arena blanca, resort de lujo y actividades acuáticas incomparables.',
+    content: `
+      <h3>Punta Cana: El Destino Más Deseado de República Dominicana</h3>
+      <p>Punta Cana es el destino turístico más exclusivo de República Dominicana, conocido por sus playas de arena blanca, aguas turquesas y lujosos resorts all-inclusive. Ubicado en el extremo oriental de la isla, ofrece el entorno perfecto para relajación y aventura.</p>
+
+      <h4>Atracciones Principales</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Playas Paradisíacas</strong> - Arena blanca y agua cristalina todo el año</li>
+        <li><strong>Parque Ecológico Ojos Indigenas</strong> - Cenotes, laguna y fauna nativa</li>
+        <li><strong>Isla de Saona</strong> - Excursión en catamarán a esta isla tropical</li>
+        <li><strong>Cueva Fun Fun</strong> - Cenote subterráneo con río subterráneo</li>
+        <li><strong>Acuario Natural</strong> - Piscina natural rodeada de arrecifes</li>
+        <li><strong>Shopping Village</strong> - Centro comercial con tiendas y restaurantes</li>
+      </ul>
+
+      <h4>Actividades Acuáticas</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Buceo y snorkel en arrecifes coralinos</li>
+        <li>Paseo en catamarán con almuerzo incluido</li>
+        <li>Jet ski y motos acuáticas</li>
+        <li>Parasailing y flyboarding</li>
+        <li>Pesca deportiva</li>
+        <li>Yoga y meditación en la playa</li>
+      </ul>
+
+      <h4>Actividades Terrestres</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Buggy tours por la selva dominicana</li>
+        <li>Tirolesa (zipline) entre árboles</li>
+        <li>Golf en campos de campeonato</li>
+        <li>Spa y tratamientos de bienestar</li>
+        <li>Tours culturales a pueblos locales</li>
+        <li>Shows y entretenimiento nocturno</li>
+      </ul>
+
+      <h4>Consejos de Viaje</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>El clima es tropical - lleva ropa ligera</li>
+        <li>Usa bloqueador solar SPF 50+ diariamente</li>
+        <li>Respeta los arrecifes coralinos al bucear</li>
+        <li>Prueba la gastronomía local (habichuelas guisadas, sancocho)</li>
+        <li>Cambia dinero en resorts o bancos autorizados</li>
+        <li>Ten cuidado con los mosquitos al atardecer</li>
+      </ul>
+
+      <h4>Mejores Épocas para Visitar</h4>
+      <p><strong>Diciembre-Marzo:</strong> Clima seco, temperaturas perfectas (25-28°C), precio alto</p>
+      <p><strong>Abril-Octubre:</strong> Calor y humedad, menor ocupación, precios bajos</p>
+      <p><strong>Nota:</strong> Huracanes posibles junio-octubre (poco frecuentes)</p>
+
+      <h4>Rangos de Precios Aproximados (por persona, 5 noches)</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Resort 3 Estrellas All-Inclusive:</strong> $600 - $1,000 USD</li>
+        <li><strong>Resort 4 Estrellas All-Inclusive:</strong> $1,000 - $2,000 USD</li>
+        <li><strong>Resort 5 Estrellas All-Inclusive:</strong> $2,000 - $4,000 USD</li>
+        <li><strong>Villa Privada de Lujo:</strong> $3,000 - $8,000 USD</li>
+      </ul>
+
+      <p style="margin-top: 20px; font-style: italic; color: #666;">Muchos resorts incluyen comidas, bebidas, entretenimiento y actividades acuáticas básicas.</p>
+    `
+  },
+  disney: {
+    title: 'Viajes a Disney: Magia para Toda la Familia',
+    icon: 'fa-crown',
+    description: 'Vive la magia de Disney en Orlando con paquetes especiales y experiencias inolvidables para toda la familia.',
+    content: `
+      <h3>Viajes a Disney: La Experiencia Mágica por Excelencia</h3>
+      <p>Un viaje a Disney es más que un destino, es una experiencia mágica para toda la familia. Con parques temáticos de clase mundial, entretenimiento de espectáculo y servicios de primera categoría, Disney crea recuerdos que duran toda la vida.</p>
+
+      <h4>Parques Disney en Orlando</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Magic Kingdom</strong> - El castillo de Cenicienta, atracciones clásicas, desfiles</li>
+        <li><strong>Epcot</strong> - Futuro tecnológico, culturas del mundo, gastronomía</li>
+        <li><strong>Hollywood Studios</strong> - Cine, televisión, Star Wars, Toy Story</li>
+        <li><strong>Animal Kingdom</strong> - Vida silvestre, aventura, naturaleza</li>
+        <li><strong>Disney Springs</strong> - Centro de entretenimiento, tiendas, restaurantes</li>
+      </ul>
+
+      <h4>Atracciones Imprescindibles</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Space Mountain, Big Thunder Mountain, Splash Mountain (Magic Kingdom)</li>
+        <li>Soarin' Around the World, Test Track (Epcot)</li>
+        <li>Tower of Terror, Rock 'n' Roller Coaster (Hollywood Studios)</li>
+        <li>Avatar Flight of Passage, Expedition Everest (Animal Kingdom)</li>
+      </ul>
+
+      <h4>Servicios Especiales Disney</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Disney Genie+ Service:</strong> Skip-the-line para atracciones populares</li>
+        <li><strong>Meet & Greet:</strong> Fotos y firmas con personajes Disney</li>
+        <li><strong>Cenas con Personajes:</strong> Experiencias culinarias temáticas</li>
+        <li><strong>Espectáculos Especiales:</strong> Fuegos artificiales, desfiles nocturnos</li>
+        <li><strong>Transporte Gratuito:</strong> Incluido en hoteles Disney</li>
+      </ul>
+
+      <h4>Consejos para Maximizar tu Visita</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Llega temprano a los parques (apertura) para menos filas</li>
+        <li>Descarga la app My Disney Experience para tiempos de espera</li>
+        <li>Come en horarios fuera de pico (11-14h, después de las 20h)</li>
+        <li>Usa FastPass+ para atracciones populares</li>
+        <li>Lleva zapatos cómodos - caminará 5-8 km diarios</li>
+        <li>Llévate una botella de agua reutilizable</li>
+        <li>Ten un plan pero mantén flexibilidad</li>
+        <li>Disfruta de los detalles mágicos pequeños</li>
+      </ul>
+
+      <h4>Mejores Épocas para Visitar</h4>
+      <p><strong>Enero-Febrero, Septiembre:</strong> Menos aglomeración, weather perfecto</p>
+      <p><strong>Junio-Agosto:</strong> Vacaciones escolares, más personas, clima caluroso</p>
+      <p><strong>Octubre-Noviembre:</strong> Halloween y decoraciones navideñas tempranas</p>
+      <p><strong>Diciembre:</strong> Navidad mágica, pero muy concurrido y caro</p>
+
+      <h4>Rangos de Precios Aproximados (por familia de 4, 5 noches)</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Hotel 3 Estrellas + Entradas:</strong> $2,500 - $4,000 USD</li>
+        <li><strong>Hotel Disney Resort + Entradas:</strong> $4,000 - $6,500 USD</li>
+        <li><strong>Paquete Premium con Genie+:</strong> $6,500 - $10,000 USD</li>
+        <li><strong>Luxury Vacation Club:</strong> $10,000 - $20,000 USD</li>
+      </ul>
+
+      <p style="margin-top: 20px; font-style: italic; color: #666;">Los precios varían según temporada. Temporada baja ofrece 20-30% descuento.</p>
+    `
+  },
+  terrenas: {
+    title: 'Las Terrenas: Playas Vírgenes y Aventura',
+    icon: 'fa-water',
+    description: 'Descubre Las Terrenas, el destino bohemio y aventurero de la República Dominicana con playas salvajes y naturaleza pura.',
+    content: `
+      <h3>Las Terrenas: El Lado Salvaje de República Dominicana</h3>
+      <p>Las Terrenas es un pueblo costero pintoresco ubicado en la Península de Samaná, conocido por su ambiente bohemio, playas vírgenes y una vibrant comunidad internacional. A diferencia de Punta Cana, Las Terrenas mantiene su autenticidad y carácter natural.</p>
+
+      <h4>Playas de Las Terrenas</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Playa Las Terrenas</strong> - La principal, con restaurantes y bares de playa</li>
+        <li><strong>Playa Bonita</strong> - Tranquila, perfecta para familias</li>
+        <li><strong>Playa Punta Poppy</strong> - Rocas interesantes y vida marina</li>
+        <li><strong>Playa Real</strong> - Aislada y con buena fauna marina</li>
+        <li><strong>Playa Madama</strong> - Arena suave y sin desarrollo turístico</li>
+        <li><strong>Playa Las Galeras</strong> - Pequeño pueblo pintoresco cercano</li>
+      </ul>
+
+      <h4>Actividades de Aventura</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Senderismo a cascadas y cuevas (Cascada Limón)</li>
+        <li>Buceo y snorkel en arrecifes pristinos</li>
+        <li>Avistamiento de ballenas (enero-marzo)</li>
+        <li>Kitesurf y windsurf</li>
+        <li>Tours en lancha rápida por la costa</li>
+        <li>Pesca en alta mar</li>
+        <li>ATV tours por la selva</li>
+        <li>Yoga y retiros de bienestar</li>
+      </ul>
+
+      <h4>Gastronomía y Cultura</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Restaurantes de comida internacional de alta calidad</li>
+        <li>Especialidades locales: langosta, pez espada, mofongo</li>
+        <li>Bares de playa con música en vivo</li>
+        <li>Mercado local con artesanías y souvenirs</li>
+        <li>Comunidad bohemia y artística</li>
+        <li>Galerías de arte local</li>
+      </ul>
+
+      <h4>Alojamiento en Las Terrenas</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Boutique Hotels:</strong> Diseño único, personal, atmosférico</li>
+        <li><strong>Eco-Lodges:</strong> Respetuosos con el ambiente, lujo rústico</li>
+        <li><strong>Villas Privadas:</strong> Con piscina, con vista al mar, independientes</li>
+        <li><strong>Casas de Huéspedes:</strong> Atmósfera local, precios moderados</li>
+        <li><strong>Resorts All-Inclusive:</strong> Comodidad completa (menos común)</li>
+      </ul>
+
+      <h4>Consejos para tu Visita</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Las Terrenas es más aventura que lujo - viajar con espíritu aventurero</li>
+        <li>Renta un auto para explorar la península</li>
+        <li>Lleva dinero en efectivo (no todos aceptan tarjeta)</li>
+        <li>Protégete del sol - el UV es muy fuerte</li>
+        <li>Aprende a conducir en caminos sinuosos de montaña</li>
+        <li>Interactúa con la comunidad local amable</li>
+        <li>Come en restaurantes locales para auténtica experiencia</li>
+      </ul>
+
+      <h4>Mejores Épocas para Visitar</h4>
+      <p><strong>Diciembre-Marzo:</strong> Clima seco, avistamiento de ballenas (enero-marzo), 24-28°C</p>
+      <p><strong>Abril-Junio:</strong> Menos turistas, playas tranquilas, lluvia ocasional</p>
+      <p><strong>Julio-Noviembre:</strong> Temporada lluviosa, precios bajos, posible ciclones</p>
+
+      <h4>Rangos de Precios Aproximados (por persona, 5 noches)</h4>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>Casa de Huéspedes:</strong> $400 - $700 USD</li>
+        <li><strong>Boutique Hotel 3 Estrellas:</strong> $700 - $1,200 USD</li>
+        <li><strong>Eco-Lodge o Villa:</strong> $1,200 - $2,500 USD</li>
+        <li><strong>Villa Privada Premium:</strong> $2,500 - $5,000 USD</li>
+      </ul>
+
+      <p style="margin-top: 20px; font-style: italic; color: #666;">Las Terrenas ofrece mejor relación precio-calidad que Punta Cana con una experiencia más auténtica.</p>
+    `
+  }
+};
+
+// SHOW BLOG ARTICLE MODAL
+function showBlogArticle(articleId) {
+  const article = blogArticles[articleId];
+  if (!article) return;
+
+  // Create modal container
+  let modal = document.getElementById('blog-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'blog-modal';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+      overflow-y: auto;
+    `;
+    document.body.appendChild(modal);
+  }
+
+  // Clear and populate modal content
+  modal.innerHTML = `
+    <div style="
+      background: white;
+      border-radius: 12px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 40px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    ">
+      <button onclick="closeBlogModal()" style="
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: var(--secondary);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        z-index: 2001;
+      " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        ×
+      </button>
+
+      <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <i class="fas ${article.icon}" style="font-size: 2.5rem; color: var(--primary);"></i>
+        <h2 style="color: var(--dark); margin: 0; font-size: 2rem;">${article.title}</h2>
+      </div>
+
+      <div style="
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        padding: 20px;
+        border-radius: 8px;
+        color: white;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      ">
+        ${article.description}
+      </div>
+
+      <!-- GALERÍA DE FOTOS -->
+      <div style="margin-bottom: 30px;">
+        <h3 style="color: var(--dark); margin-bottom: 15px; font-size: 1.3rem;">Galería de Fotos</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+          <img src="https://images.unsplash.com/photo-${article.gallery1 || '1544551763-46a013bb70d5'}?w=300&h=250&fit=crop" alt="Foto 1" style="border-radius: 8px; width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: var(--transition);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          <img src="https://images.unsplash.com/photo-${article.gallery2 || '1507525428034-b723cf961d3e'}?w=300&h=250&fit=crop" alt="Foto 2" style="border-radius: 8px; width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: var(--transition);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          <img src="https://images.unsplash.com/photo-${article.gallery3 || '1570213970321-01e34e8e6c62'}?w=300&h=250&fit=crop" alt="Foto 3" style="border-radius: 8px; width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: var(--transition);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          <img src="https://images.unsplash.com/photo-${article.gallery4 || '1519046904884-53103b34b206'}?w=300&h=250&fit=crop" alt="Foto 4" style="border-radius: 8px; width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: var(--transition);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+      </div>
+
+      <div style="
+        color: var(--dark);
+        line-height: 1.8;
+        font-size: 1rem;
+      ">
+        ${article.content}
+      </div>
+    </div>
+  `;
+
+  // Show modal
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  // Close on background click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeBlogModal();
+    }
+  });
+}
+
+// CLOSE BLOG MODAL
+function closeBlogModal() {
+  const modal = document.getElementById('blog-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// SUBSCRIPTION FORM
+function suscribirse() {
+  const emailInput = document.querySelector('input[type="email"]');
+  const email = emailInput ? emailInput.value.trim() : '';
+
+  // Simple email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!email) {
+    alert('Por favor ingresa tu correo electrónico');
+    return;
+  }
+
+  if (!emailRegex.test(email)) {
+    alert('Por favor ingresa un correo electrónico válido');
+    return;
+  }
+
+  // Show success message (in real app, would send to server)
+  alert(`¡Gracias por suscribirte! Hemos enviado un email de confirmación a ${email}`);
+
+  // Clear input
+  if (emailInput) {
+    emailInput.value = '';
+  }
+}
+
+// BLOG SEARCH AND FILTER FUNCTIONS
+const blogArticlesData = [
+  { id: 'maritimo', title: 'Cruceros Marítimos por el Caribe', category: 'cruceros', keywords: ['cruceros', 'marítimo', 'caribe', 'barco'] },
+  { id: 'fluvial', title: 'Cruceros Fluviales Internacionales', category: 'cruceros', keywords: ['cruceros', 'fluvial', 'río', 'europa'] },
+  { id: 'puntacana', title: 'Punta Cana: Paraíso Dominicano', category: 'playas', keywords: ['punta cana', 'playas', 'caribe', 'dominicana'] },
+  { id: 'disney', title: 'Viajes a Disney: Magia para Toda la Familia', category: 'parques', keywords: ['disney', 'parques', 'orlando', 'magia'] },
+  { id: 'terrenas', title: 'Las Terrenas: Playas Vírgenes y Aventura', category: 'playas', keywords: ['terrenas', 'playas', 'dominicana', 'aventura'] }
+];
+
+let currentCategory = 'todos';
+let currentSort = 'fecha';
+
+function filterBlogArticles() {
+  const searchText = document.getElementById('blogSearch').value.toLowerCase();
+  const sortValue = document.getElementById('blogSort').value;
+
+  const blogCards = document.querySelectorAll('[onclick*="showBlogArticle"]');
+  let visibleCount = 0;
+
+  blogCards.forEach((card, index) => {
+    const article = blogArticlesData[index];
+    if (!article) return;
+
+    // Check if matches search and category
+    const matchesSearch = article.title.toLowerCase().includes(searchText) ||
+                         article.keywords.some(kw => kw.includes(searchText));
+    const matchesCategory = currentCategory === 'todos' || article.category === currentCategory;
+
+    if (matchesSearch && matchesCategory) {
+      card.style.display = 'block';
+      card.style.animation = 'fadeInUp 0.6s ease';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Show "no results" message if needed
+  const resultsMessage = document.getElementById('noResults');
+  if (visibleCount === 0) {
+    if (!resultsMessage) {
+      const msg = document.createElement('div');
+      msg.id = 'noResults';
+      msg.style.cssText = 'text-align: center; padding: 40px 20px; color: #999; font-size: 1.1rem;';
+      msg.innerHTML = '<i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i><p>No se encontraron artículos que coincidan con tu búsqueda</p>';
+      document.querySelector('[style*="grid-template-columns: repeat(auto-fit"]').parentElement.appendChild(msg);
+    }
+  } else if (resultsMessage) {
+    resultsMessage.remove();
+  }
+}
+
+function filterByCategory(category) {
+  currentCategory = category;
+
+  // Update button styles
+  const buttons = document.querySelectorAll('.filter-btn, .filter-btn-active');
+  buttons.forEach(btn => {
+    if (btn.textContent.toLowerCase().includes('todos') && category === 'todos') {
+      btn.className = 'filter-btn-active';
+      btn.style.background = 'var(--primary)';
+      btn.style.color = '#fff';
+      btn.style.borderColor = 'var(--primary)';
+    } else if (btn.textContent.toLowerCase().includes('cruceros') && category === 'cruceros') {
+      btn.className = 'filter-btn-active';
+      btn.style.background = 'var(--primary)';
+      btn.style.color = '#fff';
+      btn.style.borderColor = 'var(--primary)';
+    } else if (btn.textContent.toLowerCase().includes('playas') && category === 'playas') {
+      btn.className = 'filter-btn-active';
+      btn.style.background = 'var(--primary)';
+      btn.style.color = '#fff';
+      btn.style.borderColor = 'var(--primary)';
+    } else if (btn.textContent.toLowerCase().includes('parques') && category === 'parques') {
+      btn.className = 'filter-btn-active';
+      btn.style.background = 'var(--primary)';
+      btn.style.color = '#fff';
+      btn.style.borderColor = 'var(--primary)';
+    } else if (!btn.textContent.toLowerCase().includes('todos')) {
+      btn.className = 'filter-btn';
+      btn.style.background = '#fff';
+      btn.style.color = 'var(--dark)';
+      btn.style.borderColor = 'var(--primary)';
+    }
+  });
+
+  filterBlogArticles();
+}
+
+function clearFilters() {
+  document.getElementById('blogSearch').value = '';
+  document.getElementById('blogSort').value = 'fecha';
+  currentCategory = 'todos';
+  currentSort = 'fecha';
+
+  filterByCategory('todos');
+}
+</script>
+
 </body>
 </html>
-/* GitHub Pages trigger */

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKO TRAVELS - CMS Panel Administrativo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #5BB4D4;
+            --secondary: #F79A2B;
+            --accent: #F5C547;
+            --dark: #1A3A4A;
+            --light: #f7f8fc;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            background: #f0f4f8;
+            color: var(--dark);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--dark) 0%, #0f2744 100%);
+            color: #fff;
+            padding: 30px 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+        }
+
+        .sidebar-logo {
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: #ccc;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(91, 180, 212, 0.2);
+            color: var(--primary);
+            padding-left: 25px;
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* ===== MAIN ===== */
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+
+        .header {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: var(--dark);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #fff;
+            color: var(--dark);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(91, 180, 212, 0.3);
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ===== TAB CONTENT ===== */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== FORM ===== */
+        .form-section {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(91, 180, 212, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(91, 180, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(91, 180, 212, 0.4);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: #fff;
+        }
+
+        /* ===== GRID DE ITEMS ===== */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .item-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .item-card-img {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 50px;
+        }
+
+        .item-card-body {
+            padding: 20px;
+        }
+
+        .item-card-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .item-card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .item-card-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .item-card-actions .btn-edit {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .item-card-actions .btn-delete {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        /* ===== UPLOAD ===== */
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: rgba(91, 180, 212, 0.05);
+        }
+
+        .upload-area:hover {
+            background: rgba(91, 180, 212, 0.1);
+            border-color: var(--secondary);
+        }
+
+        .upload-area i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        /* ===== STATS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary), #3a8fb3);
+            color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(91, 180, 212, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                padding: 0;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <i class="fas fa-globe"></i>
+                OKO CMS
+            </div>
+            <ul class="sidebar-menu">
+                <li><a class="menu-item active" data-menu="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a class="menu-item" data-menu="productos"><i class="fas fa-box"></i> Productos</a></li>
+                <li><a class="menu-item" data-menu="blog"><i class="fas fa-blog"></i> Blog</a></li>
+                <li><a class="menu-item" data-menu="destinos"><i class="fas fa-map-marker-alt"></i> Destinos</a></li>
+                <li><a class="menu-item" data-menu="testimonios"><i class="fas fa-star"></i> Testimonios</a></li>
+                <li><a class="menu-item" data-menu="galeria"><i class="fas fa-image"></i> Galería</a></li>
+                <li><a class="menu-item" data-menu="usuarios"><i class="fas fa-users"></i> Usuarios</a></li>
+                <li><a class="menu-item" data-menu="configuracion"><i class="fas fa-cog"></i> Configuración</a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main">
+            <div class="header">
+                <h1>Panel de Control</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary"><i class="fas fa-user"></i> Perfil</button>
+                    <button class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Salir</button>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <div id="dashboard" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>48</h3>
+                        <p>Productos</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>12</h3>
+                        <p>Blog Posts</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>24</h3>
+                        <p>Destinos</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>156</h3>
+                        <p>Testimonios</p>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Bienvenido al CMS de OKO TRAVELS</h2>
+                    <p style="margin-top: 15px; color: #666;">Desde aquí puedes gestionar todo el contenido de tu sitio web. Selecciona una opción en el menú lateral para comenzar.</p>
+                </div>
+            </div>
+
+            <!-- PRODUCTOS -->
+            <div id="productos" class="tab-content">
+                <div class="form-section">
+                    <h2>Gestión de Productos</h2>
+                    <button class="btn btn-primary" onclick="openProductModal()">
+                        <i class="fas fa-plus"></i> Nuevo Producto
+                    </button>
+                </div>
+
+                <div class="form-section">
+                    <h3>Tipos de Productos</h3>
+                    <div class="tabs" style="margin-top: 15px;">
+                        <button class="tab-btn active">Cruceros</button>
+                        <button class="tab-btn">Tours</button>
+                        <button class="tab-btn">Disney</button>
+                        <button class="tab-btn">Boletos Aéreos</button>
+                        <button class="tab-btn">Hoteles</button>
+                        <button class="tab-btn">Seguros</button>
+                    </div>
+                </div>
+
+                <div class="items-grid" id="productosGrid">
+                    <div class="item-card">
+                        <div class="item-card-img"><i class="fas fa-ship"></i></div>
+                        <div class="item-card-body">
+                            <div class="item-card-title">Crucero Caribeño</div>
+                            <p style="font-size: 13px; color: #666;">$1,299</p>
+                            <div class="item-card-actions">
+                                <button class="btn-edit">✏️ Editar</button>
+                                <button class="btn-delete">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOG -->
+            <div id="blog" class="tab-content">
+                <div class="form-section">
+                    <h2>Gestión de Blog</h2>
+                    <button class="btn btn-primary" onclick="openBlogModal()">
+                        <i class="fas fa-plus"></i> Nuevo Artículo
+                    </button>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Buscar artículos...</label>
+                        <input type="text" placeholder="Escribe para buscar">
+                    </div>
+                </div>
+
+                <div class="items-grid" id="blogGrid">
+                    <div class="item-card">
+                        <div class="item-card-img"><i class="fas fa-newspaper"></i></div>
+                        <div class="item-card-body">
+                            <div class="item-card-title">Guía de Viajes al Caribe</div>
+                            <p style="font-size: 13px; color: #666;">Publicado hace 2 días</p>
+                            <div class="item-card-actions">
+                                <button class="btn-edit">✏️ Editar</button>
+                                <button class="btn-delete">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DESTINOS -->
+            <div id="destinos" class="tab-content">
+                <div class="form-section">
+                    <h2>Gestión de Destinos</h2>
+                    <button class="btn btn-primary" onclick="openDestinoModal()">
+                        <i class="fas fa-plus"></i> Nuevo Destino
+                    </button>
+                </div>
+
+                <div class="items-grid" id="destinosGrid">
+                    <div class="item-card">
+                        <div class="item-card-img"><i class="fas fa-landmark"></i></div>
+                        <div class="item-card-body">
+                            <div class="item-card-title">Santo Domingo</div>
+                            <p style="font-size: 13px; color: #666;">República Dominicana</p>
+                            <div class="item-card-actions">
+                                <button class="btn-edit">✏️ Editar</button>
+                                <button class="btn-delete">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TESTIMONIOS -->
+            <div id="testimonios" class="tab-content">
+                <div class="form-section">
+                    <h2>Gestión de Testimonios</h2>
+                    <button class="btn btn-primary" onclick="openTestimonioModal()">
+                        <i class="fas fa-plus"></i> Nuevo Testimonio
+                    </button>
+                </div>
+
+                <div class="items-grid" id="testimoniosGrid">
+                    <div class="item-card">
+                        <div class="item-card-img"><i class="fas fa-quote-left"></i></div>
+                        <div class="item-card-body">
+                            <div class="item-card-title">Juan García</div>
+                            <p style="font-size: 13px; color: #666;">⭐⭐⭐⭐⭐ Excelente servicio</p>
+                            <div class="item-card-actions">
+                                <button class="btn-edit">✏️ Editar</button>
+                                <button class="btn-delete">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GALERÍA -->
+            <div id="galeria" class="tab-content">
+                <div class="form-section">
+                    <h2>Gestión de Galería</h2>
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p><strong>Arrastra imágenes aquí</strong> o haz clic para seleccionar</p>
+                        <input type="file" id="fileInput" style="display:none;" multiple accept="image/*">
+                    </div>
+                </div>
+
+                <div class="items-grid" id="galeriaGrid">
+                    <div class="item-card">
+                        <div class="item-card-img" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="item-card-body">
+                            <div class="item-card-title">Imagen 1</div>
+                            <p style="font-size: 13px; color: #666;">2.5 MB</p>
+                            <div class="item-card-actions">
+                                <button class="btn-delete" style="flex: 1;">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USUARIOS -->
+            <div id="usuarios" class="tab-content">
+                <div class="form-section">
+                    <h2>Gestión de Usuarios</h2>
+                    <button class="btn btn-primary" onclick="openUsuarioModal()">
+                        <i class="fas fa-plus"></i> Nuevo Usuario
+                    </button>
+                </div>
+
+                <div class="items-grid" id="usuariosGrid">
+                    <div class="item-card">
+                        <div class="item-card-img"><i class="fas fa-user-circle"></i></div>
+                        <div class="item-card-body">
+                            <div class="item-card-title">admin@okotravels.com</div>
+                            <p style="font-size: 13px; color: #666;">Administrador</p>
+                            <div class="item-card-actions">
+                                <button class="btn-edit">✏️ Editar</button>
+                                <button class="btn-delete">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONFIGURACIÓN -->
+            <div id="configuracion" class="tab-content">
+                <div class="form-section">
+                    <h2>Configuración General</h2>
+
+                    <div class="form-group">
+                        <label>Nombre del Sitio</label>
+                        <input type="text" value="OKO TRAVELS" placeholder="Nombre de tu sitio">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email de Contacto</label>
+                            <input type="email" value="info@okotravels.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" value="+1 234 567 8900">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea placeholder="Descripción de tu agencia de viajes"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" placeholder="Dirección de tu oficina">
+                    </div>
+
+                    <button class="btn btn-success" onclick="alert('Configuración guardada')">
+                        <i class="fas fa-save"></i> Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal" id="mainModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Nuevo Elemento</span>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Menu navigation
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+                item.classList.add('active');
+
+                const menu = item.dataset.menu;
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(menu)?.classList.add('active');
+            });
+        });
+
+        // Modals
+        function openProductModal() {
+            document.getElementById('mainModal').classList.add('open');
+            document.getElementById('modalBody').innerHTML = `
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" placeholder="Nombre del producto">
+                </div>
+                <div class="form-group">
+                    <label>Precio</label>
+                    <input type="number" placeholder="Precio">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea placeholder="Descripción detallada"></textarea>
+                </div>
+                <button class="btn btn-success" onclick="closeModal()">Crear Producto</button>
+            `;
+        }
+
+        function openBlogModal() {
+            document.getElementById('mainModal').classList.add('open');
+            document.getElementById('modalBody').innerHTML = `
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" placeholder="Título del artículo">
+                </div>
+                <div class="form-group">
+                    <label>Contenido</label>
+                    <textarea placeholder="Contenido del blog"></textarea>
+                </div>
+                <button class="btn btn-success" onclick="closeModal()">Publicar Artículo</button>
+            `;
+        }
+
+        function openDestinoModal() {
+            document.getElementById('mainModal').classList.add('open');
+            document.getElementById('modalBody').innerHTML = `
+                <div class="form-group">
+                    <label>Destino</label>
+                    <input type="text" placeholder="Nombre del destino">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea placeholder="Información sobre el destino"></textarea>
+                </div>
+                <button class="btn btn-success" onclick="closeModal()">Crear Destino</button>
+            `;
+        }
+
+        function openTestimonioModal() {
+            document.getElementById('mainModal').classList.add('open');
+            document.getElementById('modalBody').innerHTML = `
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" placeholder="Nombre del cliente">
+                </div>
+                <div class="form-group">
+                    <label>Testimonio</label>
+                    <textarea placeholder="Lo que dice del servicio"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Calificación</label>
+                    <select>
+                        <option>⭐⭐⭐⭐⭐ Excelente</option>
+                        <option>⭐⭐⭐⭐ Muy Bueno</option>
+                        <option>⭐⭐⭐ Bueno</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" onclick="closeModal()">Crear Testimonio</button>
+            `;
+        }
+
+        function openUsuarioModal() {
+            document.getElementById('mainModal').classList.add('open');
+            document.getElementById('modalBody').innerHTML = `
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="email@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" placeholder="Contraseña segura">
+                </div>
+                <div class="form-group">
+                    <label>Rol</label>
+                    <select>
+                        <option>Administrador</option>
+                        <option>Editor</option>
+                        <option>Cliente</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" onclick="closeModal()">Crear Usuario</button>
+            `;
+        }
+
+        function closeModal() {
+            document.getElementById('mainModal').classList.remove('open');
+        }
+
+        // Close modal on background click
+        document.getElementById('mainModal').addEventListener('click', (e) => {
+            if (e.target.id === 'mainModal') closeModal();
+        });
+    </script>
+</body>
+</html>

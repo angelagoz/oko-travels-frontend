@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKO TRAVELS - CMS PRO Productos</title>
+    <script src="https://upload-widget.cloudinary.com/latest/index.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0D6A4F 0%, #09453E 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header h1 { color: #0D6A4F; font-size: 32px; margin-bottom: 10px; }
+        header p { color: #666; font-size: 14px; }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+        .nav-tab {
+            padding: 12px 20px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .nav-tab.active {
+            background: #0D6A4F;
+            color: white;
+        }
+        .nav-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Main Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        /* Sidebar Form */
+        .sidebar {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .sidebar h3 {
+            color: #0D6A4F;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 13px;
+            transition: border 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0D6A4F;
+            box-shadow: 0 0 0 3px rgba(13, 106, 79, 0.1);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Buttons */
+        .btn-upload {
+            background: #FF8C00;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+        .btn-upload:hover {
+            background: #E67E00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.3);
+        }
+        .btn-guardar {
+            background: #0D6A4F;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .btn-guardar:hover {
+            background: #095340;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(13, 106, 79, 0.3);
+        }
+        .btn-guardar:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Content Area */
+        .content {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .content h2 {
+            color: #0D6A4F;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        /* Products Grid */
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .producto-card {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .producto-card:hover {
+            border-color: #0D6A4F;
+            box-shadow: 0 6px 20px rgba(13, 106, 79, 0.15);
+            transform: translateY(-4px);
+        }
+        .producto-image {
+            width: 100%;
+            height: 200px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 13px;
+            overflow: hidden;
+        }
+        .producto-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .producto-info {
+            padding: 15px;
+        }
+        .producto-tipo {
+            display: inline-block;
+            background: #0D6A4F;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .producto-nombre {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .producto-precio {
+            color: #0D6A4F;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .producto-acciones {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-editar, .btn-eliminar {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        .btn-editar {
+            background: #4CAF50;
+            color: white;
+        }
+        .btn-editar:hover {
+            background: #45a049;
+        }
+        .btn-eliminar {
+            background: #f44336;
+            color: white;
+        }
+        .btn-eliminar:hover {
+            background: #da190b;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .modal-content h2 {
+            color: #0D6A4F;
+            margin-bottom: 20px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        .empty-state p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Fotos Grid */
+        .fotos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .foto-item {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #e0e0e0;
+        }
+        .foto-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .foto-remove {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(244, 67, 54, 0.9);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #0D6A4F;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+            .nav-tabs {
+                overflow-x: auto;
+            }
+            .productos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌴 OKO TRAVELS - CMS PRO Productos</h1>
+            <p>Gestión completa de productos, galería de fotos y catálogo dinámico</p>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="cambiarTab('cruceros')">⛴️ Cruceros</button>
+            <button class="nav-tab" onclick="cambiarTab('tours')">🎒 Tours</button>
+            <button class="nav-tab" onclick="cambiarTab('disney')">🏰 Disney</button>
+            <button class="nav-tab" onclick="cambiarTab('boletos')">✈️ Boletos Aéreos</button>
+            <button class="nav-tab" onclick="cambiarTab('hoteles')">🏨 Hoteles</button>
+            <button class="nav-tab" onclick="cambiarTab('seguros')">🛡️ Seguros</button>
+        </div>
+
+        <div class="main-grid">
+            <!-- Sidebar Form -->
+            <div class="sidebar">
+                <h3 id="sidebarTitle">Nuevo Producto</h3>
+                <form id="productoForm" onsubmit="guardarProducto(event)">
+                    <div class="form-group">
+                        <label>Tipo de Producto</label>
+                        <select id="tipo" required onchange="actualizarCampos()">
+                            <option value="">Seleccionar...</option>
+                            <option value="crucero">Crucero</option>
+                            <option value="tour">Tour</option>
+                            <option value="disney">Disney</option>
+                            <option value="boleto">Boleto Aéreo</option>
+                            <option value="hotel">Hotel</option>
+                            <option value="seguro">Seguro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nombre del Producto</label>
+                        <input type="text" id="nombre" placeholder="Ej: Royal Caribbean Allure" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="descripcion" placeholder="Describe el producto..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Precio Base (USD)</label>
+                        <input type="number" id="precio" placeholder="0.00" step="0.01" required>
+                    </div>
+
+                    <div class="form-group" id="duracionDiv" style="display:none;">
+                        <label>Duración (días)</label>
+                        <input type="number" id="duracion" placeholder="7">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descuento (%)</label>
+                        <input type="number" id="descuento" placeholder="0" min="0" max="100" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <input type="text" id="categoria" placeholder="Ej: Caribe, Europa">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tags (separados por comas)</label>
+                        <input type="text" id="tags" placeholder="playa, familia, lujo">
+                    </div>
+
+                    <div class="form-group" id="fotoDiv">
+                        <label>Fotos</label>
+                        <button type="button" class="btn-upload" onclick="subirFoto()">📸 Subir Foto</button>
+                        <div class="fotos-grid" id="fotosGrid"></div>
+                    </div>
+
+                    <button type="submit" class="btn-guardar">💾 Guardar Producto</button>
+                </form>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content">
+                <h2 id="contentTitle">Cruceros</h2>
+                <div class="productos-grid" id="productosGrid">
+                    <div class="empty-state">
+                        <p>No hay productos. Crea uno nuevo para empezar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ver/Editar -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="cerrarModal()">×</button>
+            <h2>Detalles del Producto</h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://luchris-travels-backend.onrender.com/api';
+        let productoActual = null;
+        let fotosActuales = [];
+        let tipoActual = 'crucero';
+
+        // Inicializar
+        function init() {
+            actualizarCampos();
+            cargarProductos(tipoActual);
+        }
+
+        // Cambiar tab
+        function cambiarTab(tipo) {
+            tipoActual = tipo;
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const titulos = {
+                'crucero': '⛴️ Cruceros',
+                'tour': '🎒 Tours',
+                'disney': '🏰 Disney',
+                'boleto': '✈️ Boletos Aéreos',
+                'hotel': '🏨 Hoteles',
+                'seguro': '🛡️ Seguros'
+            };
+
+            document.getElementById('contentTitle').textContent = titulos[tipo];
+            document.getElementById('tipo').value = tipo;
+            document.getElementById('sidebarTitle').textContent = `Nuevo ${titulos[tipo].split(' ')[1]}`;
+            actualizarCampos();
+            limpiarFormulario();
+            cargarProductos(tipo);
+        }
+
+        // Actualizar campos según tipo
+        function actualizarCampos() {
+            const tipo = document.getElementById('tipo').value;
+            const duracionDiv = document.getElementById('duracionDiv');
+
+            if (['crucero', 'tour', 'boleto'].includes(tipo)) {
+                duracionDiv.style.display = 'block';
+            } else {
+                duracionDiv.style.display = 'none';
+            }
+        }
+
+        // Cargar productos
+        async function cargarProductos(tipo) {
+            try {
+                const response = await fetch(`${API_URL}/productos`);
+                const productos = await response.json();
+                const filtrados = productos.filter(p => p.tipo === tipo && p.estado === 'activo');
+
+                const grid = document.getElementById('productosGrid');
+                if (filtrados.length === 0) {
+                    grid.innerHTML = '<div class="empty-state"><p>No hay productos</p></div>';
+                    return;
+                }
+
+                grid.innerHTML = filtrados.map(p => `
+                    <div class="producto-card" onclick="abrirModal('${p._id}')">
+                        <div class="producto-image">
+                            ${p.fotos && p.fotos[0] ? `<img src="${p.fotos[0]}" alt="${p.nombre}">` : '<span>Sin foto</span>'}
+                        </div>
+                        <div class="producto-info">
+                            <div class="producto-tipo">${p.tipo.toUpperCase()}</div>
+                            <div class="producto-nombre">${p.nombre}</div>
+                            <div class="producto-precio">$${p.precio_base}</div>
+                            ${p.duracion ? `<div style="font-size: 12px; color: #666; margin-bottom: 10px;">${p.duracion} días</div>` : ''}
+                            <div class="producto-acciones">
+                                <button class="btn-editar" onclick="editarProducto('${p._id}', event)">✏️ Editar</button>
+                                <button class="btn-eliminar" onclick="eliminarProducto('${p._id}', event)">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error('Error cargando productos:', e);
+            }
+        }
+
+        // Subir foto
+        function subirFoto() {
+            const preset = localStorage.getItem('cloudinaryPreset') || 'hergoz_unsigned';
+            const w = cloudinary.createUploadWidget({
+                cloudName: 'diy',
+                uploadPreset: preset,
+                sources: ['local', 'url'],
+                resourceType: 'auto'
+            }, (error, result) => {
+                if (result && result.event === 'success') {
+                    fotosActuales.push(result.info.secure_url);
+                    actualizarFotosGrid();
+                }
+            });
+            w.open();
+        }
+
+        // Actualizar grid de fotos
+        function actualizarFotosGrid() {
+            const grid = document.getElementById('fotosGrid');
+            grid.innerHTML = fotosActuales.map((foto, idx) => `
+                <div class="foto-item">
+                    <img src="${foto}" alt="foto">
+                    <button type="button" class="foto-remove" onclick="removerFoto(${idx})">×</button>
+                </div>
+            `).join('');
+        }
+
+        // Remover foto
+        function removerFoto(idx) {
+            fotosActuales.splice(idx, 1);
+            actualizarFotosGrid();
+        }
+
+        // Guardar producto
+        async function guardarProducto(e) {
+            e.preventDefault();
+
+            const producto = {
+                tipo: document.getElementById('tipo').value,
+                nombre: document.getElementById('nombre').value,
+                descripcion: document.getElementById('descripcion').value,
+                precio_base: parseFloat(document.getElementById('precio').value),
+                descuento: parseFloat(document.getElementById('descuento').value) || 0,
+                categoria: document.getElementById('categoria').value,
+                tags: document.getElementById('tags').value.split(',').map(t => t.trim()),
+                fotos: fotosActuales,
+                duracion: document.getElementById('tipo').value === 'crucero' ? parseInt(document.getElementById('duracion').value) : null,
+                estado: 'activo'
+            };
+
+            try {
+                const method = productoActual ? 'PUT' : 'POST';
+                const url = productoActual ? `${API_URL}/productos/${productoActual}` : `${API_URL}/productos`;
+
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(producto)
+                });
+
+                if (response.ok) {
+                    alert('✅ Producto guardado exitosamente');
+                    limpiarFormulario();
+                    cargarProductos(tipoActual);
+                } else {
+                    alert('❌ Error al guardar producto');
+                }
+            } catch (e) {
+                alert('❌ Error: ' + e.message);
+            }
+        }
+
+        // Limpiar formulario
+        function limpiarFormulario() {
+            document.getElementById('productoForm').reset();
+            document.getElementById('tipo').value = tipoActual;
+            fotosActuales = [];
+            actualizarFotosGrid();
+            productoActual = null;
+            document.getElementById('sidebarTitle').textContent = 'Nuevo Producto';
+            actualizarCampos();
+        }
+
+        // Editar producto
+        async function editarProducto(id, e) {
+            e.stopPropagation();
+            try {
+                const response = await fetch(`${API_URL}/productos/${id}`);
+                const p = await response.json();
+
+                document.getElementById('sidebarTitle').textContent = 'Editar Producto';
+                document.getElementById('tipo').value = p.tipo;
+                document.getElementById('nombre').value = p.nombre;
+                document.getElementById('descripcion').value = p.descripcion || '';
+                document.getElementById('precio').value = p.precio_base;
+                document.getElementById('descuento').value = p.descuento || 0;
+                document.getElementById('categoria').value = p.categoria || '';
+                document.getElementById('tags').value = p.tags ? p.tags.join(', ') : '';
+                document.getElementById('duracion').value = p.duracion || '';
+
+                fotosActuales = p.fotos || [];
+                actualizarFotosGrid();
+                productoActual = id;
+                actualizarCampos();
+
+                window.scrollTo(0, 0);
+            } catch (e) {
+                alert('Error cargando producto: ' + e.message);
+            }
+        }
+
+        // Eliminar producto
+        async function eliminarProducto(id, e) {
+            e.stopPropagation();
+            if (!confirm('¿Eliminar este producto?')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/productos/${id}`, { method: 'DELETE' });
+                if (response.ok) {
+                    alert('✅ Producto eliminado');
+                    cargarProductos(tipoActual);
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
+        // Modal
+        function abrirModal(id) {
+            // Implementar más adelante
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        // Inicializar
+        init();
+    </script>
+</body>
+</html>

@@ -567,71 +567,9 @@
     <section class="section" style="background: var(--light);" id="productos">
         <h2 class="section-title">Nuestros Productos</h2>
         <p class="section-subtitle">Explora una variedad de opciones para tu próximo viaje</p>
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image"><img src="images/hero-crucero.jpg" alt="Crucero"></div>
-                <div class="product-info">
-                    <span class="product-category">CRUCEROS</span>
-                    <div class="product-name">Cruceros Caribeños</div>
-                    <p class="product-description">Navega por las aguas más hermosas del Caribe a bordo de lujosos barcos.</p>
-                    <div class="product-price">Desde $899</div>
-                    <button class="btn-producto">Ver Detalles</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image"><img src="images/hero-disney.jpg" alt="Disney"></div>
-                <div class="product-info">
-                    <span class="product-category">DISNEY</span>
-                    <div class="product-name">Paquetes Disney</div>
-                    <p class="product-description">Vive la magia de Disney en Florida con paquetes especiales para familias.</p>
-                    <div class="product-price">Desde $1,299</div>
-                    <button class="btn-producto">Ver Detalles</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image"><img src="images/hero-globos.jpg" alt="Tours"></div>
-                <div class="product-info">
-                    <span class="product-category">TOURS</span>
-                    <div class="product-name">Tours Internacionales</div>
-                    <p class="product-description">Explora Europa, Turquía, Asia y otros destinos con guías profesionales.</p>
-                    <div class="product-price">Desde $1,599</div>
-                    <button class="btn-producto">Ver Detalles</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
-                <div class="product-info">
-                    <span class="product-category">HOTELES</span>
-                    <div class="product-name">Hospedaje de Lujo</div>
-                    <p class="product-description">Alojamiento en hoteles 4 y 5 estrellas en destinos premium.</p>
-                    <div class="product-price">Desde $199/noche</div>
-                    <button class="btn-producto">Ver Detalles</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                <div class="product-info">
-                    <span class="product-category">BOLETOS</span>
-                    <div class="product-name">Vuelos Internacionales</div>
-                    <p class="product-description">Pasajes aéreos a precios competitivos con las mejores aerolíneas.</p>
-                    <div class="product-price">Desde $299</div>
-                    <button class="btn-producto">Ver Detalles</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                <div class="product-info">
-                    <span class="product-category">SEGUROS</span>
-                    <div class="product-name">Seguros de Viaje</div>
-                    <p class="product-description">Cobertura completa para tu tranquilidad en cualquier viaje.</p>
-                    <div class="product-price">Desde $49</div>
-                    <button class="btn-producto">Ver Detalles</button>
-                </div>
+        <div class="products-grid" id="productosContainer">
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--gray);">
+                <p>Cargando productos...</p>
             </div>
         </div>
     </section>
@@ -685,6 +623,10 @@
     </footer>
 
     <script>
+        // API Configuration
+        const API_URL = 'https://luchris-travels-backend.onrender.com/api';
+
+        // Carousel variables
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-slide');
         const indicators = document.querySelectorAll('.indicator');
@@ -692,6 +634,7 @@
         let isVideoMuted = true;
         const carousel = document.getElementById('carousel');
 
+        // Carousel functions
         function showSlide(n) {
             slides.forEach((s, idx) => {
                 s.classList.remove('active', 'fade', 'slideLeft', 'slideRight');
@@ -774,8 +717,65 @@
             if (e.key === 'ArrowRight') nextSlide();
         });
 
+        // Products loading from API
+        async function cargarProductos() {
+            try {
+                const response = await fetch(`${API_URL}/productos`);
+                const data = await response.json();
+
+                if (data.success && data.datos) {
+                    const container = document.getElementById('productosContainer');
+                    const productos = data.datos.filter(p => p.estado === 'activo').slice(0, 12);
+
+                    if (productos.length === 0) {
+                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--gray);">No hay productos disponibles</div>';
+                        return;
+                    }
+
+                    container.innerHTML = productos.map(producto => {
+                        const icono = {
+                            'crucero': '⛴️',
+                            'tour': '🎒',
+                            'disney': '🏰',
+                            'boleto': '✈️',
+                            'hotel': '🏨',
+                            'seguro': '🛡️',
+                            'destinos': '🌍'
+                        }[producto.tipo] || '📍';
+
+                        const imagenUrl = producto.fotos && producto.fotos[0]
+                            ? producto.fotos[0]
+                            : producto.foto_principal;
+
+                        return `
+                            <div class="product-card">
+                                <div class="product-image">
+                                    ${imagenUrl
+                                        ? `<img src="${imagenUrl}" alt="${producto.nombre}">`
+                                        : `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 48px;">${icono}</div>`
+                                    }
+                                </div>
+                                <div class="product-info">
+                                    <span class="product-category">${icono} ${producto.tipo.toUpperCase()}</span>
+                                    <div class="product-name">${producto.nombre}</div>
+                                    <p class="product-description">${producto.descripcion ? producto.descripcion.substring(0, 80) + '...' : 'Producto destacado'}</p>
+                                    <div class="product-price">$${parseFloat(producto.precio_base).toFixed(2)}</div>
+                                    <button class="btn-producto" onclick="alert('Producto: ${producto.nombre}\nPrecio: $${parseFloat(producto.precio_base).toFixed(2)}\n\nContactanos para reservar!')">Ver Detalles</button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            } catch (error) {
+                console.error('Error cargando productos:', error);
+                document.getElementById('productosContainer').innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: red;">Error cargando productos</div>';
+            }
+        }
+
+        // Initialize
         showSlide(0);
         startAutoPlay();
+        cargarProductos();
     </script>
 </body>
 </html>

@@ -490,6 +490,90 @@ select {
   }
 }
 
+/* ===== SEARCH BAR ===== */
+.search-bar {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px 35px;
+  margin: -50px 30px 0 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto;
+  gap: 20px;
+  align-items: flex-end;
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.search-group label {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.search-group select,
+.search-group input {
+  padding: 12px 15px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.search-group select:focus,
+.search-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(91, 180, 212, 0.1);
+}
+
+.search-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(91, 180, 212, 0.3);
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(91, 180, 212, 0.4);
+  background: #4a9bc9;
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    grid-template-columns: 1fr;
+    margin: -40px 15px 0 15px;
+    padding: 20px;
+  }
+
+  .search-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ===== EFECTOS VISUALES AVANZADOS ===== */
 @keyframes glowPulse {
   0%, 100% {
@@ -1193,6 +1277,41 @@ a:hover::after {
         <div class="carousel-dot" onclick="goToSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: var(--transition);"></div>
         <div class="carousel-dot" onclick="goToSlide(3)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: var(--transition);"></div>
       </div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar">
+      <div class="search-group">
+        <label>Tipo de Viaje</label>
+        <select id="tipoViaje">
+          <option value="">Selecciona...</option>
+          <option value="crucero">Crucero</option>
+          <option value="destino">Destino</option>
+          <option value="parque">Parque</option>
+          <option value="hotel">Hotel</option>
+        </select>
+      </div>
+      <div class="search-group">
+        <label>Destino</label>
+        <input type="text" id="destino" placeholder="¿A dónde quieres ir?">
+      </div>
+      <div class="search-group">
+        <label>Fecha de Viaje</label>
+        <input type="date" id="fecha">
+      </div>
+      <div class="search-group">
+        <label>Pasajeros</label>
+        <select id="pasajeros">
+          <option value="1">1 persona</option>
+          <option value="2">2 personas</option>
+          <option value="3">3 personas</option>
+          <option value="4">4 personas</option>
+          <option value="5+">5+ personas</option>
+        </select>
+      </div>
+      <button class="search-btn" onclick="buscarViajes()">
+        <i class="fas fa-search"></i> Buscar
+      </button>
     </div>
 
     <div class="section">
@@ -2207,6 +2326,36 @@ function closeSidebar() {
   const overlay = document.getElementById('overlay');
   sidebar.classList.remove('open');
   overlay.classList.remove('open');
+}
+
+// SEARCH BAR FUNCTION
+function buscarViajes() {
+  const tipoViaje = document.getElementById('tipoViaje').value;
+  const destino = document.getElementById('destino').value;
+  const fecha = document.getElementById('fecha').value;
+  const pasajeros = document.getElementById('pasajeros').value;
+
+  // Validar que todos los campos estén completos
+  if (!tipoViaje || !destino || !fecha || !pasajeros) {
+    alert('Por favor completa todos los campos de búsqueda');
+    return;
+  }
+
+  // Navegar a la sección correspondiente con los datos
+  navigateTo(tipoViaje);
+
+  // Guardar búsqueda en localStorage
+  const busqueda = {
+    tipoViaje,
+    destino,
+    fecha,
+    pasajeros,
+    timestamp: new Date().toISOString()
+  };
+  localStorage.setItem('ultimaBusqueda', JSON.stringify(busqueda));
+
+  // Mostrar mensaje de éxito
+  alert(`Buscando ${tipoViaje}s para ${destino} el ${fecha} para ${pasajeros} ${pasajeros === '1' ? 'persona' : 'personas'}`);
 }
 
 // FILTERS

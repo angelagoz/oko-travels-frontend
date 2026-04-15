@@ -561,7 +561,21 @@ select {
   background: #4a9bc9;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .search-bar {
+    grid-template-columns: 1fr 1fr;
+    margin: -40px 15px 0 15px;
+    padding: 20px;
+  }
+
+  .search-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
   .search-bar {
     grid-template-columns: 1fr;
     margin: -40px 15px 0 15px;

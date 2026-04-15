@@ -498,7 +498,7 @@ select {
   margin: -50px 30px 0 30px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
   gap: 20px;
   align-items: flex-end;
   position: relative;
@@ -1285,15 +1285,38 @@ a:hover::after {
         <label>Tipo de Viaje</label>
         <select id="tipoViaje">
           <option value="">Selecciona...</option>
-          <option value="crucero">Crucero</option>
-          <option value="destino">Destino</option>
-          <option value="parque">Parque</option>
-          <option value="hotel">Hotel</option>
+          <option value="crucero-maritimo">Crucero Marítimo</option>
+          <option value="crucero-fluvial">Crucero Fluvial</option>
+          <option value="paquete-disney">Paquete Disney</option>
+          <option value="paquete-universal">Paquete Universal</option>
+          <option value="tour-nacional">Tour Nacional</option>
+          <option value="tour-internacional">Tour Internacional</option>
         </select>
       </div>
       <div class="search-group">
         <label>Destino</label>
-        <input type="text" id="destino" placeholder="¿A dónde quieres ir?">
+        <select id="destino">
+          <option value="">Selecciona...</option>
+          <optgroup label="🏝️ Caribe">
+            <option value="el-caribe">El Caribe</option>
+            <option value="bahamas">Bahamas</option>
+            <option value="jamaica">Jamaica</option>
+            <option value="puerto-rico">Puerto Rico</option>
+            <option value="islas-virgenes">Islas Vírgenes</option>
+            <option value="curacao">Curaçao</option>
+            <option value="aruba">Aruba</option>
+            <option value="barbados">Barbados</option>
+            <option value="santa-lucia">Santa Lucía</option>
+            <option value="bermudas">Bermudas</option>
+            <option value="republica-dominicana">República Dominicana</option>
+            <option value="haiti">Haití</option>
+          </optgroup>
+          <optgroup label="🇲🇽 México">
+            <option value="cancun">Cancún</option>
+            <option value="playa-del-carmen">Playa del Carmen</option>
+            <option value="cozumel">Cozumel</option>
+          </optgroup>
+        </select>
       </div>
       <div class="search-group">
         <label>Fecha de Viaje</label>
@@ -1304,9 +1327,17 @@ a:hover::after {
         <select id="pasajeros">
           <option value="1">1 persona</option>
           <option value="2">2 personas</option>
-          <option value="3">3 personas</option>
-          <option value="4">4 personas</option>
+          <option value="3-4">3-4 personas</option>
           <option value="5+">5+ personas</option>
+        </select>
+      </div>
+      <div class="search-group">
+        <label>Niños</label>
+        <select id="ninos">
+          <option value="0">0 niños</option>
+          <option value="1">1 niño</option>
+          <option value="2">2 niños</option>
+          <option value="3+">3+ niños</option>
         </select>
       </div>
       <button class="search-btn" onclick="buscarViajes()">
@@ -2334,6 +2365,7 @@ function buscarViajes() {
   const destino = document.getElementById('destino').value;
   const fecha = document.getElementById('fecha').value;
   const pasajeros = document.getElementById('pasajeros').value;
+  const ninos = document.getElementById('ninos').value;
 
   // Validar que todos los campos estén completos
   if (!tipoViaje || !destino || !fecha || !pasajeros) {
@@ -2350,12 +2382,13 @@ function buscarViajes() {
     destino,
     fecha,
     pasajeros,
+    ninos,
     timestamp: new Date().toISOString()
   };
   localStorage.setItem('ultimaBusqueda', JSON.stringify(busqueda));
 
   // Mostrar mensaje de éxito
-  alert(`Buscando ${tipoViaje}s para ${destino} el ${fecha} para ${pasajeros} ${pasajeros === '1' ? 'persona' : 'personas'}`);
+  alert(`Buscando ${tipoViaje}s para ${destino} el ${fecha} para ${pasajeros} ${pasajeros === '1' ? 'persona' : 'personas'} con ${ninos} ${ninos === '1' ? 'niño' : 'niños'}`);
 }
 
 // FILTERS
